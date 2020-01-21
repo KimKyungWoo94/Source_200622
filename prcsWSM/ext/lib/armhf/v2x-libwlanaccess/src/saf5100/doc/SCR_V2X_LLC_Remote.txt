@@ -1,0 +1,74 @@
+NXP Software Content Register - V2X LLC-Remote 
+
+Release Location:          https://nxp.box.com/
+
+--------------------------------------------
+
+Component:                 LLC Driver 
+Outgoing License:          NXP/Cohda Proprietary
+License File:              NXP - ELA V2X Gen1
+Package Category:          V2X Driver and User-space utilities for Linux 
+Type of content:           Source
+Description and comments:  Linux and QNX Device drivers
+Release Location:          [tgz]/llc-remote/cohda/kernel/drivers
+Origin:                    Cohda Wireless Pty (proprietary)
+Notes:                     LLC Driver and Utility contain copy of public domain 'Atomic Operations' and UThash (BSD-1-Clause license)
+                           Linux Kernel driver utilizes GPL export kernel symbols
+
+--------------------------------------------
+
+Component:                 LLC Library and User-space Utility
+Outgoing License:          NXP/Cohda Proprietary
+License File:              NXP - ELA V2X Gen1
+Package Category:          V2X User-space utilities for Linux 
+Type of content:           Mixed (binary, source)
+Description and comments:  Device driver and User-space Test application
+Release Location:          [tgz]/llc-remote/cohda/kernel; llc-remote/cohda/app
+Origin:                    Cohda Wireless Pty (proprietary)
+Notes:                     LLC Driver and Utility contain copy of public domain 'Atomic Operations' and UThash (BSD-1-Clause license)
+
+--------------------------------------------
+
+Component:                 SAF5100 Firmware images
+Outgoing License:          NXP/Cohda Proprietary
+License File:              NXP - ELA V2X Gen1
+Package Category:          V2X SDR Firmware 
+Type of content:           Binary image
+Description and comments:  Firmware, Linux Kernel driver and User-space Test application
+Release Location:          [tgz]/llc-remote/images/SDR*.bin
+Origin:                    Cohda Wireless Pty (proprietary)
+
+--------------------------------------------
+
+Component:                 SAF5100 Boot Utilities
+Outgoing License:          NXP Proprietary
+License File:              NXP - ELA V2X Gen1
+Package Category:          Boot Utility
+Type of content:           Mixed (binary, source)
+Description and comments:  Boot utilities for SAF5100 Modem
+Release Location:          [tgz]/llc-remote/nxp/util; llc-remote/images/*.usb
+Origin:                    NXP Semiconductors (proprietary)
+	
+--------------------------------------------
+
+Package:                   gpsd-3.8.tar.gz
+Outgoing License:          BSD-4 clause (University of California)
+License File:              COPYRIGHT.Note, COPYING
+Package Category:          Support Library
+Type of content:           Unmodified source package with patches
+Description and comments:  Service daemon that monitors one or more GPS receivers
+Release Location:          [tgz]/llc-remote/bsp/app/gpsd/gpsd-3.8.tar.gz
+Origin:                    http://www.catb.org/gpsd/
+
+--------------------------------------------
+
+Package:                   libpcap-1.8.1.tar.gz
+Outgoing License:          BSD 3-clause 
+License File:              LICENSE
+Package Category:          Support Library
+Type of content:           Unmodified source package with patches
+Description and comments:  System-independent interface for user-level packet capture
+Release Location:          [tgz]/llc-remote/bsp/app/libpcap/
+Origin:                    https://sourceforge.net/projects/libpcap/
+
+--------------------------------------------

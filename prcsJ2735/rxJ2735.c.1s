@@ -1,0 +1,408 @@
+#include <prcsJ2735.h>
+#include <unistd.h>
+#include <termios.h>
+#include <fcntl.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/time.h>
+
+#include "udp.h"
+
+/* 전역변수 */
+pthread_t gpsd_thread;
+bool sockCheck = false;
+struct gps_data_t gpsData;
+int client_sock = -1;
+struct sockaddr_in client_addr;
+
+/* 함수 원형 */
+int sockConnection();
+static void* gpsdThread(void *notused);
+int sendPkt(GPS_Pkt_t *buf);
+
+void setJ2735rx()
+{
+    int result, status;
+    void *msg;
+    ASN1Error err;
+    char pkt[kMpduMaxSize] = {0, };
+    /* 1분 타이머 변수 */
+    struct timeval startTime, endTime = {0, }; 
+    int rtcmTimeCnt = 0;
+    bool rtcmFlag = false;
+    bool dataFlag = false;
+    char rtcmBuf[1024] = {0, };
+    int rtcmLen = 0;
+    /*******************/
+
+#if 1
+    /* GPSD */
+    result = gps_open("localhost", g_mib.gpsdPort, &gpsData);
+    if(result < 0 )
+    {
+        printf("[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
+        return;
+    }
+    (void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
+#endif
+//    gps_enable_debug(2, stdout);
+
+# if 0
+    /* GPSD 쓰레드 생성 */
+    result = pthread_create(&gpsd_thread, NULL, gpsdThread, NULL);
+    if (result < 0) {
+        perror("[prcsJ2735] Fail to create tx thread() ");
+        return;
+    }
+#endif
+
+    /* 현재 시간 획득 */
+    gettimeofday(&startTime, NULL);
+    gettimeofday(&endTime, NULL);
+
+    while(!ending)
+    {
+# if 1
+        /* connection check */
+        if(sockCheck == true)
+        {
+            gps_close(&gpsData);
+
+            printf("[prcsJ2735] Re connection to GPSD\n");
+
+            result = gps_open("localhost", g_mib.gpsdPort, &gpsData);
+            if(result < 0 )
+            {
+                printf("[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
+                pthread_exit((void *)-1);
+            }
+            (void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
+
+            sockCheck = false;
+        }
+#endif
+
+        /* 1초 계산 */
+        gettimeofday(&startTime, NULL);
+        result = startTime.tv_sec - endTime.tv_sec;
+        if(result >= 1)
+        {
+            endTime.tv_sec = startTime.tv_sec;
+            rtcmTimeCnt++;
+
+            /* rtcm write */
+            if(dataFlag == true)
+            {
+                result = write(gpsData.gps_fd, rtcmBuf, rtcmLen);
+                if( result < 0)
+                {
+                    perror("[prcsJ2735] RTCM write fail : ");
+                    sockCheck = true;
+                }
+                else
+                {
+                    if( g_mib.dbg)
+                        printf("[prcsJ2735] Write RTCM(%d byte)\n",  result);
+                }
+            }
+
+            /* 1분 마다 flag set */
+            if(rtcmTimeCnt >= 60)
+            {
+                rtcmFlag = true;
+                rtcmTimeCnt = 0;
+            }
+
+        }
+
+        /* msgQ read */
+        result = recvMQ(pkt);
+        if(result < 0 )
+            continue;
+        else
+        {
+            /* J2735 Decoding */
+            result = asn1_uper_decode(&msg, asn1_type_MessageFrame, pkt, result, &err);
+            if(result < 0)
+                printf("[prcsJ2735] Decoding fail \n");
+            else
+            {
+                if( g_mib.dbg)
+                    printf("[prcsJ2735] Decoding success\n");
+            //    asn1_xer_printf(asn1_type_MessageFrame, msg);
+
+                switch( ((MessageFrame *)msg)->messageId)
+                {
+                    case 28 :
+                        {
+                            RTCMcorrections *pRTCM = ((MessageFrame *)msg)->value.u.data;
+
+                            if( g_mib.dbg)
+                                printf("[prcsJ2735] Receive RTCM(%d Byte)\n", result);
+
+                            if(rtcmFlag == true || dataFlag == false)
+                            {
+                                memset(rtcmBuf, 0, sizeof(rtcmBuf));
+                                memcpy(rtcmBuf, pRTCM->msgs.tab->buf, pRTCM->msgs.tab->len);
+                                rtcmLen = pRTCM->msgs.tab->len;
+                                rtcmFlag = false;
+                                dataFlag = true;
+                            }
+
+#if 0
+                            result = write(gpsData.gps_fd, pRTCM->msgs.tab->buf, pRTCM->msgs.tab->len);
+                            if( result < 0)
+                            {
+                                perror("[prcsJ2735] RTCM write fail : ");
+                                sockCheck = true;
+                            }
+                            else
+                            {
+                                if( g_mib.dbg)
+                                    printf("[prcsJ2735] Write RTCM(%d byte)\n",  result);
+                            }
+
+                            break;
+#endif
+                        }
+                        /* TO DO - MapData, SPaT, PVD, BSM, RSA, TIM 
+                           추가 필요 */
+                }
+            }
+        }
+    }
+#if 0
+    /* 송신 쓰레드 종료 */
+    result = pthread_join(gpsd_thread, (void **)status);
+    if( result == 0 )
+    {
+        if( g_mib.dbg )
+            printf("[prcsJ2735] Completed join with gpsdThread status = %d\n", status);
+    }
+    else
+        printf("[prcsJ2735] ERROR: return code from pthread_join() is %d\n", result);
+#else
+    gps_close(&gpsData);
+#endif
+
+    return;
+}
+
+static void* gpsdThread(void *notused)
+{
+    int result;
+    GPS_Pkt_t shared_GPS;
+
+    result = gps_open("localhost", g_mib.gpsdPort, &gpsData);
+    if(result < 0 )
+    {
+        printf("[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
+        pthread_exit((void *)-1);
+    }
+    (void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
+
+    while(!ending)
+    {
+        /* connection check */
+        if(sockCheck == true)
+        {
+            gps_close(&gpsData);
+
+            printf("[prcsJ2735] Re connection to GPSD\n");
+
+            result = gps_open("localhost", g_mib.gpsdPort, &gpsData);
+            if(result < 0 )
+            {
+                printf("[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
+                pthread_exit((void *)-1);
+            }
+            (void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
+
+            sockCheck = false;
+        }
+
+        /* UDP sock check */
+        if( client_sock == -1) 
+        {
+            if( sockConnection() == -1)
+                continue;
+        }
+
+        /* gps read */
+        if (gps_waiting(&gpsData, 1000000))
+        {
+            result = gps_read(&gpsData);
+            if(result == -1)
+                printf("[prcsJ2735] gps_read() fail( %s)\n", gps_errstr(result));
+            else
+            {
+                if(gpsData.set & UBX_PVT_SET )
+                {
+                    printf("********************status  : %d*****************\n", gpsData.status);
+
+                    //shared_GPS
+                    //pthread_mutex_lock(&gps_mutex_lock);
+                    shared_GPS.version = GPS_VERSION;
+                    shared_GPS.fixType = gpsData.pvt.fixType;
+                    shared_GPS.numSV = gpsData.pvt.numSV;
+                    //ConvertToPosition( &(gpsData.pvt.lon), &(gpsData.pvt.lat), &(shared_GPS.lon), &(shared_GPS.lat), gpsData.status);
+                    if (gpsData.status == STATUS_NO_FIX) {
+                        shared_GPS.lon = 1800000001;
+                        shared_GPS.lat = 900000001;
+                    }
+                    else{
+                        shared_GPS.lon = gpsData.pvt.lon;
+                        shared_GPS.lat = gpsData.pvt.lat;
+                    }
+                    shared_GPS.lon = gpsData.pvt.lon;
+                    shared_GPS.lat = gpsData.pvt.lat;
+                    shared_GPS.nedNorSpd = ConvertToSpeed( &(gpsData.pvt.velN), gpsData.status );
+                    shared_GPS.nedEastSpd = ConvertToSpeed( &(gpsData.pvt.velE), gpsData.status);
+                    shared_GPS.endDownSpd = ConvertToSpeed( &(gpsData.pvt.velD), gpsData.status);
+                    //shared_GPS.heading = ConvertToHeading(&(gpsData.pvt.headVeh), gpsData.status);
+                    //shared_GPS.heading = (uint32_t)(gpsData.fix.track);
+                    //shared_GPS.heading = ConvertToHeading(&(shared_GPS.heading), gpsData.status);
+                    shared_GPS.heading = ConvertToHeading(&(gpsData.fix.track), gpsData.status);
+                    shared_GPS.elev = ConvertToElevation(&(gpsData.pvt.height),  gpsData.status);
+                    GetDiff_Carrsoln(&(gpsData.pvt.flags), &(shared_GPS.diffsoln), &(shared_GPS.carrSoln),  gpsData.status);
+                    //get_time = sim_CalculateUtcTime( IN gpsData.fix.time, IN gpsData.pvt.nano);
+                    printf("gpsData.fix.time   : %f\n", gpsData.fix.time);
+                    shared_GPS.time.tv_sec = gpsData.fix.time;
+                    int32_t i_temp_time =  (gpsData.fix.time + (double)gpsData.pvt.nano * (0.000000001));
+                    double d_temp_time = (gpsData.fix.time + (double)gpsData.pvt.nano * (0.000000001));
+                    shared_GPS.time.tv_usec =  ( d_temp_time - (double)i_temp_time ) * 1000000 ;
+                    //pthread_mutex_unlock(&gps_mutex_lock);
+
+
+                    if(g_mib.dbg)
+                    {
+                        printf("******************gpsData*****************\n");
+                        printf("status  : %d\n", gpsData.status); 
+                        printf("itow    : %u\n", gpsData.pvt.itow); 
+                        printf("year    : %u\n", gpsData.pvt.year); 
+                        printf("month   : %u\n", gpsData.pvt.month); 
+                        printf("day     : %u\n", gpsData.pvt.day); 
+                        printf("hour    : %u\n", gpsData.pvt.hour); 
+                        printf("min     : %u\n", gpsData.pvt.min); 
+                        printf("sec     : %d\n", gpsData.pvt.sec); 
+                        printf("valid   : %d\n", gpsData.pvt.valid); 
+                        printf("tAcc    : %u\n", gpsData.pvt.tAcc); 
+                        printf("nano    : %d\n", gpsData.pvt.nano); 
+                        printf("fixType : 0x%02x\n", gpsData.pvt.fixType); 
+                        printf("flags   : 0x%02x\n", gpsData.pvt.flags); 
+                        printf("flags2  : 0x%02x\n", gpsData.pvt.flags2); 
+                        printf("numSV   : %u\n", gpsData.pvt.numSV); 
+                        printf("lon     : %d\n", gpsData.pvt.lon); 
+                        printf("lat     : %d\n", gpsData.pvt.lat); 
+                        printf("height  : %d\n", gpsData.pvt.height); 
+                        printf("hMSL    : %d\n", gpsData.pvt.hMSL); 
+                        printf("hAcc    : %u\n", gpsData.pvt.hAcc); 
+                        printf("vAcc    : %u\n", gpsData.pvt.vAcc); 
+                        printf("velN    : %d\n", gpsData.pvt.velN); 
+                        printf("velE    : %d\n", gpsData.pvt.velE); 
+                        printf("velD    : %d\n", gpsData.pvt.velD); 
+                        printf("gSpeed  : %d\n", gpsData.pvt.gSpeed); 
+                        printf("headMot : %d\n", gpsData.pvt.headMot); 
+                        printf("sAcc    : %u\n", gpsData.pvt.sAcc); 
+                        printf("headAcc : %u\n", gpsData.pvt.headAcc); 
+                        printf("pDOP    : %u\n", gpsData.pvt.pDOP); 
+                        printf("headVeh : %d\n", gpsData.pvt.headVeh); 
+                        printf("msgDec  : %d\n", gpsData.pvt.msgDec); 
+                        printf("msgAcc  : %u\n", gpsData.pvt.msgAcc); 
+                        printf("heading : %d\n", gpsData.fix.track); 
+                        printf("********************************************\n");
+
+
+                        printf("******************GPS_IF*****************\n"); 
+                        printf("version  : %d\n", shared_GPS.version); 
+                        printf("fixType : 0x%02x\n", shared_GPS.fixType );
+                        printf("time.sec    : %d\n", shared_GPS.time.tv_sec); 
+                        printf("time.nsec   : %d\n", shared_GPS.time.tv_usec); 
+                        printf("diffsoln  : %d\n", shared_GPS.diffsoln); 
+                        printf("carrSoln  : %d\n", shared_GPS.carrSoln); 
+                        printf("numSV   : %u\n", shared_GPS.numSV); 
+                        printf("lon     : %d\n", shared_GPS.lon); 
+                        printf("lat     : %d\n", shared_GPS.lat); 
+                        printf("height  : %d\n", shared_GPS.elev); 
+                        printf("velN    : %d\n", shared_GPS.nedNorSpd); 
+                        printf("velE    : %d\n", shared_GPS.nedEastSpd); 
+                        printf("velD    : %d\n", shared_GPS.endDownSpd); 
+                        printf("headVeh : %d\n", shared_GPS.heading); 
+                        printf("********************************************\n"); 
+                    }
+
+                    /* change byte */
+                    shared_GPS.time.tv_sec = htonl(shared_GPS.time.tv_sec);
+                    shared_GPS.time.tv_usec = htonl(shared_GPS.time.tv_usec);
+                    shared_GPS.lat = htonl(shared_GPS.lat);
+                    shared_GPS.lon = htonl(shared_GPS.lon);
+                    shared_GPS.elev = htonl(shared_GPS.elev);
+                    shared_GPS.nedNorSpd = htonl(shared_GPS.nedNorSpd);
+                    shared_GPS.nedEastSpd = htonl(shared_GPS.nedEastSpd);
+                    shared_GPS.endDownSpd = htonl(shared_GPS.endDownSpd);
+                    shared_GPS.heading = htonl(shared_GPS.heading);
+
+
+                    /* udp 송신 */
+                    sendPkt(&shared_GPS);
+                }
+            }
+        }
+    }
+    gps_close(&gpsData);
+    pthread_exit((void *)0);
+}
+
+int sockConnection()
+{
+    int tmpfd = -1;
+    long int *add;
+    struct in_addr myen;
+
+    if( client_sock == -1 )
+    {
+        printf(">>>>>>>>>>>>> SOCKET CONNECTION CHECK <<<<<<<<<<<<<<<<<<<<<<\n");
+        if ((tmpfd = socket(AF_INET, SOCK_DGRAM, 0)) == -1)
+        {
+            perror("[prcsJ2735] sock failed");
+            return -1;
+        }
+
+        memset(&client_addr, 0, sizeof(client_addr));
+        client_addr.sin_family = AF_INET;
+        client_addr.sin_port = htons(g_mib.destPort);
+        client_addr.sin_addr.s_addr = inet_addr(g_mib.destIP);
+
+        client_sock = dup(tmpfd);
+        close(tmpfd);
+    }
+
+    return 0;
+}
+
+int sendPkt(GPS_Pkt_t *buf)
+{
+    int result;
+
+    if(client_sock == -1)
+    {
+        printf("[commCenter_sendPkt] No setting client socket yet\n");
+        return -1;
+    }
+
+    //result = write(client_sock, buf, bufLen);
+   result = sendto( client_sock, buf, sizeof(GPS_Pkt_t), MSG_DONTWAIT|MSG_NOSIGNAL, (struct sockaddr*)&client_addr, sizeof(client_addr) );
+
+    if(result >  0)
+        printf("[prcsJ2735] Success send packet %d byte\n", result);
+    else if(result == -1)
+    {
+        perror("[prcsJ2735] packet send error :");
+        close(client_sock);
+        client_sock = -1;
+        return -1;
+    }
+
+    return result;
+}
+

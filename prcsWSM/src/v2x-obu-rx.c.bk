@@ -1,0 +1,285 @@
+/**
+ * @file v2x-obu-rx.c
+ * @date 2019-08-19
+ * @author gyun
+ * @brief WSM 수신 처리 기능 구현
+ */
+
+#include <arpa/inet.h>
+#include <stdio.h>
+#include <string.h>
+#include <signal.h>
+#include <dot3/dot3.h>
+#include <sys/time.h>
+#include <time.h>
+
+#include "dot3/dot3.h"
+
+#include "v2x-obu.h"
+#include "hexdump.h"
+
+
+#if 0
+#define RSU_10_PSID 0x40
+#define RSU_20_PSID 0x41
+#define RSU_30_PSID 0x42
+
+/* 전역변수 */
+static int rxCnt = 0;
+static timer_t rtcmTimer; 
+#endif
+
+/**
+ * 파싱된 WSA의 내용을 출력한다.
+ *
+ * @param params    파싱된 WSA 정보
+ */
+static void V2X_OBU_PrintWsaParseParams(const struct Dot3ParseWsaParams *const params)
+{
+  printf("WSA params\n");
+  printf("  version: %u, wsa_id: %u, content_count: %u\n",
+         params->hdr.version, params->hdr.wsa_id, params->hdr.content_count);
+  if (params->hdr.extensions.repeat_rate) {
+    printf("  repeat_rate: %u\n", params->hdr.repeat_rate);
+  }
+  if (params->hdr.extensions.twod_location) {
+    printf("  2DLocation.latitude: %d\n", params->hdr.twod_location.latitude);
+    printf("  2DLocation.longitude: %d\n", params->hdr.twod_location.longitude);
+  }
+  if (params->hdr.extensions.threed_location) {
+    printf("  3DLocation.latitude: %d\n", params->hdr.threed_location.latitude);
+    printf("  3DLocation.longitude: %d\n", params->hdr.threed_location.longitude);
+    printf("  3DLocation.elevation: %d\n", params->hdr.threed_location.elevation);
+  }
+  if (params->hdr.extensions.advertiser_id) {
+    printf("  Advertiser Id: %s\n", params->hdr.advertiser_id.id);
+  }
+  for (int i = 0; i < params->wsi_num; i++) {
+    printf("  Serv info[%d] - psid: %u, channel_index: %u,", i, params->wsis[i].psid, params->wsis[i].channel_index);
+    if (params->wsis[i].extensions.ipv6_address) {
+      char ip_str[IPV6_ADDR_STR_MAX_LEN];
+      inet_ntop(AF_INET6, params->wsis[i].ipv6_address, ip_str, IPV6_ADDR_STR_MAX_LEN);
+      printf("  ip: %s, ", ip_str);
+    }
+    if (params->wsis[i].extensions.service_port) {
+      printf("  port: %u, ", params->wsis[i].service_port);
+    }
+    printf("\n");
+  }
+  for (int i = 0; i < params->wci_num; i++) {
+    printf("  Chan info[%d] - chan: %d, power: %d, datarate: %d, adaptable: %u\n",
+           i,params->wcis[i].chan_num,
+           params->wcis[i].transmit_power_level,
+           params->wcis[i].datarate,
+           params->wcis[i].adaptable_datarate);
+  }
+  if (params->present.wra) {
+    char ip_prefix_str[IPV6_ADDR_STR_MAX_LEN], default_gw[IPV6_ADDR_STR_MAX_LEN], primary_dns[IPV6_ADDR_STR_MAX_LEN];
+    inet_ntop(AF_INET6, params->wra.ip_prefix, ip_prefix_str, IPV6_ADDR_STR_MAX_LEN);
+    inet_ntop(AF_INET6, params->wra.default_gw, default_gw, IPV6_ADDR_STR_MAX_LEN);
+    inet_ntop(AF_INET6, params->wra.primary_dns, primary_dns, IPV6_ADDR_STR_MAX_LEN);
+    printf("  WRA - lifetime: %u, ip_prefix: %s/%u, default_gw: %s, primary_dns: %s\n",
+      params->wra.router_lifetime, ip_prefix_str, params->wra.ip_prefix_len, default_gw, primary_dns);
+  }
+}
+
+
+/**
+ * 수신된 MPDU 를 처리한다.
+ *  - WSM 파싱을 시도한다.
+ *
+ *
+ * @param mpdu      수신된 MPDU
+ * @param mpdu_size 수신된 MPDU의 크기
+ */
+void V2X_OBU_ProcessRxMpdu(const uint8_t *const mpdu, const uint16_t mpdu_size)
+{
+# if 1
+    /* rtcm parameter */
+    static Dot3Psid currentPSID = 0;
+    static Dot3Rcpi rsu10rcpi = 0;
+    static Dot3Rcpi rsu20rcpi = 0;
+    static Dot3Rcpi rsu30rcpi = 0;
+#endif
+    /*
+   * WSM MPDU 파싱
+   */
+  struct Dot3WsmMpduRxParams dot3_params;
+  bool wsr_registered;
+  uint8_t outbuf[kMpduMaxSize];
+  int payload_size = Dot3_ParseWsmMpdu(mpdu, mpdu_size, outbuf, sizeof(outbuf), &dot3_params, &wsr_registered);
+  if (payload_size < 0) {
+    printf("Fail to Dot3_ParseWsmMpdu() %d\n", payload_size);
+    printf("------------------------------------------------------------\n\n");
+    return;
+  }
+#if 1
+  else
+  {
+      //  hexdump(outbuf, payload_size);
+      //  sendMQ(outbuf, payload_size);
+      switch(dot3_params.psid)
+      {
+          case RSU_10_PSID : 
+              rsu10rcpi = dot3_params.rcpi;
+              break;
+          case RSU_20_PSID :
+              rsu10rcpi = dot3_params.rcpi;
+              break;
+          case RSU_30_PSID :
+              rsu10rcpi = dot3_params.rcpi;
+              break;
+      }
+      
+      /* 최대 rcpi 확인 */
+      if(rxCnt >= 10 || currentPSID == 0)
+      {
+          printf("[prcsWSM] Set currentPSID\n");
+          if(rsu10rcpi > rsu20rcpi)
+          {
+              if(rsu10rcpi > rsu30rcpi)
+                  currentPSID = RSU_10_PSID;
+              else
+                  currentPSID = RSU_30_PSID;
+          }
+          else if(rsu20rcpi > rsu10rcpi)
+          {
+              if(rsu20rcpi > rsu30rcpi)
+                  currentPSID = RSU_20_PSID;
+              else
+                  currentPSID = RSU_30_PSID;
+          }
+      }
+      printf("[prcsWSM] currentPSID : 0x%x\n",currentPSID);
+      printf("[prcsWSM] rxCnt : %d\n", rxCnt);
+
+      if (currentPSID == dot3_params.psid)
+          rxCnt = 0 ;
+
+  }
+#endif
+  if (g_dbg >= kDbgMsgLevel_event) {
+    printf("Success to Dot3_ParseWsmMpdu() - payload_size: %d\n", payload_size);
+    printf("    tx_chan_num: %d, tx_datarate: %d, tx_power: %d, priority: %d, psid: %d\n",
+           dot3_params.tx_chan_num, dot3_params.tx_datarate, dot3_params.tx_power, dot3_params.priority, dot3_params.psid);
+    printf("    dst_mac_addr: %02X:%02X:%02X:%02X:%02X:%02X, src_mac_addr: %02X:%02X:%02X:%02X:%02X:%02X\n",
+           dot3_params.dst_mac_addr[0], dot3_params.dst_mac_addr[1], dot3_params.dst_mac_addr[2],
+           dot3_params.dst_mac_addr[3], dot3_params.dst_mac_addr[4], dot3_params.dst_mac_addr[5],
+           dot3_params.src_mac_addr[0], dot3_params.src_mac_addr[1], dot3_params.src_mac_addr[2],
+           dot3_params.src_mac_addr[3], dot3_params.src_mac_addr[4], dot3_params.src_mac_addr[5]);
+    if (g_dbg >= kDbgMsgLevel_msgdump) {
+      for (int i = 0; i < payload_size; i++) {
+        if ((i != 0) && (i % 16 == 0)) {
+          printf("\n");
+        }
+        printf("%02X ", outbuf[i]);
+      }
+      printf("\n");
+    }
+  }
+
+  /*
+   * WSA 인 경우 파싱한다.
+   */
+  if (dot3_params.psid == kDot3Psid_Wsa) {
+    struct Dot3ParseWsaParams wsa_params;
+    memset(&wsa_params, 0, sizeof(wsa_params));
+    int ret = Dot3_ParseWsa(outbuf, payload_size, &wsa_params);
+    if (ret < 0) {
+      printf("Fail to parse WSA - %d\n", ret);
+      printf("------------------------------------------------------------\n\n");
+      return;
+    }
+    if (g_dbg >= kDbgMsgLevel_event) {
+      printf("Success to parse WSA()\n");
+      V2X_OBU_PrintWsaParseParams(&wsa_params);
+    }
+  }
+  /*
+   * 원하는 WSMP인 경우 적당히 처리한다.
+   */
+# if 0
+  if (dot3_params.psid == g_mib.psid) {
+      if (g_dbg >= kDbgMsgLevel_event) {
+          printf("Processing interseted WSM for psid %u\n", dot3_params.psid);
+          sendMQ(outbuf, payload_size);
+          printf("------------------------------------------------------------\n\n");
+      }
+      /* TO DO */
+  }
+# else
+  else if (dot3_params.psid == currentPSID) {
+      if (g_dbg >= kDbgMsgLevel_event) {
+          printf("Processing interseted WSM for psid %u\n", dot3_params.psid);
+          sendMQ(outbuf, payload_size);
+          printf("------------------------------------------------------------\n\n");
+      }
+  }
+#endif
+  /*
+   * 그 외 WSMP는 무시한다.
+   */
+  else {
+    if (g_dbg >= kDbgMsgLevel_event) {
+      printf("Drop not interseted WSM for psid %u\n", dot3_params.psid);
+      printf("------------------------------------------------------------\n\n");
+    }
+  }
+}
+
+#if 1
+static void rtcmCheckTimerThread(union sigval arg)
+{
+    rxCnt++;
+}
+
+/**
+ * rtcm check timer  초기화한다.
+ *
+ * @param interval  송신주기(usec)
+ * @return          성공 시 0, 실패 시 -1
+ */
+int rtcmCheckTimer(const uint32_t interval)
+{
+  int ret;
+
+  struct itimerspec ts;
+  struct sigevent se;
+
+  printf("Initializing tx timer - interval: %uusec\n", interval);
+
+  /*
+   * 송신타이머 만기 시 송신타이머쓰레드(V2X_WSM_TxTimerThread)가 생성되도록 설정한다.
+   */
+  se.sigev_notify = SIGEV_THREAD;
+  se.sigev_value.sival_ptr = &rtcmTimer;
+  se.sigev_notify_function = rtcmCheckTimerThread;
+  se.sigev_notify_attributes = NULL;
+
+  ts.it_value.tv_sec = 0;
+  ts.it_value.tv_nsec = 1000000;  // 최초타이머 주기 = 1msec
+  ts.it_interval.tv_sec = interval / 1000000;
+  ts.it_interval.tv_nsec = (interval % 1000000) * 1000;
+
+  /*
+   * 송신타이머 생성
+   */
+  ret = timer_create(CLOCK_REALTIME, &se, &rtcmTimer);
+  if (ret) {
+    perror("Fail to cerate timer: ");
+    return -1;
+  }
+
+  /*
+   * 송신타이머 주기 설정
+   */
+  ret = timer_settime(rtcmTimer, 0, &ts, 0);
+  if (ret) {
+    perror("Fail to set timer: ");
+    return -1;
+  }
+
+  printf("Success to initialize tx timer.\n");
+  return 0;
+}
+#endif

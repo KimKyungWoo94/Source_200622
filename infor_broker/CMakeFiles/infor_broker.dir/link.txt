@@ -1,0 +1,1 @@
+aarch64-linux-gnu-gcc    CMakeFiles/infor_broker.dir/main.c.o CMakeFiles/infor_broker.dir/options.c.o CMakeFiles/infor_broker.dir/hexdump.c.o CMakeFiles/infor_broker.dir/socket.c.o  -o output/infor_broker -lpthread 
