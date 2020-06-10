@@ -115,7 +115,7 @@ int rtcmPkt(struct gps_data_t * gpsData)
             rtcmData[i].flag = false;
         }
 
-        rtcmFlag = true;
+        rtcmFlag = true;//갱신됬으니 가져가라 의미
         pthread_mutex_unlock(&rtcmMtx);
     }
     else
@@ -207,7 +207,7 @@ int ConstructRTCM(uint8_t *pkt, uint32_t *len)
     }
 
     /* RTCM 메모리 복사 */
-    if(rtcmFlag == true )
+    if(rtcmFlag == true )//RTCM 메시지가 갱신된게있으면 인코딩을 하고 인코딩된데이터를 PKT에 카피
     {
         pRTCM->msgs.count = 1;
         tab->len = getRTCM(tab->buf);

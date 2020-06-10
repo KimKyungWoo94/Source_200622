@@ -30,7 +30,7 @@ void setJ2735tx()
     pthread_mutex_init(&g_mib.txMtx, NULL);
     pthread_cond_init(&g_mib.txCond, NULL);
 
-    setRTCM_mutex(0);
+    setRTCM_mutex(0);//Mutex 열고 닫기 함수 0 이면 열기
 
     /* 송신 쓰레드 생성 */
     result = pthread_create(&tx_thread, NULL, txThread, NULL);
@@ -74,7 +74,7 @@ void setJ2735tx()
     }
 
     /* 송신 쓰레드 종료 */
-    result = pthread_join(tx_thread, (void **)status);
+    result = pthread_join(tx_thread, (void **)status); //송신쓰레드 종료되는것을 기다림
     if( result == 0 )
     {
         if( g_mib.dbg )
@@ -95,7 +95,7 @@ void setJ2735tx()
     /* 뮤텍스 및 컨디션시그널 해제 */
     pthread_mutex_destroy(&g_mib.txMtx);
     pthread_cond_destroy(&g_mib.txCond);
-    setRTCM_mutex(1);
+    setRTCM_mutex(1); //0이면 실행 1이면 종료
 
     /* gpsd Socket close */
     if(g_mib.sockType == udpServer)
@@ -104,7 +104,7 @@ void setJ2735tx()
     return;
 }
 
-static void* txThread(void *notused)
+static void* txThread(void *notused)//RTK보정정보받은것을 RTCM메세지로 인코딩후 prcsWSM으로 메시지큐 전송
 {
     int	result;
     uint8_t pkt[kMpduMaxSize];

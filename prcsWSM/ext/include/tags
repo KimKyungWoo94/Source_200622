@@ -1,0 +1,478 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AlChannel	wlanaccess/wlanaccess-types.h	/^typedef uint8_t AlChannel;$/;"	t
+AlErrorCode	wlanaccess/wlanaccess-types.h	/^typedef int AlErrorCode;$/;"	t
+AlIfIndex	wlanaccess/wlanaccess-types.h	/^typedef uint8_t AlIfIndex;$/;"	t
+AlLogLevel	wlanaccess/wlanaccess-types.h	/^typedef int AlLogLevel;$/;"	t
+AlMacAddress	wlanaccess/wlanaccess-types.h	/^typedef uint8_t AlMacAddress[6];$/;"	t
+AlMpduRxParams	wlanaccess/wlanaccess-types.h	/^struct AlMpduRxParams {$/;"	s
+AlMpduSize	wlanaccess/wlanaccess-types.h	/^typedef uint16_t AlMpduSize;$/;"	t
+AlMpduTxParams	wlanaccess/wlanaccess-types.h	/^struct AlMpduTxParams {$/;"	s
+AlOui	wlanaccess/wlanaccess-types.h	/^typedef uint8_t AlOui[3];$/;"	t
+AlResultCode	wlanaccess/wlanaccess-types.h	/^typedef int AlResultCode;$/;"	t
+AlRxStatstics	wlanaccess/wlanaccess-types.h	/^struct AlRxStatstics {$/;"	s
+AlTimeSlot	wlanaccess/wlanaccess-types.h	/^typedef uint8_t AlTimeSlot;$/;"	t
+AlTxResultCode	wlanaccess/wlanaccess-types.h	/^typedef int AlTxResultCode;$/;"	t
+AlTxStatstics	wlanaccess/wlanaccess-types.h	/^struct AlTxStatstics {$/;"	s
+Dot3AddrSize	dot3/dot3-types.h	/^typedef uint32_t Dot3AddrSize;$/;"	t
+Dot3ChannelNumber	dot3/dot3-types.h	/^typedef int32_t Dot3ChannelNumber;  \/\/\/ @copydoc eDot3ChannelNumber$/;"	t
+Dot3ConstructWsaParams	dot3/dot3-types.h	/^struct Dot3ConstructWsaParams$/;"	s
+Dot3DataRate	dot3/dot3-types.h	/^typedef int32_t Dot3DataRate;$/;"	t
+Dot3Elevation	dot3/dot3-types.h	/^typedef int32_t Dot3Elevation; \/\/\/< @copydoc eDot3Elevation$/;"	t
+Dot3IPv6Address	dot3/dot3-types.h	/^typedef uint8_t Dot3IPv6Address[IPV6_ALEN];$/;"	t
+Dot3IPv6PrefixLen	dot3/dot3-types.h	/^typedef uint8_t Dot3IPv6PrefixLen; \/\/\/< @copydoc eDot3IPv6PrefixLen$/;"	t
+Dot3Latitude	dot3/dot3-types.h	/^typedef int32_t Dot3Latitude; \/\/\/< @copydoc eDot3Latitude$/;"	t
+Dot3Longitude	dot3/dot3-types.h	/^typedef int32_t Dot3Longitude; \/\/\/< @copydoc eDot3Longitude$/;"	t
+Dot3MacAddress	dot3/dot3-types.h	/^typedef uint8_t Dot3MacAddress[MAC_ALEN];$/;"	t
+Dot3OperatingClass	dot3/dot3-types.h	/^typedef uint8_t Dot3OperatingClass; \/\/\/< @copydoc eDot3OperatingClass$/;"	t
+Dot3ParseWsaParams	dot3/dot3-types.h	/^struct Dot3ParseWsaParams$/;"	s
+Dot3Pci	dot3/dot3-types.h	/^struct Dot3Pci$/;"	s
+Dot3PciNum	dot3/dot3-types.h	/^typedef unsigned int Dot3PciNum;  \/\/\/< @copydoc eDot3PciNum$/;"	t
+Dot3PduSize	dot3/dot3-types.h	/^typedef uint16_t Dot3PduSize;$/;"	t
+Dot3Power	dot3/dot3-types.h	/^typedef int32_t Dot3Power;  \/\/\/ @copydoc eDot3Power$/;"	t
+Dot3Priority	dot3/dot3-types.h	/^typedef int32_t Dot3Priority;$/;"	t
+Dot3ProviderChannelAccess	dot3/dot3-types.h	/^typedef uint32_t Dot3ProviderChannelAccess; \/\/\/< @copydoc eDot3ProviderChannelAccess$/;"	t
+Dot3ProviderServiceStatus	dot3/dot3-types.h	/^typedef uint32_t Dot3ProviderServiceStatus; \/\/\/< @copydoc eDot3ProviderServiceStatus$/;"	t
+Dot3Psc	dot3/dot3-types.h	/^struct Dot3Psc$/;"	s
+Dot3PscLen	dot3/dot3-types.h	/^typedef unsigned int Dot3PscLen; \/\/\/< @copydoc eDot3PscLen$/;"	t
+Dot3Psid	dot3/dot3-types.h	/^typedef uint32_t Dot3Psid;$/;"	t
+Dot3Psr	dot3/dot3-types.h	/^struct Dot3Psr$/;"	s
+Dot3PsrNum	dot3/dot3-types.h	/^typedef unsigned int Dot3PsrNum;  \/\/\/< @copydoc eDot3PsrNum$/;"	t
+Dot3Rcpi	dot3/dot3-types.h	/^typedef int32_t Dot3Rcpi; \/\/\/ @copydoc eDot3Rcpi;$/;"	t
+Dot3ResultCode	dot3/dot3-types.h	/^typedef int Dot3ResultCode;$/;"	t
+Dot3TimeSlot	dot3/dot3-types.h	/^typedef uint32_t Dot3TimeSlot;$/;"	t
+Dot3Wci	dot3/dot3-types.h	/^struct Dot3Wci$/;"	s
+Dot3WciNum	dot3/dot3-types.h	/^typedef unsigned int Dot3WciNum; \/\/\/< @copydoc eDot3WciNum$/;"	t
+Dot3Wra	dot3/dot3-types.h	/^struct Dot3Wra$/;"	s
+Dot3WraRouterLifeTime	dot3/dot3-types.h	/^typedef uint16_t Dot3WraRouterLifeTime; \/\/\/< @copydoc eDot3WraRouterLifeTime$/;"	t
+Dot3WsaAdvertiserId	dot3/dot3-types.h	/^struct Dot3WsaAdvertiserId$/;"	s
+Dot3WsaAdvertiserIdLen	dot3/dot3-types.h	/^typedef uint8_t Dot3WsaAdvertiserIdLen; \/\/\/< @copydoc eDot3WsaAdvertiserIdLen$/;"	t
+Dot3WsaChangeCount	dot3/dot3-types.h	/^typedef unsigned int Dot3WsaChangeCount; \/\/\/< @copydoc eDot3WsaChangeCount$/;"	t
+Dot3WsaChannelIndex	dot3/dot3-types.h	/^typedef unsigned int Dot3WsaChannelIndex; \/\/\/< @copydoc eDot3WsaChannelIndex$/;"	t
+Dot3WsaContentCount	dot3/dot3-types.h	/^typedef uint8_t Dot3WsaContentCount;  \/\/\/< @copydoc eDot3WsaContentCount$/;"	t
+Dot3WsaCountThreshold	dot3/dot3-types.h	/^typedef uint8_t Dot3WsaCountThreshold;  \/\/\/< @copydoc eDot3WsaCountThreshold$/;"	t
+Dot3WsaCountThresholdInterval	dot3/dot3-types.h	/^typedef uint8_t Dot3WsaCountThresholdInterval; \/\/\/< @copydoc kDot3WsaCountThresholdInterval$/;"	t
+Dot3WsaHdr	dot3/dot3-types.h	/^struct Dot3WsaHdr$/;"	s
+Dot3WsaIdentifier	dot3/dot3-types.h	/^typedef uint8_t Dot3WsaIdentifier;  \/\/\/< @copydoc eDot3WsaIdentifier$/;"	t
+Dot3WsaRepeatRate	dot3/dot3-types.h	/^typedef uint8_t Dot3WsaRepeatRate; \/\/\/< @copydoc eDot3WsaRepeatRate$/;"	t
+Dot3WsaThreeDLocation	dot3/dot3-types.h	/^struct Dot3WsaThreeDLocation$/;"	s
+Dot3WsaTwoDLocation	dot3/dot3-types.h	/^struct Dot3WsaTwoDLocation$/;"	s
+Dot3WsaType	dot3/dot3-types.h	/^typedef uint32_t Dot3WsaType; \/\/\/< @copydoc eDot3WsaType$/;"	t
+Dot3WsaVersion	dot3/dot3-types.h	/^typedef unsigned int Dot3WsaVersion; \/\/\/< @copydoc eDot3WsaVersion$/;"	t
+Dot3Wsi	dot3/dot3-types.h	/^struct Dot3Wsi$/;"	s
+Dot3WsiNum	dot3/dot3-types.h	/^typedef unsigned int Dot3WsiNum; \/\/\/< @copydoc eDot3WsiNum$/;"	t
+Dot3WsmMpduRxParams	dot3/dot3-types.h	/^struct Dot3WsmMpduRxParams$/;"	s
+Dot3WsmMpduTxParams	dot3/dot3-types.h	/^struct Dot3WsmMpduTxParams$/;"	s
+Dot3Wsr	dot3/dot3-types.h	/^struct Dot3Wsr$/;"	s
+IPV6_ADDR_STR_MAX_LEN	dot3/dot3-types.h	334;"	d
+IPV6_ALEN	dot3/dot3-types.h	333;"	d
+LIBWLANACCESS_WLANACCESS_API_H	wlanaccess/wlanaccess-api.h	9;"	d
+LIBWLANACCESS_WLANACCESS_H	wlanaccess/wlanaccess.h	9;"	d
+LIBWLANACCESS_WLANACCESS_TYPES_H	wlanaccess/wlanaccess-types.h	10;"	d
+MAC_ALEN	dot3/dot3-types.h	327;"	d
+V2X_LIBDOT3_DOT3_API_H	dot3/dot3-api.h	6;"	d
+V2X_LIBDOT3_DOT3_H	dot3/dot3.h	6;"	d
+V2X_LIBDOT3_DOT3_TYPES_H	dot3/dot3-types.h	6;"	d
+adaptable_datarate	dot3/dot3-types.h	/^  bool adaptable_datarate;                \/\/\/< true: 본 채널에서 datarate 만 사용 가능. false: datarate 이상 사용 가능$/;"	m	struct:Dot3Pci
+adaptable_datarate	dot3/dot3-types.h	/^  bool adaptable_datarate;                \/\/\/< true: 본 채널에서 datarate 만 사용 가능. false: datarate 이상 사용 가능$/;"	m	struct:Dot3Wci
+advertiser_id	dot3/dot3-types.h	/^    bool advertiser_id;$/;"	m	struct:Dot3WsaHdr::__anon1
+advertiser_id	dot3/dot3-types.h	/^  struct Dot3WsaAdvertiserId advertiser_id;$/;"	m	struct:Dot3WsaHdr	typeref:struct:Dot3WsaHdr::Dot3WsaAdvertiserId
+best_available_chan	dot3/dot3-types.h	/^  bool best_available_chan;    \/\/\/< (미사용 항목) dot3가 적절한 채널을 선택한다. PSR 단위가 아닌 통합 프로세스 단위에서 제어한다.$/;"	m	struct:Dot3Psr
+chan_access	dot3/dot3-types.h	/^    bool chan_access;$/;"	m	struct:Dot3Wci::__anon5
+chan_access	dot3/dot3-types.h	/^  Dot3ProviderChannelAccess chan_access;  \/\/\/< 본 채널에 적용되는 채널접속 유형$/;"	m	struct:Dot3Wci
+chan_access	dot3/dot3-types.h	/^  Dot3ProviderChannelAccess chan_access;  \/\/\/< 채널접속 유형$/;"	m	struct:Dot3Psr
+chan_load	dot3/dot3-types.h	/^    bool chan_load;  \/\/\/< WSM-N 헤더에 ChannelLoad 확장필드 존재 여부$/;"	m	struct:Dot3WsmMpduTxParams::__anon2
+chan_load	dot3/dot3-types.h	/^  uint32_t chan_load; \/\/\/<  사용되지 않음. (표준에 기능 및 사용방법에 대한 언급이 없음)$/;"	m	struct:Dot3WsmMpduTxParams
+chan_load	dot3/dot3-types.h	/^  uint32_t chan_load; \/\/\/< 사용되지 않음. (표준에 기능 및 사용방법에 대한 언급이 없음)$/;"	m	struct:Dot3WsmMpduRxParams
+chan_num	dot3/dot3-types.h	/^    bool chan_num;  \/\/\/< WSM-N 헤더에 ChannelNumber 확장필드 존재 여부$/;"	m	struct:Dot3WsmMpduTxParams::__anon2
+chan_num	dot3/dot3-types.h	/^  Dot3ChannelNumber chan_num;             \/\/\/< 채널번호$/;"	m	struct:Dot3Pci
+chan_num	dot3/dot3-types.h	/^  Dot3ChannelNumber chan_num;             \/\/\/< 채널번호$/;"	m	struct:Dot3Wci
+chan_num	dot3/dot3-types.h	/^  Dot3ChannelNumber chan_num; \/\/\/< WSM을 전송할 채널번호$/;"	m	struct:Dot3WsmMpduTxParams
+channel	wlanaccess/wlanaccess-types.h	/^  AlChannel channel;    \/\/\/ MPDU가 수신된 채널번호$/;"	m	struct:AlMpduRxParams
+channel	wlanaccess/wlanaccess-types.h	/^  AlChannel channel;    \/\/\/ 전송 채널$/;"	m	struct:AlMpduTxParams
+channel_index	dot3/dot3-types.h	/^  Dot3WsaChannelIndex channel_index;$/;"	m	struct:Dot3Wsi
+content_count	dot3/dot3-types.h	/^  Dot3WsaContentCount content_count;$/;"	m	struct:Dot3WsaHdr
+datarate	dot3/dot3-types.h	/^    bool datarate;  \/\/\/< WSM-N 헤더에 DataRate 확장필드 존재 여부$/;"	m	struct:Dot3WsmMpduTxParams::__anon2
+datarate	dot3/dot3-types.h	/^  Dot3DataRate datarate;                  \/\/\/< 이 채널에서 사용할 수 있는 데이터레이트 또는 최소 데이터레이트$/;"	m	struct:Dot3Pci
+datarate	dot3/dot3-types.h	/^  Dot3DataRate datarate;                  \/\/\/< 이 채널에서 사용할 수 있는 데이터레이트 또는 최소 데이터레이트$/;"	m	struct:Dot3Wci
+datarate	dot3/dot3-types.h	/^  Dot3DataRate datarate; \/\/\/< WSM을 전송할 DataRate$/;"	m	struct:Dot3WsmMpduTxParams
+datarate	wlanaccess/wlanaccess-types.h	/^  uint8_t datarate;     \/\/\/ MPDU 수신 데이터레이트$/;"	m	struct:AlMpduRxParams
+datarate	wlanaccess/wlanaccess-types.h	/^  uint8_t datarate;     \/\/\/ 송신데이터레이트 (500kbps 단위)$/;"	m	struct:AlMpduTxParams
+default_gw	dot3/dot3-types.h	/^  Dot3IPv6Address default_gw; \/\/\/< Default gateway IP 주소$/;"	m	struct:Dot3Wra
+dst_mac_addr	dot3/dot3-types.h	/^  Dot3MacAddress dst_mac_addr; \/\/\/< (미사용 항목) WSA 목적지 MAC 주소. PSR 단위가 아닌 통합 프로세스 단위에서 제어한다.$/;"	m	struct:Dot3Psr
+dst_mac_addr	dot3/dot3-types.h	/^  uint8_t dst_mac_addr[kDot3MacAddrSize]; \/\/\/< 목적지 MAC 주소 (내 MAC주소 또는 멀티캐스트, 브로드캐스트)$/;"	m	struct:Dot3WsmMpduRxParams
+dst_mac_addr	dot3/dot3-types.h	/^  uint8_t dst_mac_addr[kDot3MacAddrSize]; \/\/\/< 목적지 MAC 주소$/;"	m	struct:Dot3WsmMpduTxParams
+eAlChannel	wlanaccess/wlanaccess-types.h	/^enum eAlChannel {$/;"	g
+eAlErrorCode	wlanaccess/wlanaccess-types.h	/^enum eAlErrorCode {$/;"	g
+eAlIfIndex	wlanaccess/wlanaccess-types.h	/^enum eAlIfIndex {$/;"	g
+eAlLogLevel	wlanaccess/wlanaccess-types.h	/^enum eAlLogLevel {$/;"	g
+eAlMpduSize	wlanaccess/wlanaccess-types.h	/^enum eAlMpduSize {$/;"	g
+eAlResultCode	wlanaccess/wlanaccess-types.h	/^enum eAlResultCode {$/;"	g
+eAlTimeSlot	wlanaccess/wlanaccess-types.h	/^enum eAlTimeSlot {$/;"	g
+eAlTxResultCode	wlanaccess/wlanaccess-types.h	/^enum eAlTxResultCode {$/;"	g
+eDot3AddrSize	dot3/dot3-types.h	/^enum eDot3AddrSize {$/;"	g
+eDot3ChannelNumber	dot3/dot3-types.h	/^enum eDot3ChannelNumber$/;"	g
+eDot3DataRate	dot3/dot3-types.h	/^enum eDot3DataRate {$/;"	g
+eDot3Elevation	dot3/dot3-types.h	/^enum eDot3Elevation$/;"	g
+eDot3IPv6PrefixLen	dot3/dot3-types.h	/^enum eDot3IPv6PrefixLen$/;"	g
+eDot3Latitude	dot3/dot3-types.h	/^enum eDot3Latitude$/;"	g
+eDot3Longitude	dot3/dot3-types.h	/^enum eDot3Longitude$/;"	g
+eDot3OperatingClass	dot3/dot3-types.h	/^enum eDot3OperatingClass$/;"	g
+eDot3PciNum	dot3/dot3-types.h	/^enum eDot3PciNum$/;"	g
+eDot3PduSize	dot3/dot3-types.h	/^enum eDot3PduSize {$/;"	g
+eDot3Power	dot3/dot3-types.h	/^enum eDot3Power$/;"	g
+eDot3Priority	dot3/dot3-types.h	/^enum eDot3Priority {$/;"	g
+eDot3ProviderChannelAccess	dot3/dot3-types.h	/^enum eDot3ProviderChannelAccess {$/;"	g
+eDot3ProviderServiceStatus	dot3/dot3-types.h	/^enum eDot3ProviderServiceStatus {$/;"	g
+eDot3PscLen	dot3/dot3-types.h	/^enum eDot3PscLen$/;"	g
+eDot3Psid	dot3/dot3-types.h	/^enum eDot3Psid {$/;"	g
+eDot3PsrNum	dot3/dot3-types.h	/^enum eDot3PsrNum$/;"	g
+eDot3Rcpi	dot3/dot3-types.h	/^enum eDot3Rcpi {$/;"	g
+eDot3ResultCode	dot3/dot3-types.h	/^enum eDot3ResultCode {$/;"	g
+eDot3TimeSlot	dot3/dot3-types.h	/^enum eDot3TimeSlot {$/;"	g
+eDot3WciNum	dot3/dot3-types.h	/^enum eDot3WciNum$/;"	g
+eDot3WraRouterLifeTime	dot3/dot3-types.h	/^enum eDot3WraRouterLifeTime$/;"	g
+eDot3WsaAdvertiserIdLen	dot3/dot3-types.h	/^enum eDot3WsaAdvertiserIdLen$/;"	g
+eDot3WsaChangeCount	dot3/dot3-types.h	/^enum eDot3WsaChangeCount$/;"	g
+eDot3WsaChannelIndex	dot3/dot3-types.h	/^enum eDot3WsaChannelIndex$/;"	g
+eDot3WsaContentCount	dot3/dot3-types.h	/^enum eDot3WsaContentCount$/;"	g
+eDot3WsaCountThreshold	dot3/dot3-types.h	/^enum eDot3WsaCountThreshold$/;"	g
+eDot3WsaCountThresholdInterval	dot3/dot3-types.h	/^enum eDot3WsaCountThresholdInterval$/;"	g
+eDot3WsaIdentifier	dot3/dot3-types.h	/^enum eDot3WsaIdentifier$/;"	g
+eDot3WsaRepeatRate	dot3/dot3-types.h	/^enum eDot3WsaRepeatRate$/;"	g
+eDot3WsaType	dot3/dot3-types.h	/^enum eDot3WsaType {$/;"	g
+eDot3WsaVersion	dot3/dot3-types.h	/^enum eDot3WsaVersion$/;"	g
+eDot3WsiNum	dot3/dot3-types.h	/^enum eDot3WsiNum$/;"	g
+edca_param_set	dot3/dot3-types.h	/^    bool edca_param_set;$/;"	m	struct:Dot3Wci::__anon5
+elevation	dot3/dot3-types.h	/^  Dot3Elevation elevation;$/;"	m	struct:Dot3WsaThreeDLocation
+expiry	dot3/dot3-types.h	/^  uint64_t expiry; \/\/\/< WSM 만기시각$/;"	m	struct:Dot3WsmMpduTxParams
+expiry	wlanaccess/wlanaccess-types.h	/^  uint64_t expiry;      \/\/\/ (현재시간으로부터의)유효기간 (마이크로초 단위)$/;"	m	struct:AlMpduTxParams
+extension	dot3/dot3-types.h	/^  } extension;$/;"	m	struct:Dot3Wci	typeref:struct:Dot3Wci::__anon5
+extensions	dot3/dot3-types.h	/^  } extensions;$/;"	m	struct:Dot3WsaHdr	typeref:struct:Dot3WsaHdr::__anon1
+extensions	dot3/dot3-types.h	/^  } extensions;$/;"	m	struct:Dot3Wsi	typeref:struct:Dot3Wsi::__anon4
+gateway_mac_addr	dot3/dot3-types.h	/^  Dot3MacAddress gateway_mac_addr;  \/\/\/< Default gateway MAC 주소$/;"	m	struct:Dot3Wra
+gatewya_mac_addr	dot3/dot3-types.h	/^    bool gatewya_mac_addr;$/;"	m	struct:Dot3Wra::__anon6
+hdr	dot3/dot3-types.h	/^  struct Dot3WsaHdr hdr;$/;"	m	struct:Dot3ConstructWsaParams	typeref:struct:Dot3ConstructWsaParams::Dot3WsaHdr
+hdr	dot3/dot3-types.h	/^  struct Dot3WsaHdr hdr;$/;"	m	struct:Dot3ParseWsaParams	typeref:struct:Dot3ParseWsaParams::Dot3WsaHdr
+hdr_extensions	dot3/dot3-types.h	/^  } hdr_extensions; \/\/\/< WSM-N 헤더의 각 확장필드 존재 여부$/;"	m	struct:Dot3WsmMpduTxParams	typeref:struct:Dot3WsmMpduTxParams::__anon2
+id	dot3/dot3-types.h	/^  uint8_t id[kDot3WsaAdvertiserIdLen_Max + 1];$/;"	m	struct:Dot3WsaAdvertiserId
+ifindex	dot3/dot3-types.h	/^  uint32_t ifindex; \/\/\/< WSM을 전송할 네트워크인터페이스 식별번호$/;"	m	struct:Dot3WsmMpduTxParams
+ifindex	dot3/dot3-types.h	/^  uint32_t ifindex; \/\/\/< WSM이 수신된 네트워크인터페이스 식별번호$/;"	m	struct:Dot3WsmMpduRxParams
+ifindex	wlanaccess/wlanaccess-types.h	/^  AlIfIndex ifindex;    \/\/\/ MPDU가 수신된 인터페이스 식별번호$/;"	m	struct:AlMpduRxParams
+ip_prefix	dot3/dot3-types.h	/^  Dot3IPv6Address ip_prefix;  \/\/\/< IP prefix$/;"	m	struct:Dot3Wra
+ip_prefix_len	dot3/dot3-types.h	/^  Dot3IPv6PrefixLen ip_prefix_len; \/\/\/< IP prefix length$/;"	m	struct:Dot3Wra
+ip_service	dot3/dot3-types.h	/^  bool ip_service;                      \/\/\/< IP 서비스인지 여부$/;"	m	struct:Dot3Psr
+ipv6_address	dot3/dot3-types.h	/^    bool ipv6_address;$/;"	m	struct:Dot3Wsi::__anon4
+ipv6_address	dot3/dot3-types.h	/^  Dot3IPv6Address ipv6_address;         \/\/\/< IP 서비스 제공자의 IPv6 주소$/;"	m	struct:Dot3Psr
+ipv6_address	dot3/dot3-types.h	/^  Dot3IPv6Address ipv6_address;$/;"	m	struct:Dot3Wsi
+kAlChannel_max	wlanaccess/wlanaccess-types.h	/^  kAlChannel_max = 255,$/;"	e	enum:eAlChannel
+kAlChannel_min	wlanaccess/wlanaccess-types.h	/^  kAlChannel_min = 0,$/;"	e	enum:eAlChannel
+kAlError_unspecified	wlanaccess/wlanaccess-types.h	/^  kAlError_unspecified,$/;"	e	enum:eAlErrorCode
+kAlIfIndex_max	wlanaccess/wlanaccess-types.h	/^  kAlIfIndex_max = 255,$/;"	e	enum:eAlIfIndex
+kAlIfIndex_min	wlanaccess/wlanaccess-types.h	/^  kAlIfIndex_min = 0,$/;"	e	enum:eAlIfIndex
+kAlLogLevel_all	wlanaccess/wlanaccess-types.h	/^  kAlLogLevel_all,      \/\/\/< 모든 로그$/;"	e	enum:eAlLogLevel
+kAlLogLevel_config	wlanaccess/wlanaccess-types.h	/^  kAlLogLevel_config,   \/\/\/< 설정에 관련된 로그 (API 엔트리 포함)$/;"	e	enum:eAlLogLevel
+kAlLogLevel_dump	wlanaccess/wlanaccess-types.h	/^  kAlLogLevel_dump,     \/\/\/< 상세내용 로그(송수신 패킷 덤프 데이터 등)$/;"	e	enum:eAlLogLevel
+kAlLogLevel_err	wlanaccess/wlanaccess-types.h	/^  kAlLogLevel_err,      \/\/\/< 에러 로그$/;"	e	enum:eAlLogLevel
+kAlLogLevel_event	wlanaccess/wlanaccess-types.h	/^  kAlLogLevel_event,    \/\/\/< 각종 이벤트(패킷 송수신 포함)에 관련된 로그$/;"	e	enum:eAlLogLevel
+kAlLogLevel_init	wlanaccess/wlanaccess-types.h	/^  kAlLogLevel_init,     \/\/\/< 초기화 절차에 관련된 로그$/;"	e	enum:eAlLogLevel
+kAlLogLevel_none	wlanaccess/wlanaccess-types.h	/^  kAlLogLevel_none = 0, \/\/\/< 아무 로그도 출력하지 않는다.$/;"	e	enum:eAlLogLevel
+kAlMacCrcSize	wlanaccess/wlanaccess-types.h	/^  kAlMacCrcSize = 4,           \/\/\/ MAC CRC 길이$/;"	e	enum:eAlMpduSize
+kAlMacNonQoSHeadrSize	wlanaccess/wlanaccess-types.h	/^  kAlMacNonQoSHeadrSize = 24,  \/\/\/ Non-QoS MSDU에 대한 MAC 헤더 길이 (OCB통신(=V2X통신)에서는 사용되지 않음)$/;"	e	enum:eAlMpduSize
+kAlMacQoSHeaderSize	wlanaccess/wlanaccess-types.h	/^  kAlMacQoSHeaderSize = 26,    \/\/\/ QoS MSDU에 대한 MAC 헤더 길이 (OCB(=V2X통신)통신에 사용됨)$/;"	e	enum:eAlMpduSize
+kAlMpduMaxSize	wlanaccess/wlanaccess-types.h	/^  kAlMpduMaxSize = (kAlMacQoSHeaderSize + kAlMsduMaxSize),   \/\/\/ MPDU 최대길이$/;"	e	enum:eAlMpduSize
+kAlMpduMaxSizeWithCrc	wlanaccess/wlanaccess-types.h	/^  kAlMpduMaxSizeWithCrc = (kAlMpduMaxSize + kAlMacCrcSize),   \/\/\/ MPDU 최대길이$/;"	e	enum:eAlMpduSize
+kAlMpduMinSize	wlanaccess/wlanaccess-types.h	/^  kAlMpduMinSize = (kAlMacNonQoSHeadrSize + kAlMsduMinSize), \/\/\/ MPDU 최소길이 (데이터 또는 관리프레임)$/;"	e	enum:eAlMpduSize
+kAlMpduMinSizeWithCrc	wlanaccess/wlanaccess-types.h	/^  kAlMpduMinSizeWithCrc = (kAlMpduMinSize + kAlMacCrcSize), \/\/\/ MPDU 최소길이 (데이터 또는 관리프레임)$/;"	e	enum:eAlMpduSize
+kAlMsduMaxSize	wlanaccess/wlanaccess-types.h	/^  kAlMsduMaxSize = 2304,      \/\/\/ MSDU 최대길이 (IEEE 802.11)$/;"	e	enum:eAlMpduSize
+kAlMsduMinSize	wlanaccess/wlanaccess-types.h	/^  kAlMsduMinSize = 0,         \/\/\/ MSDU 최소길이$/;"	e	enum:eAlMpduSize
+kAlResult_DevSpecificError	wlanaccess/wlanaccess-types.h	/^  kAlResult_DevSpecificError, \/\/\/< 디바이스(하드웨어) 관련 에러$/;"	e	enum:eAlResultCode
+kAlResult_InvalidChannel	wlanaccess/wlanaccess-types.h	/^  kAlResult_InvalidChannel,   \/\/\/< 유효하지 않은 채널$/;"	e	enum:eAlResultCode
+kAlResult_InvalidIfIndex	wlanaccess/wlanaccess-types.h	/^  kAlResult_InvalidIfIndex,   \/\/\/< 유효하지 않은 인터페이스 식별번호$/;"	e	enum:eAlResultCode
+kAlResult_InvalidIfNum	wlanaccess/wlanaccess-types.h	/^  kAlResult_InvalidIfNum,     \/\/\/< 유효하지 않은 인터페이스 개수$/;"	e	enum:eAlResultCode
+kAlResult_InvalidMacAddress	wlanaccess/wlanaccess-types.h	/^  kAlResult_InvalidMacAddress, \/\/\/< 유효하지 않은 MAC 주소$/;"	e	enum:eAlResultCode
+kAlResult_InvalidMpduSize	wlanaccess/wlanaccess-types.h	/^  kAlResult_InvalidMpduSize,  \/\/\/< 유효하지 않은 MPDU 길이$/;"	e	enum:eAlResultCode
+kAlResult_InvalidTimeSlot	wlanaccess/wlanaccess-types.h	/^  kAlResult_InvalidTimeSlot,  \/\/\/< 유효하지 않은 TimeSlot$/;"	e	enum:eAlResultCode
+kAlResult_NoMemory	wlanaccess/wlanaccess-types.h	/^  kAlResult_NoMemory,         \/\/\/< 메모리 할당 실패$/;"	e	enum:eAlResultCode
+kAlResult_NotSupported	wlanaccess/wlanaccess-types.h	/^  kAlResult_NotSupported,     \/\/\/< 지원하지 않음$/;"	e	enum:eAlResultCode
+kAlResult_NotSupportedYet	wlanaccess/wlanaccess-types.h	/^  kAlResult_NotSupportedYet,  \/\/\/< 아직 지원하지 않음 (구현 예정)$/;"	e	enum:eAlResultCode
+kAlResult_NullParameters	wlanaccess/wlanaccess-types.h	/^  kAlResult_NullParameters,   \/\/\/< 널 파라미터$/;"	e	enum:eAlResultCode
+kAlResult_PollingFailed	wlanaccess/wlanaccess-types.h	/^  kAlResult_PollingFailed,    \/\/\/< 이벤트 폴링 실패$/;"	e	enum:eAlResultCode
+kAlResult_Success	wlanaccess/wlanaccess-types.h	/^  kAlResult_Success = 0,      \/\/\/< 성공$/;"	e	enum:eAlResultCode
+kAlTimeSlot_0	wlanaccess/wlanaccess-types.h	/^  kAlTimeSlot_0,    \/\/\/ TimeSlot0$/;"	e	enum:eAlTimeSlot
+kAlTimeSlot_1	wlanaccess/wlanaccess-types.h	/^  kAlTimeSlot_1,    \/\/\/ TimeSlot1$/;"	e	enum:eAlTimeSlot
+kAlTimeSlot_any	wlanaccess/wlanaccess-types.h	/^  kAlTimeSlot_any = kAlTimeSlot_both, \/\/\/ Any timeslot (예: 패킷 전송 시, 시간슬롯 상관없이 전송할 때)$/;"	e	enum:eAlTimeSlot
+kAlTimeSlot_both	wlanaccess/wlanaccess-types.h	/^  kAlTimeSlot_both, \/\/\/ Both timeslot(ex: continuous)$/;"	e	enum:eAlTimeSlot
+kAlTimeSlot_max	wlanaccess/wlanaccess-types.h	/^  kAlTimeSlot_max = kAlTimeSlot_both$/;"	e	enum:eAlTimeSlot
+kAlTimeSlot_min	wlanaccess/wlanaccess-types.h	/^  kAlTimeSlot_min = kAlTimeSlot_0,$/;"	e	enum:eAlTimeSlot
+kAlTxResult_DevSpecificErr	wlanaccess/wlanaccess-types.h	/^  kAlTxResult_DevSpecificErr,   \/\/\/ 디바이스 의존적 실패$/;"	e	enum:eAlTxResultCode
+kAlTxResult_Success	wlanaccess/wlanaccess-types.h	/^  kAlTxResult_Success = 0,      \/\/\/ 성공$/;"	e	enum:eAlTxResultCode
+kDot3Channel_Any	dot3/dot3-types.h	/^  kDot3Channel_Any = -999,  \/\/\/< 임의의 채널$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_KoreaV2XCch	dot3/dot3-types.h	/^  kDot3Channel_KoreaV2XCch = 180,$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_KoreaV2XMax	dot3/dot3-types.h	/^  kDot3Channel_KoreaV2XMax = 184,$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_KoreaV2XMin	dot3/dot3-types.h	/^  kDot3Channel_KoreaV2XMin = 172,$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_Max	dot3/dot3-types.h	/^  kDot3Channel_Max = 200, \/\/\/< 접속 가능한 최대 채널번호(=6.00GHz 중심주파수)$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_Min	dot3/dot3-types.h	/^  kDot3Channel_Min = 0, \/\/\/< 접속 가능한 최소 채널번호(=5.00GHz 중심주파수)$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_Unknown	dot3/dot3-types.h	/^  kDot3Channel_Unknown = -999,  \/\/\/< 알 수 없는 채널$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_UsaV2X20MhzHigh	dot3/dot3-types.h	/^  kDot3Channel_UsaV2X20MhzHigh = 181,$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_UsaV2X20MhzLow	dot3/dot3-types.h	/^  kDot3Channel_UsaV2X20MhzLow = 175,$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_UsaV2XCch	dot3/dot3-types.h	/^  kDot3Channel_UsaV2XCch = 178,$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_UsaV2XMax	dot3/dot3-types.h	/^  kDot3Channel_UsaV2XMax = 184,$/;"	e	enum:eDot3ChannelNumber
+kDot3Channel_UsaV2XMin	dot3/dot3-types.h	/^  kDot3Channel_UsaV2XMin = 172,$/;"	e	enum:eDot3ChannelNumber
+kDot3DataRate_12Mbps	dot3/dot3-types.h	/^  kDot3DataRate_12Mbps = 24,$/;"	e	enum:eDot3DataRate
+kDot3DataRate_18Mbps	dot3/dot3-types.h	/^  kDot3DataRate_18Mbps = 36,$/;"	e	enum:eDot3DataRate
+kDot3DataRate_24Mbps	dot3/dot3-types.h	/^  kDot3DataRate_24Mbps = 48,$/;"	e	enum:eDot3DataRate
+kDot3DataRate_27Mbps	dot3/dot3-types.h	/^  kDot3DataRate_27Mbps = 54,$/;"	e	enum:eDot3DataRate
+kDot3DataRate_3Mbps	dot3/dot3-types.h	/^  kDot3DataRate_3Mbps = 6,$/;"	e	enum:eDot3DataRate
+kDot3DataRate_4p5Mbps	dot3/dot3-types.h	/^  kDot3DataRate_4p5Mbps = 9,$/;"	e	enum:eDot3DataRate
+kDot3DataRate_6Mbps	dot3/dot3-types.h	/^  kDot3DataRate_6Mbps = 12,$/;"	e	enum:eDot3DataRate
+kDot3DataRate_9Mbps	dot3/dot3-types.h	/^  kDot3DataRate_9Mbps = 18,$/;"	e	enum:eDot3DataRate
+kDot3DataRate_Max	dot3/dot3-types.h	/^  kDot3DataRate_Max = kDot3DataRate_27Mbps,$/;"	e	enum:eDot3DataRate
+kDot3DataRate_Min	dot3/dot3-types.h	/^  kDot3DataRate_Min = kDot3DataRate_3Mbps,$/;"	e	enum:eDot3DataRate
+kDot3DataRate_TxDefault	dot3/dot3-types.h	/^  kDot3DataRate_TxDefault = kDot3DataRate_6Mbps,  \/\/\/< 기본 송신 데이터레이트$/;"	e	enum:eDot3DataRate
+kDot3DataRate_Unknown	dot3/dot3-types.h	/^  kDot3DataRate_Unknown = -999, \/\/\/< 알 수 없는 데이터레이트$/;"	e	enum:eDot3DataRate
+kDot3Elevation_Max	dot3/dot3-types.h	/^  kDot3Elevation_Max = 61439, \/\/\/< 6143.9 m$/;"	e	enum:eDot3Elevation
+kDot3Elevation_Min	dot3/dot3-types.h	/^  kDot3Elevation_Min = -4096,$/;"	e	enum:eDot3Elevation
+kDot3Elevation_Unavailable	dot3/dot3-types.h	/^  kDot3Elevation_Unavailable = -4096$/;"	e	enum:eDot3Elevation
+kDot3IPv6PrefixLen_Max	dot3/dot3-types.h	/^  kDot3IPv6PrefixLen_Max = 128$/;"	e	enum:eDot3IPv6PrefixLen
+kDot3IPv6PrefixLen_Min	dot3/dot3-types.h	/^  kDot3IPv6PrefixLen_Min = 1,$/;"	e	enum:eDot3IPv6PrefixLen
+kDot3Ipv6AddrSize	dot3/dot3-types.h	/^  kDot3Ipv6AddrSize = 16  \/\/\/< IPv6 주소 길이$/;"	e	enum:eDot3AddrSize
+kDot3Latitude_Max	dot3/dot3-types.h	/^  kDot3Latitude_Max = 900000001,$/;"	e	enum:eDot3Latitude
+kDot3Latitude_Min	dot3/dot3-types.h	/^  kDot3Latitude_Min = -900000000,$/;"	e	enum:eDot3Latitude
+kDot3Latitude_Unavailable	dot3/dot3-types.h	/^  kDot3Latitude_Unavailable = 900000001$/;"	e	enum:eDot3Latitude
+kDot3Longitude_Max	dot3/dot3-types.h	/^  kDot3Longitude_Max = 1800000001,$/;"	e	enum:eDot3Longitude
+kDot3Longitude_Min	dot3/dot3-types.h	/^  kDot3Longitude_Min = -1800000000,$/;"	e	enum:eDot3Longitude
+kDot3Longitude_Unavailable	dot3/dot3-types.h	/^  kDot3Longitude_Unavailable = 1800000001$/;"	e	enum:eDot3Longitude
+kDot3MacAddrSize	dot3/dot3-types.h	/^  kDot3MacAddrSize = 6, \/\/\/< MAC 주소 길이$/;"	e	enum:eDot3AddrSize
+kDot3OperatingClass_5G_10mhz	dot3/dot3-types.h	/^  kDot3OperatingClass_5G_10mhz = 17,		\/* 미국 기준. IEEE 802.11-2012 *\/$/;"	e	enum:eDot3OperatingClass
+kDot3OperatingClass_5G_20mhz	dot3/dot3-types.h	/^  kDot3OperatingClass_5G_20mhz = 18,		\/* 미국 기준. IEEE 802.11-2012 *\/$/;"	e	enum:eDot3OperatingClass
+kDot3OperatingClass_Default	dot3/dot3-types.h	/^  kDot3OperatingClass_Default = kDot3OperatingClass_5G_10mhz$/;"	e	enum:eDot3OperatingClass
+kDot3OperatingClass_Max	dot3/dot3-types.h	/^  kDot3OperatingClass_Max = 255,$/;"	e	enum:eDot3OperatingClass
+kDot3OperatingClass_Min	dot3/dot3-types.h	/^  kDot3OperatingClass_Min = 0,$/;"	e	enum:eDot3OperatingClass
+kDot3PciNum_MaxIndex	dot3/dot3-types.h	/^  kDot3PciNum_MaxIndex = (kDot3PciNum_MaxNum - 1),$/;"	e	enum:eDot3PciNum
+kDot3PciNum_MaxNum	dot3/dot3-types.h	/^  kDot3PciNum_MaxNum = _PSR_MAX_NUM_, \/\/\/< Channel info 테이블 내 엔트리 최대 개수 (per 1609.3-2016)$/;"	e	enum:eDot3PciNum
+kDot3PciNum_MinIndex	dot3/dot3-types.h	/^  kDot3PciNum_MinIndex = 0,$/;"	e	enum:eDot3PciNum
+kDot3Power_Max	dot3/dot3-types.h	/^  kDot3Power_Max = 127,       \/\/\/< 최대 파워$/;"	e	enum:eDot3Power
+kDot3Power_MaxEirpInClassC	dot3/dot3-types.h	/^  kDot3Power_MaxEirpInClassC = 33,          \/\/\/< 클래스 C 최대 EIRP$/;"	e	enum:eDot3Power
+kDot3Power_MaxInClassC	dot3/dot3-types.h	/^  kDot3Power_MaxInClassC = 20,              \/\/\/< 클래스 C 최대 파워 (포트출력)$/;"	e	enum:eDot3Power
+kDot3Power_Min	dot3/dot3-types.h	/^  kDot3Power_Min = -128,      \/\/\/< 최소 파워$/;"	e	enum:eDot3Power
+kDot3Power_TxDefault	dot3/dot3-types.h	/^  kDot3Power_TxDefault = kDot3Power_MaxInClassC,   \/\/\/< 기본 송신파워$/;"	e	enum:eDot3Power
+kDot3Power_Unknown	dot3/dot3-types.h	/^  kDot3Power_Unknown = -999 \/\/\/< 알 수 없는 파워값$/;"	e	enum:eDot3Power
+kDot3Priority_Max	dot3/dot3-types.h	/^  kDot3Priority_Max = 7,  \/\/\/< 우선순위 최대값$/;"	e	enum:eDot3Priority
+kDot3Priority_Min	dot3/dot3-types.h	/^  kDot3Priority_Min = 0,  \/\/\/< 우선순위 최소값$/;"	e	enum:eDot3Priority
+kDot3Priority_Unknown	dot3/dot3-types.h	/^  kDot3Priority_Unknown = -999  \/\/\/< 알 수 없는 우선순위(수신 시에만 사용)$/;"	e	enum:eDot3Priority
+kDot3Priority_Wsa	dot3/dot3-types.h	/^  kDot3Priority_Wsa = kDot3Priority_Max,  \/\/\/< WSA용 우선순위$/;"	e	enum:eDot3Priority
+kDot3ProviderChannelAccess_AlternatingTimeSlot0Only	dot3/dot3-types.h	/^  kDot3ProviderChannelAccess_AlternatingTimeSlot0Only = 1,  \/\/\/< TimeSlot0 에서 서비스 제공 (=alternating)$/;"	e	enum:eDot3ProviderChannelAccess
+kDot3ProviderChannelAccess_AlternatingTimeSlot1Only	dot3/dot3-types.h	/^  kDot3ProviderChannelAccess_AlternatingTimeSlot1Only = 2,  \/\/\/< TimeSlot1 에서 서비스 제공 (=alternating)$/;"	e	enum:eDot3ProviderChannelAccess
+kDot3ProviderChannelAccess_Any	dot3/dot3-types.h	/^  kDot3ProviderChannelAccess_Any = 3,                       \/\/\/< 어떤 형태든 가능$/;"	e	enum:eDot3ProviderChannelAccess
+kDot3ProviderChannelAccess_Continuous	dot3/dot3-types.h	/^  kDot3ProviderChannelAccess_Continuous = 0,          \/\/\/< TimeSlot0 과 TimeSlot1 에서 서비스를 제공 (=continuous)$/;"	e	enum:eDot3ProviderChannelAccess
+kDot3ProviderChannelAccess_Default	dot3/dot3-types.h	/^  kDot3ProviderChannelAccess_Default = kDot3ProviderChannelAccess_AlternatingTimeSlot1Only,$/;"	e	enum:eDot3ProviderChannelAccess
+kDot3ProviderChannelAccess_Max	dot3/dot3-types.h	/^  kDot3ProviderChannelAccess_Max = kDot3ProviderChannelAccess_Any$/;"	e	enum:eDot3ProviderChannelAccess
+kDot3ProviderChannelAccess_Min	dot3/dot3-types.h	/^  kDot3ProviderChannelAccess_Min = kDot3ProviderChannelAccess_Continuous,$/;"	e	enum:eDot3ProviderChannelAccess
+kDot3ProviderServiceStatus_PartiallySatisfied	dot3/dot3-types.h	/^  kDot3ProviderServiceStatus_PartiallySatisfied = 2$/;"	e	enum:eDot3ProviderServiceStatus
+kDot3ProviderServiceStatus_Pending	dot3/dot3-types.h	/^  kDot3ProviderServiceStatus_Pending = 0,$/;"	e	enum:eDot3ProviderServiceStatus
+kDot3ProviderServiceStatus_Satisified	dot3/dot3-types.h	/^  kDot3ProviderServiceStatus_Satisified = 1,$/;"	e	enum:eDot3ProviderServiceStatus
+kDot3PscLen_Max	dot3/dot3-types.h	/^  kDot3PscLen_Max = 31,$/;"	e	enum:eDot3PscLen
+kDot3PscLen_Min	dot3/dot3-types.h	/^  kDot3PscLen_Min = 0,$/;"	e	enum:eDot3PscLen
+kDot3Psid_Ipv6Routing	dot3/dot3-types.h	/^  kDot3Psid_Ipv6Routing = 0x1020407E, \/\/\/< IPv6 Routing 용 PSID$/;"	e	enum:eDot3Psid
+kDot3Psid_Max	dot3/dot3-types.h	/^  kDot3Psid_Max = 0x1020407F, \/\/\/< PSID 최대값$/;"	e	enum:eDot3Psid
+kDot3Psid_Min	dot3/dot3-types.h	/^  kDot3Psid_Min = 0,  \/\/\/< PSID 최소값$/;"	e	enum:eDot3Psid
+kDot3Psid_Wsa	dot3/dot3-types.h	/^  kDot3Psid_Wsa = 0x87  \/\/\/< WSA용 PSID$/;"	e	enum:eDot3Psid
+kDot3PsrNum_MaxIndex	dot3/dot3-types.h	/^  kDot3PsrNum_MaxIndex = (kDot3PsrNum_MaxNum - 1),$/;"	e	enum:eDot3PsrNum
+kDot3PsrNum_MaxNum	dot3/dot3-types.h	/^  kDot3PsrNum_MaxNum = _PSR_MAX_NUM_, \/\/\/< PSR 테이블 내 엔트리 최대 개수 (per 1609.3-2016)$/;"	e	enum:eDot3PsrNum
+kDot3PsrNum_MinIndex	dot3/dot3-types.h	/^  kDot3PsrNum_MinIndex = 0,$/;"	e	enum:eDot3PsrNum
+kDot3Rcpi_Max	dot3/dot3-types.h	/^  kDot3Rcpi_Max = 220,\/*=0dBm*\/ \/\/\/< 최대 RCPI 값$/;"	e	enum:eDot3Rcpi
+kDot3Rcpi_Min	dot3/dot3-types.h	/^  kDot3Rcpi_Min = 0,\/*=-110dBm*\/ \/\/\/< 최소 RCPI 값$/;"	e	enum:eDot3Rcpi
+kDot3Rcpi_Unknown	dot3/dot3-types.h	/^  kDot3Rcpi_Unknown = -999 \/\/\/< 알 수 없는 RCPI$/;"	e	enum:eDot3Rcpi
+kDot3Result_Fail_Asn1AbnormalOp	dot3/dot3-types.h	/^  kDot3Result_Fail_Asn1AbnormalOp, \/\/\/< 비정상 asn.1 동작$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_Asn1Decode	dot3/dot3-types.h	/^  kDot3Result_Fail_Asn1Decode, \/\/\/< asn.1 디코딩 실패$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_Asn1Encode	dot3/dot3-types.h	/^  kDot3Result_Fail_Asn1Encode, \/\/\/< asn.1 인코딩 실패$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InsufficientBuf	dot3/dot3-types.h	/^  kDot3Result_Fail_InsufficientBuf, \/\/\/< 길이가 충분하지 않은 버퍼$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidAdvertiserIdLen	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidAdvertiserIdLen, \/\/\/< 유효하지 않은 Advertiser Id 길이$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidChannelAccess	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidChannelAccess, \/\/\/< 유효하지 않은 Channel access$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidChannelNumberValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidChannelNumberValue, \/\/\/< 유효하지 않은 채널번호 값$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidDataRate	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidDataRate, \/\/\/< 유효하지 않은 DataRate$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidElevationValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidElevationValue, \/\/\/< 유효하지 않은 고도 값$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidIPv6PrefixLenValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidIPv6PrefixLenValue, \/\/\/< 유효하지 않은 IPv6 prefix length$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidLatitudeValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidLatitudeValue, \/\/\/< 유효하지 않은 위도 값$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidLongitudeValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidLongitudeValue, \/\/\/< 유효하지 않은 경도 값$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidLowerLayerFrameType	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidLowerLayerFrameType, \/\/\/< 유효하지 않은 하위계층 프레임 유형$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidLowerLayerProtocolVersion	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidLowerLayerProtocolVersion, \/\/\/< 유효하지 않은 하위계층 프로토콜 버전$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidPowerValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidPowerValue, \/\/\/< 유효하지 않은 파워 값$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidPriorityValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidPriorityValue, \/\/\/< 유효하지 않은 priority 값$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidPsidFormat	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidPsidFormat,  \/\/\/< 유효하지 않은 PSID 형식$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidPsidValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidPsidValue,  \/\/\/< 유효하지 않은 PSID 값$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWciExtensionIdValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWciExtensionIdValue, \/\/\/< 유효하지 않은 WSA Channel Info 확장필드 ID$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsaContentCountValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsaContentCountValue, \/\/\/< 유효하지 않은 WSA content count$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsaCountThresholdIntervalValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsaCountThresholdIntervalValue, \/\/\/< 유효하지 않은 WSA Count Threshold Interval$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsaHdrExtensionIdValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsaHdrExtensionIdValue, \/\/\/< 유효하지 않은 WSA 확장필드 ID$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsaIdValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsaIdValue, \/\/\/< 유효하지 않은 WSA identifier$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsaMessageType	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsaMessageType, \/\/\/< 유효하지 않은 WSA 메시지 유형$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsaVersionValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsaVersionValue, \/\/\/< 유효하지 않은 WSA 버전$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsiExtensionIdValue	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsiExtensionIdValue, \/\/\/< 유효하지 않은 WSA Service Info 확장필드 ID$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsmpNHeaderExtensionId	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsmpNHeaderExtensionId, \/\/\/< 유효하지 않은 ExtensionId (WSMP-N-Header)$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsmpNHeaderSubType	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsmpNHeaderSubType, \/\/\/ < 유효하지 않은 subtype (WSMP-N-Header)$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsmpNHeaderTpid	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsmpNHeaderTpid, \/\/\/< 유효하지 않은 TPID (WSMP-N-Header)$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_InvalidWsmpNHeaderWsmpVersion	dot3/dot3-types.h	/^  kDot3Result_Fail_InvalidWsmpNHeaderWsmpVersion, \/\/\/< 유효하지 않은 WSMP 버전 (WSMP-N-Header)$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_NoMemory	dot3/dot3-types.h	/^  kDot3Result_Fail_NoMemory, \/\/\/< 메모리 부족$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_NoRelatedChannelInfo	dot3/dot3-types.h	/^  kDot3Result_Fail_NoRelatedChannelInfo, \/\/\/< PSR에 연관된 Channel info 가 없음.$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_NoSuchPsr	dot3/dot3-types.h	/^  kDot3Result_Fail_NoSuchPsr, \/\/\/< 해당 PSR이 테이블에 존재하지 않음.$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_NotSupportedEtherType	dot3/dot3-types.h	/^  kDot3Result_Fail_NotSupportedEtherType, \/\/\/< 지원되지 않는 EtherType$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_NotSupportedYet	dot3/dot3-types.h	/^  kDot3Result_Fail_NotSupportedYet, \/\/\/< 아직 지원하지 않음$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_NotWildcardBssid	dot3/dot3-types.h	/^  kDot3Result_Fail_NotWildcardBssid, \/\/\/< BSSID 가 wildcard BSSID 가 아님.$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_NullParameters	dot3/dot3-types.h	/^  kDot3Result_Fail_NullParameters,  \/\/\/< 널 파라미터가 전달된 경우$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_PsrTableFull	dot3/dot3-types.h	/^  kDot3Result_Fail_PsrTableFull, \/\/\/< PSR 테이블이 꽉 참.$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_SamePsidPsr	dot3/dot3-types.h	/^  kDot3Result_Fail_SamePsidPsr, \/\/\/< 동일한 PSID를 갖는 PSR이 존재함.$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_TooLongMpdu	dot3/dot3-types.h	/^  kDot3Result_Fail_TooLongMpdu, \/\/\/< 너무 긴 MPDU$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_TooLongPayload	dot3/dot3-types.h	/^  kDot3Result_Fail_TooLongPayload, \/\/\/< 너무 큰 페이로드가 전달된 경우$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_TooLongPsc	dot3/dot3-types.h	/^  kDot3Result_Fail_TooLongPsc, \/\/\/< 너무 긴 PSC$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_TooLongWsa	dot3/dot3-types.h	/^  kDot3Result_Fail_TooLongWsa, \/\/\/< 너무 긴 WSA$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_TooLongWsm	dot3/dot3-types.h	/^  kDot3Result_Fail_TooLongWsm, \/\/\/< 너무 긴 WSM$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_TooShortMpdu	dot3/dot3-types.h	/^  kDot3Result_Fail_TooShortMpdu, \/\/\/< 너무 짧은 MPDU$/;"	e	enum:eDot3ResultCode
+kDot3Result_Fail_TooShortWsm	dot3/dot3-types.h	/^  kDot3Result_Fail_TooShortWsm, \/\/\/< 너무 짧은 WSM$/;"	e	enum:eDot3ResultCode
+kDot3Result_Success	dot3/dot3-types.h	/^  kDot3Result_Success = 0,  \/\/\/< 성공$/;"	e	enum:eDot3ResultCode
+kDot3SecuredWsa	dot3/dot3-types.h	/^  kDot3SecuredWsa = 1,    \/\/\/< Unsecured WSA$/;"	e	enum:eDot3WsaType
+kDot3TimeSlot_0	dot3/dot3-types.h	/^  kDot3TimeSlot_0 = 0,  \/\/\/< TimeSlot0$/;"	e	enum:eDot3TimeSlot
+kDot3TimeSlot_1	dot3/dot3-types.h	/^  kDot3TimeSlot_1 = 1,  \/\/\/< TimeSlot1$/;"	e	enum:eDot3TimeSlot
+kDot3TimeSlot_Any	dot3/dot3-types.h	/^  kDot3TimeSlot_Any = 2,  \/\/\/< TimeSlot0 또는 TimeSlot1$/;"	e	enum:eDot3TimeSlot
+kDot3TimeSlot_Continuous	dot3/dot3-types.h	/^  kDot3TimeSlot_Continuous = 2  \/\/\/< Continuous 접속 (TimeSlot0 & TimeSlot1)$/;"	e	enum:eDot3TimeSlot
+kDot3UnsecuredWsa	dot3/dot3-types.h	/^  kDot3UnsecuredWsa = 2,  \/\/\/< Secured WSA$/;"	e	enum:eDot3WsaType
+kDot3WciNum_MaxIndex	dot3/dot3-types.h	/^  kDot3WciNum_MaxIndex = (kDot3WciNum_MaxNum - 1)$/;"	e	enum:eDot3WciNum
+kDot3WciNum_MaxNum	dot3/dot3-types.h	/^  kDot3WciNum_MaxNum = _WSA_CHAN_INFO_MAX_NUM_,$/;"	e	enum:eDot3WciNum
+kDot3WciNum_MinIndex	dot3/dot3-types.h	/^  kDot3WciNum_MinIndex = 0,$/;"	e	enum:eDot3WciNum
+kDot3WciNum_MinNum	dot3/dot3-types.h	/^  kDot3WciNum_MinNum = 0,$/;"	e	enum:eDot3WciNum
+kDot3WraRouterLifeTime_Max	dot3/dot3-types.h	/^  kDot3WraRouterLifeTime_Max = 65535$/;"	e	enum:eDot3WraRouterLifeTime
+kDot3WraRouterLifeTime_Min	dot3/dot3-types.h	/^  kDot3WraRouterLifeTime_Min = 0,$/;"	e	enum:eDot3WraRouterLifeTime
+kDot3WsaAdvertiserIdLen_Max	dot3/dot3-types.h	/^  kDot3WsaAdvertiserIdLen_Max = 32,$/;"	e	enum:eDot3WsaAdvertiserIdLen
+kDot3WsaAdvertiserIdLen_Min	dot3/dot3-types.h	/^  kDot3WsaAdvertiserIdLen_Min = 1,$/;"	e	enum:eDot3WsaAdvertiserIdLen
+kDot3WsaChangeCount_Max	dot3/dot3-types.h	/^  kDot3WsaChangeCount_Max = 15,$/;"	e	enum:eDot3WsaChangeCount
+kDot3WsaChangeCount_Min	dot3/dot3-types.h	/^  kDot3WsaChangeCount_Min = 0,$/;"	e	enum:eDot3WsaChangeCount
+kDot3WsaChannelIndex_Max	dot3/dot3-types.h	/^  kDot3WsaChannelIndex_Max = _WSA_CHAN_INFO_MAX_NUM_$/;"	e	enum:eDot3WsaChannelIndex
+kDot3WsaChannelIndex_Min	dot3/dot3-types.h	/^  kDot3WsaChannelIndex_Min = 1,$/;"	e	enum:eDot3WsaChannelIndex
+kDot3WsaChannelIndex_NotUsed	dot3/dot3-types.h	/^  kDot3WsaChannelIndex_NotUsed = 0,$/;"	e	enum:eDot3WsaChannelIndex
+kDot3WsaCountThresholdInterval_Max	dot3/dot3-types.h	/^  kDot3WsaCountThresholdInterval_Max = 255$/;"	e	enum:eDot3WsaCountThresholdInterval
+kDot3WsaCountThresholdInterval_Min	dot3/dot3-types.h	/^  kDot3WsaCountThresholdInterval_Min = 1,$/;"	e	enum:eDot3WsaCountThresholdInterval
+kDot3WsaCountThreshold_Max	dot3/dot3-types.h	/^  kDot3WsaCountThreshold_Max = 255,$/;"	e	enum:eDot3WsaCountThreshold
+kDot3WsaCountThreshold_Min	dot3/dot3-types.h	/^  kDot3WsaCountThreshold_Min = 0,$/;"	e	enum:eDot3WsaCountThreshold
+kDot3WsaMaxContentCount	dot3/dot3-types.h	/^  kDot3WsaMaxContentCount = 15,$/;"	e	enum:eDot3WsaContentCount
+kDot3WsaMaxId	dot3/dot3-types.h	/^  kDot3WsaMaxId = 15,$/;"	e	enum:eDot3WsaIdentifier
+kDot3WsaMinContentCount	dot3/dot3-types.h	/^  kDot3WsaMinContentCount = 0,$/;"	e	enum:eDot3WsaContentCount
+kDot3WsaMinId	dot3/dot3-types.h	/^  kDot3WsaMinId = 0,$/;"	e	enum:eDot3WsaIdentifier
+kDot3WsaRepeatRate_Max	dot3/dot3-types.h	/^  kDot3WsaRepeatRate_Max = 255,$/;"	e	enum:eDot3WsaRepeatRate
+kDot3WsaRepeatRate_Min	dot3/dot3-types.h	/^  kDot3WsaRepeatRate_Min = 0,$/;"	e	enum:eDot3WsaRepeatRate
+kDot3WsaVersion_Current	dot3/dot3-types.h	/^  kDot3WsaVersion_Current = 3,$/;"	e	enum:eDot3WsaVersion
+kDot3WsaVersion_Max	dot3/dot3-types.h	/^  kDot3WsaVersion_Max = 15,$/;"	e	enum:eDot3WsaVersion
+kDot3WsaVersion_Min	dot3/dot3-types.h	/^  kDot3WsaVersion_Min = 0,$/;"	e	enum:eDot3WsaVersion
+kDot3WsiNum_MaxIndex	dot3/dot3-types.h	/^  kDot3WsiNum_MaxIndex = (kDot3WsiNum_MaxNum - 1),$/;"	e	enum:eDot3WsiNum
+kDot3WsiNum_MaxNum	dot3/dot3-types.h	/^  kDot3WsiNum_MaxNum = _WSA_SERVICE_INFO_MAX_NUM_,$/;"	e	enum:eDot3WsiNum
+kDot3WsiNum_MinIndex	dot3/dot3-types.h	/^  kDot3WsiNum_MinIndex = 0,$/;"	e	enum:eDot3WsiNum
+kDot3WsiNum_MinNum	dot3/dot3-types.h	/^  kDot3WsiNum_MinNum = 0,$/;"	e	enum:eDot3WsiNum
+kLLCHdrSize	dot3/dot3-types.h	/^  kLLCHdrSize = 2,  \/\/\/< LLC 헤더 크기$/;"	e	enum:eDot3PduSize
+kMacCrcSize	dot3/dot3-types.h	/^  kMacCrcSize = 4,  \/\/\/< MAC CRC 필드 크기$/;"	e	enum:eDot3PduSize
+kMpduMaxSize	dot3/dot3-types.h	/^  kMpduMaxSize = (kQoSMacHdrSize + kMsduMaxSize), \/\/\/< CRC 제외한 MPDU 최대크기(=2330)$/;"	e	enum:eDot3PduSize
+kMpduMaxSizeWithCrc	dot3/dot3-types.h	/^  kMpduMaxSizeWithCrc = (kQoSMacHdrSize + kMsduMaxSize + kMacCrcSize), \/\/\/< CRC 포함한 MPDU 최대크기(=2334)$/;"	e	enum:eDot3PduSize
+kMsduMaxSize	dot3/dot3-types.h	/^  kMsduMaxSize = 2304,  \/\/\/< MSDU 최대크기(per 802.11-2012~)$/;"	e	enum:eDot3PduSize
+kNonQosMacHdrSize	dot3/dot3-types.h	/^  kNonQosMacHdrSize = 24, \/\/\/< Non QoS MAC 헤더 크기$/;"	e	enum:eDot3PduSize
+kPduSize_Max	dot3/dot3-types.h	/^  kPduSize_Max = kMpduMaxSize$/;"	e	enum:eDot3PduSize
+kPduSize_Min	dot3/dot3-types.h	/^  kPduSize_Min = 0,$/;"	e	enum:eDot3PduSize
+kQoSMacHdrSize	dot3/dot3-types.h	/^  kQoSMacHdrSize = 26,  \/\/\/< QoS MAC 헤더 크기$/;"	e	enum:eDot3PduSize
+kWsmBodyMaxSize	dot3/dot3-types.h	/^  kWsmBodyMaxSize = (kWsmMaxSize - (kWsmpHdrMinSize+1)), \/\/\/< WSM헤더 길이가 최소(=5)일 때 가능한 WSM body 최대 크기 (=2297)$/;"	e	enum:eDot3PduSize
+kWsmBodySafeMaxSize	dot3/dot3-types.h	/^  kWsmBodySafeMaxSize = (kWsmMaxSize - kWsmpHdrMaxSize), \/\/\/< WSM헤더 길이가 최대(=18)일 때 가능한 WSM body 최대 크기 (=2284)$/;"	e	enum:eDot3PduSize
+kWsmMaxSize	dot3/dot3-types.h	/^  kWsmMaxSize = (kMsduMaxSize - kLLCHdrSize), \/\/\/< WSM 최대 크기 (=2302)$/;"	e	enum:eDot3PduSize
+kWsmMinSize	dot3/dot3-types.h	/^  kWsmMinSize = kWsmpHdrMinSize, \/\/ WSM 최소 크기 (=4)$/;"	e	enum:eDot3PduSize
+kWsmMpduMinSize	dot3/dot3-types.h	/^  kWsmMpduMinSize = (kNonQosMacHdrSize + kLLCHdrSize + kWsmpHdrMinSize), \/\/\/< CRC 제외한 MPDU 최소크기(=32)$/;"	e	enum:eDot3PduSize
+kWsmMpduMinSizeWithCrc	dot3/dot3-types.h	/^  kWsmMpduMinSizeWithCrc = (kNonQosMacHdrSize + kLLCHdrSize + kWsmpHdrMinSize + kMacCrcSize), \/\/\/< CRC 포함한 MPDU 최소크기(=36)$/;"	e	enum:eDot3PduSize
+kWsmpHdrMaxSize	dot3/dot3-types.h	/^  kWsmpHdrMaxSize = 18, \/\/\/< WSMP 헤더 최대 크기 (확장필드 모두 포함, PSID\/WsmLength 최대값 사용 시)$/;"	e	enum:eDot3PduSize
+kWsmpHdrMinSize	dot3/dot3-types.h	/^  kWsmpHdrMinSize = 4, \/\/\/< WSMP 헤더 최소 크기$/;"	e	enum:eDot3PduSize
+latitude	dot3/dot3-types.h	/^  Dot3Latitude latitude;$/;"	m	struct:Dot3WsaThreeDLocation
+latitude	dot3/dot3-types.h	/^  Dot3Latitude latitude;$/;"	m	struct:Dot3WsaTwoDLocation
+len	dot3/dot3-types.h	/^  Dot3PscLen len;$/;"	m	struct:Dot3Psc
+len	dot3/dot3-types.h	/^  Dot3WsaAdvertiserIdLen len;$/;"	m	struct:Dot3WsaAdvertiserId
+longitude	dot3/dot3-types.h	/^  Dot3Longitude longitude;$/;"	m	struct:Dot3WsaThreeDLocation
+longitude	dot3/dot3-types.h	/^  Dot3Longitude longitude;$/;"	m	struct:Dot3WsaTwoDLocation
+operating_class	dot3/dot3-types.h	/^  Dot3OperatingClass operating_class;     \/\/\/< operating class$/;"	m	struct:Dot3Pci
+operating_class	dot3/dot3-types.h	/^  Dot3OperatingClass operating_class;     \/\/\/< operating class$/;"	m	struct:Dot3Wci
+present	dot3/dot3-types.h	/^  } present;  \/\/\/< 각 옵션필드의 존재 여부$/;"	m	struct:Dot3Psr	typeref:struct:Dot3Psr::__anon3
+present	dot3/dot3-types.h	/^  } present;$/;"	m	struct:Dot3ConstructWsaParams	typeref:struct:Dot3ConstructWsaParams::__anon7
+present	dot3/dot3-types.h	/^  } present;$/;"	m	struct:Dot3ParseWsaParams	typeref:struct:Dot3ParseWsaParams::__anon8
+present	dot3/dot3-types.h	/^  } present;$/;"	m	struct:Dot3Wra	typeref:struct:Dot3Wra::__anon6
+primary_dns	dot3/dot3-types.h	/^  Dot3IPv6Address primary_dns;  \/\/\/< Primary DNS$/;"	m	struct:Dot3Wra
+priority	dot3/dot3-types.h	/^  Dot3Priority priority; \/\/\/< WSM을 전송할 우선 순위$/;"	m	struct:Dot3WsmMpduTxParams
+priority	dot3/dot3-types.h	/^  Dot3Priority priority; \/\/\/< 수신된 WSM의 우선순위$/;"	m	struct:Dot3WsmMpduRxParams
+provider_mac_addr	dot3/dot3-types.h	/^    bool provider_mac_addr;$/;"	m	struct:Dot3Psr::__anon3
+provider_mac_addr	dot3/dot3-types.h	/^  Dot3MacAddress provider_mac_addr;     \/\/\/< (서비스 제공자와 WSA 전송자가 다를 경우) 서비스 제공자의 MAC 주소$/;"	m	struct:Dot3Psr
+provider_mac_address	dot3/dot3-types.h	/^    bool provider_mac_address;$/;"	m	struct:Dot3Wsi::__anon4
+provider_mac_address	dot3/dot3-types.h	/^  Dot3MacAddress provider_mac_address;$/;"	m	struct:Dot3Wsi
+psc	dot3/dot3-types.h	/^    bool psc;$/;"	m	struct:Dot3Psr::__anon3
+psc	dot3/dot3-types.h	/^    bool psc;$/;"	m	struct:Dot3Wsi::__anon4
+psc	dot3/dot3-types.h	/^  struct Dot3Psc psc;                   \/\/\/< Provider Service Context$/;"	m	struct:Dot3Psr	typeref:struct:Dot3Psr::Dot3Psc
+psc	dot3/dot3-types.h	/^  struct Dot3Psc psc;$/;"	m	struct:Dot3Wsi	typeref:struct:Dot3Wsi::Dot3Psc
+psc	dot3/dot3-types.h	/^  uint8_t psc[kDot3PscLen_Max + 1];$/;"	m	struct:Dot3Psc
+psid	dot3/dot3-types.h	/^  Dot3Psid psid;                        \/\/\/< PSID$/;"	m	struct:Dot3Psr
+psid	dot3/dot3-types.h	/^  Dot3Psid psid;  \/\/\/< PSID$/;"	m	struct:Dot3WsmMpduTxParams
+psid	dot3/dot3-types.h	/^  Dot3Psid psid;  \/\/\/< PSID$/;"	m	struct:Dot3Wsr
+psid	dot3/dot3-types.h	/^  Dot3Psid psid; \/\/\/< PSID$/;"	m	struct:Dot3WsmMpduRxParams
+psid	dot3/dot3-types.h	/^  Dot3Psid psid;$/;"	m	struct:Dot3Wsi
+rcpi	dot3/dot3-types.h	/^  Dot3Rcpi rcpi; \/\/\/< RCPI$/;"	m	struct:Dot3WsmMpduRxParams
+rcpi	wlanaccess/wlanaccess-types.h	/^  uint8_t rcpi;         \/\/\/ MPDU RCPI$/;"	m	struct:AlMpduRxParams
+rcpi_threshold	dot3/dot3-types.h	/^    bool rcpi_threshold;$/;"	m	struct:Dot3Psr::__anon3
+rcpi_threshold	dot3/dot3-types.h	/^    bool rcpi_threshold;$/;"	m	struct:Dot3Wsi::__anon4
+rcpi_threshold	dot3/dot3-types.h	/^  Dot3Rcpi rcpi_threshold;              \/\/\/< 유효한 WSA로 판단되기 위한 RCPI 임계값$/;"	m	struct:Dot3Psr
+rcpi_threshold	dot3/dot3-types.h	/^  Dot3Rcpi rcpi_threshold;$/;"	m	struct:Dot3Wsi
+repeat_rate	dot3/dot3-types.h	/^    bool repeat_rate;$/;"	m	struct:Dot3WsaHdr::__anon1
+repeat_rate	dot3/dot3-types.h	/^  Dot3WsaRepeatRate repeat_rate;  \/\/\/< (미사용 항목) 5초당 WSA 전송 회수. PSR 단위가 아닌 통합 프로세스 단위에서 제어한다.$/;"	m	struct:Dot3Psr
+repeat_rate	dot3/dot3-types.h	/^  Dot3WsaRepeatRate repeat_rate;$/;"	m	struct:Dot3WsaHdr
+router_lifetime	dot3/dot3-types.h	/^  Dot3WraRouterLifeTime router_lifetime;  \/\/\/< Router lifetime$/;"	m	struct:Dot3Wra
+rx_chan_num	dot3/dot3-types.h	/^  Dot3ChannelNumber rx_chan_num; \/\/\/< 실제 수신된 채널번호 (=수신인터페이스가 접속 중인 채널번호)$/;"	m	struct:Dot3WsmMpduRxParams
+rx_datarate	dot3/dot3-types.h	/^  Dot3DataRate rx_datarate; \/\/\/< 실제 수신된 데이터레이트$/;"	m	struct:Dot3WsmMpduRxParams
+rx_power	dot3/dot3-types.h	/^  Dot3Power rx_power; \/\/\/< 실제 수신된 파워$/;"	m	struct:Dot3WsmMpduRxParams
+rxpower	wlanaccess/wlanaccess-types.h	/^  int16_t rxpower;       \/\/\/ MPDU 수신 파워 (0.5dBm 단위). -32768=Unknown$/;"	m	struct:AlMpduRxParams
+secondary_dns	dot3/dot3-types.h	/^    bool secondary_dns;$/;"	m	struct:Dot3Wra::__anon6
+secondary_dns	dot3/dot3-types.h	/^  Dot3IPv6Address secondary_dns;  \/\/\/< Secondary DNS$/;"	m	struct:Dot3Wra
+service_chan_num	dot3/dot3-types.h	/^  Dot3ChannelNumber service_chan_num;   \/\/\/< 서비스가 제공되는 채널$/;"	m	struct:Dot3Psr
+service_port	dot3/dot3-types.h	/^    bool service_port;$/;"	m	struct:Dot3Wsi::__anon4
+service_port	dot3/dot3-types.h	/^  uint16_t service_port;                \/\/\/< IP 서비스인 경우, IP 서비스 제공자의 포트번호$/;"	m	struct:Dot3Psr
+service_port	dot3/dot3-types.h	/^  uint16_t service_port;$/;"	m	struct:Dot3Wsi
+src_mac_addr	dot3/dot3-types.h	/^  uint8_t src_mac_addr[kDot3MacAddrSize]; \/\/\/< 송신지 MAC 주소$/;"	m	struct:Dot3WsmMpduRxParams
+src_mac_addr	dot3/dot3-types.h	/^  uint8_t src_mac_addr[kDot3MacAddrSize]; \/\/\/< 송신지(자신) MAC 주소$/;"	m	struct:Dot3WsmMpduTxParams
+threed_location	dot3/dot3-types.h	/^    bool threed_location;$/;"	m	struct:Dot3WsaHdr::__anon1
+threed_location	dot3/dot3-types.h	/^  struct Dot3WsaThreeDLocation threed_location;$/;"	m	struct:Dot3WsaHdr	typeref:struct:Dot3WsaHdr::Dot3WsaThreeDLocation
+timeslot	dot3/dot3-types.h	/^  Dot3TimeSlot timeslot; \/\/\/< WSM을 전송할 TimeSlot$/;"	m	struct:Dot3WsmMpduTxParams
+timeslot	wlanaccess/wlanaccess-types.h	/^  AlTimeSlot timeslot;  \/\/\/ MPDU가 수신된 TimeSlot$/;"	m	struct:AlMpduRxParams
+timeslot	wlanaccess/wlanaccess-types.h	/^  AlTimeSlot timeslot;  \/\/\/ 전송 TimeSlot$/;"	m	struct:AlMpduTxParams
+transmit_power	dot3/dot3-types.h	/^    bool transmit_power;  \/\/\/< WSM-N 헤더에 TransmitPowerUsed 확장필드 존재 여부$/;"	m	struct:Dot3WsmMpduTxParams::__anon2
+transmit_power	dot3/dot3-types.h	/^  Dot3Power transmit_power; \/\/\/< WSM을 전송할 파워$/;"	m	struct:Dot3WsmMpduTxParams
+transmit_power_level	dot3/dot3-types.h	/^  Dot3Power transmit_power_level;         \/\/\/< 이 채널에서 사용할 수 있는 최대 EIRP(dBm)$/;"	m	struct:Dot3Pci
+transmit_power_level	dot3/dot3-types.h	/^  Dot3Power transmit_power_level;         \/\/\/< 이 채널에서 사용할 수 있는 최대 EIRP(dBm)$/;"	m	struct:Dot3Wci
+twod_location	dot3/dot3-types.h	/^    bool twod_location;$/;"	m	struct:Dot3WsaHdr::__anon1
+twod_location	dot3/dot3-types.h	/^  struct Dot3WsaTwoDLocation twod_location;$/;"	m	struct:Dot3WsaHdr	typeref:struct:Dot3WsaHdr::Dot3WsaTwoDLocation
+tx_chan_num	dot3/dot3-types.h	/^  Dot3ChannelNumber tx_chan_num; \/\/\/< WSM-N 헤더의 ChannelNumber 확장필드 값 (필드가 없을 경우 Unknown으로 설정됨)$/;"	m	struct:Dot3WsmMpduRxParams
+tx_datarate	dot3/dot3-types.h	/^  Dot3DataRate tx_datarate; \/\/\/< WSM-N 헤더의 DataRate 확장필드 값 (필드가 없을 경우 Unknown으로 설정됨)$/;"	m	struct:Dot3WsmMpduRxParams
+tx_power	dot3/dot3-types.h	/^  Dot3Power tx_power; \/\/\/< WSM-N 헤더의 TransmitPowerUsed 확장필드 값 (필드가 없을 경우 Unknown으로 설정됨)$/;"	m	struct:Dot3WsmMpduRxParams
+txpower	wlanaccess/wlanaccess-types.h	/^  int8_t txpower;       \/\/\/ 송신파워 (0.5dBm 단위)$/;"	m	struct:AlMpduTxParams
+version	dot3/dot3-types.h	/^  Dot3WsaVersion version;$/;"	m	struct:Dot3WsaHdr
+version	dot3/dot3-types.h	/^  uint32_t version; \/\/\/< WSMP version$/;"	m	struct:Dot3WsmMpduRxParams
+wci_num	dot3/dot3-types.h	/^  Dot3WciNum wci_num;$/;"	m	struct:Dot3ParseWsaParams
+wcis	dot3/dot3-types.h	/^  struct Dot3Wci wcis[kDot3WciNum_MaxNum];$/;"	m	struct:Dot3ParseWsaParams	typeref:struct:Dot3ParseWsaParams::Dot3Wci
+wra	dot3/dot3-types.h	/^    bool wra;$/;"	m	struct:Dot3ConstructWsaParams::__anon7
+wra	dot3/dot3-types.h	/^    bool wra;$/;"	m	struct:Dot3ParseWsaParams::__anon8
+wra	dot3/dot3-types.h	/^  struct Dot3Wra wra;$/;"	m	struct:Dot3ConstructWsaParams	typeref:struct:Dot3ConstructWsaParams::Dot3Wra
+wra	dot3/dot3-types.h	/^  struct Dot3Wra wra;$/;"	m	struct:Dot3ParseWsaParams	typeref:struct:Dot3ParseWsaParams::Dot3Wra
+wsa_chan_num	dot3/dot3-types.h	/^  Dot3ChannelNumber wsa_chan_num; \/\/\/< (미사용 항목) WSA가 전송되는 채널. PSR 단위가 아닌 통합 프로세스 단위에서 제어한다.$/;"	m	struct:Dot3Psr
+wsa_cnt_threshold	dot3/dot3-types.h	/^    bool wsa_cnt_threshold;$/;"	m	struct:Dot3Psr::__anon3
+wsa_cnt_threshold	dot3/dot3-types.h	/^    bool wsa_cnt_threshold;$/;"	m	struct:Dot3Wsi::__anon4
+wsa_cnt_threshold	dot3/dot3-types.h	/^  Dot3WsaCountThreshold wsa_cnt_threshold;                    \/\/\/< 유효한 WSA로 판단되기 위한 수신 개수$/;"	m	struct:Dot3Psr
+wsa_cnt_threshold	dot3/dot3-types.h	/^  Dot3WsaCountThreshold wsa_cnt_threshold;$/;"	m	struct:Dot3Wsi
+wsa_cnt_threshold_interval	dot3/dot3-types.h	/^    bool wsa_cnt_threshold_interval;$/;"	m	struct:Dot3Psr::__anon3
+wsa_cnt_threshold_interval	dot3/dot3-types.h	/^    bool wsa_cnt_threshold_interval;$/;"	m	struct:Dot3Wsi::__anon4
+wsa_cnt_threshold_interval	dot3/dot3-types.h	/^  Dot3WsaCountThresholdInterval wsa_cnt_threshold_interval;   \/\/\/< wsa_cnt_threshold 를 카운트하기 위한 100ms 단위 인터벌(1~)$/;"	m	struct:Dot3Psr
+wsa_cnt_threshold_interval	dot3/dot3-types.h	/^  Dot3WsaCountThresholdInterval wsa_cnt_threshold_interval;$/;"	m	struct:Dot3Wsi
+wsa_id	dot3/dot3-types.h	/^  Dot3WsaIdentifier wsa_id;             \/\/\/< WSA 헤더에 수납되는 WSA identifier$/;"	m	struct:Dot3Psr
+wsa_id	dot3/dot3-types.h	/^  Dot3WsaIdentifier wsa_id;$/;"	m	struct:Dot3WsaHdr
+wsa_type	dot3/dot3-types.h	/^  Dot3WsaType wsa_type;        \/\/\/< (미사용 항목) WSA 유형. PSR 단위가 아닌 통합 프로세스 단위에서 제어한다.$/;"	m	struct:Dot3Psr
+wsi_num	dot3/dot3-types.h	/^  Dot3WsiNum wsi_num;$/;"	m	struct:Dot3ParseWsaParams
+wsis	dot3/dot3-types.h	/^  struct Dot3Wsi wsis[kDot3WsiNum_MaxNum];$/;"	m	struct:Dot3ParseWsaParams	typeref:struct:Dot3ParseWsaParams::Dot3Wsi

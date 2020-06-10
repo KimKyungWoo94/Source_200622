@@ -197,7 +197,7 @@ int serverSockConnection(int connect_timeout_usec)
     {
         //printf(">>>>>>>>>>>>> SOCKET CONNECTION CHECK <<<<<<<<<<<<<<<<<<<<<<\n");
         syslog(LOG_INFO | LOG_LOCAL0, ">>>>>>>>>>>>> SOCKET CONNECTION CHECK <<<<<<<<<<<<<<<<<<<<<<\n");
-        if ((tmpfd = socket(AF_INET, SOCK_DGRAM, 0)) == -1)
+        if ((tmpfd = socket(AF_INET, SOCK_DGRAM, 0)) == -1)//UDP로 소켓 열겠다.
         {
             //perror("[prcsJ2735] sock failed");
             syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] sock failed : %s\n", strerror(errno));
@@ -235,7 +235,7 @@ int serverSockConnection(int connect_timeout_usec)
     return 0;
 }
 
-int clientSockConnection(int connect_timeout_usec)
+int clientSockConnection(int connect_timeout_usec)//기능으로는 10번 30번 서버
 {
     int tmpfd = -1;
 
@@ -271,7 +271,7 @@ int clientSockConnection(int connect_timeout_usec)
     return 0;
 }
 
-void connection_Check(void)
+void connection_Check(void) //소켓이 깨졌는지 안깨졌는지 확인
 {
     if(g_mib.sockType == udpServer)
     {

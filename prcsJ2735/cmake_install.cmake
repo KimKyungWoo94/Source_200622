@@ -1,4 +1,4 @@
-# Install script for directory: /media/sf_Source/Xavier/apps/prcsJ2735
+# Install script for directory: /media/sf_Source/200104_Application_source/prcsJ2735
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/media/sf_Source/Xavier/apps/prcsJ2735/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/media/sf_Source/200104_Application_source/prcsJ2735/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

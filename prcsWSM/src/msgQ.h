@@ -17,7 +17,7 @@
 
 #define KEY_RECV_J2735 1716
 #define KEY_SEND_J2735 1717
-
+#define KEY_SEND_PAR 1718
 #define MSGMAX 4096
 
 typedef enum msgType {
@@ -46,3 +46,4 @@ int initMQ(void);
 void releaseMQ(void);
 int recvMQ(char *pkt);
 void sendMQ(uint8_t *pPkt, uint32_t len);
+void parsendMQ(uint8_t *pPkt, uint32_t len);

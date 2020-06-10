@@ -60,7 +60,7 @@ typedef struct
     uint32_t type;
     uint32_t len;
     char buf[1024];
-    bool flag;
+    bool flag;//갱신정보
 } rtcmData_t;
 
 /*----------------------------------------------------------------------------------*/

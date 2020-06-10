@@ -1,0 +1,94 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+DbgMsgLevel	v2x-obu.h	/^typedef uint32_t DbgMsgLevel; \/\/\/< @copydoc eDbgMsgLevel$/;"	t
+HEXDUMP_COLS	hexdump.h	6;"	d
+IF0_CHAN_NUM	v2x-obu.h	27;"	d
+IF0_DATARATE	v2x-obu.h	41;"	d
+IF0_POWER	v2x-obu.h	43;"	d
+IF1_CHAN_NUM	v2x-obu.h	28;"	d
+IF1_DATARATE	v2x-obu.h	42;"	d
+IF1_POWER	v2x-obu.h	44;"	d
+IP_SERVICE_PSID	v2x-obu.h	24;"	d
+KEY_RECV_J2735	msgQ.h	18;"	d
+KEY_SEND_J2735	msgQ.h	19;"	d
+MSGMAX	msgQ.h	21;"	d
+MSGQ_MSG	msgQ.h	/^}MSGQ_MSG;$/;"	t	typeref:struct:msgq_msg
+MSGQ_MSGTYPE	msgQ.h	/^}MSGQ_MSGTYPE;$/;"	t	typeref:enum:msgType
+ParsingOptions	options.c	/^int32_t ParsingOptions(int32_t argc, char *argv[])$/;"	f
+V2X_OBU_AccessChannel	v2x-obu-libwlanaccess.c	/^int V2X_OBU_AccessChannel(const uint8_t if_idx, const uint8_t ts0_chan, const uint8_t ts1_chan)$/;"	f
+V2X_OBU_GetCurrentChannel	v2x-obu-libwlanaccess.c	/^int V2X_OBU_GetCurrentChannel(uint8_t *const ts0_chan, uint8_t *const ts1_chan)$/;"	f
+V2X_OBU_InitDot3Library	v2x-obu-libdot3.c	/^int V2X_OBU_InitDot3Library(int log_level)$/;"	f
+V2X_OBU_InitV2XLibs	v2x-obu.c	/^static int V2X_OBU_InitV2XLibs(void)$/;"	f	file:
+V2X_OBU_InitWsmTx	v2x-obu-tx-wsm.c	/^int V2X_OBU_InitWsmTx(const uint32_t timer_interval)$/;"	f
+V2X_OBU_MIB	v2x-obu.h	/^struct V2X_OBU_MIB$/;"	s
+V2X_OBU_Main	v2x-obu.c	/^int V2X_OBU_Main(int argc, char *argv[])$/;"	f
+V2X_OBU_Main	v2x-obu.c	70;"	d	file:
+V2X_OBU_OpenAccessLibrary	v2x-obu-libwlanaccess.c	/^int V2X_OBU_OpenAccessLibrary(const int log_level)$/;"	f
+V2X_OBU_PollEvent	v2x-obu-libwlanaccess.c	/^static void* V2X_OBU_PollEvent(void *none)$/;"	f	file:
+V2X_OBU_PrintWsaParseParams	v2x-obu-rx.c	/^static void V2X_OBU_PrintWsaParseParams(const struct Dot3ParseWsaParams *const params)$/;"	f	file:
+V2X_OBU_ProcessAccessChannelResultCallback	v2x-obu-libwlanaccess.c	/^static void V2X_OBU_ProcessAccessChannelResultCallback(const AlIfIndex ifindex)$/;"	f	file:
+V2X_OBU_ProcessRxMpdu	v2x-obu-rx.c	/^void V2X_OBU_ProcessRxMpdu(const uint8_t *const mpdu, const uint16_t mpdu_size)$/;"	f
+V2X_OBU_ProcessRxMpduCallback	v2x-obu-libwlanaccess.c	/^static void V2X_OBU_ProcessRxMpduCallback($/;"	f	file:
+V2X_OBU_ProcessSetIfMacAddressResultCallback	v2x-obu-libwlanaccess.c	/^static void V2X_OBU_ProcessSetIfMacAddressResultCallback(const AlIfIndex ifindex)$/;"	f	file:
+V2X_OBU_ProcessTransmitResultCallback	v2x-obu-libwlanaccess.c	/^static void V2X_OBU_ProcessTransmitResultCallback(const AlTxResultCode result, const int dev_specific_errcode)$/;"	f	file:
+V2X_OBU_SetIfMacAddress	v2x-obu-libwlanaccess.c	/^int V2X_OBU_SetIfMacAddress(const uint8_t if_idx, const uint8_t *addr)$/;"	f
+V2X_OBU_V2X_OBU_H	v2x-obu.h	6;"	d
+V2X_OBU_WaitEventPolling	v2x-obu-libwlanaccess.c	/^void V2X_OBU_WaitEventPolling(void)$/;"	f
+V2X_OBU_WsmTxThread	v2x-obu-tx-wsm.c	/^static void* V2X_OBU_WsmTxThread(void *notused)$/;"	f	file:
+WSMP_SERVICE_PSID	v2x-obu.h	23;"	d
+WSM_TX_INTERVAL	v2x-obu.h	52;"	d
+_CNVC_MSGQ_H_	msgQ.h	2;"	d
+_HEXDUMP_H_	hexdump.h	2;"	d
+channel	v2x-obu.h	/^  Dot3ChannelNumber channel;$/;"	m	struct:V2X_OBU_MIB
+cn_MQ_attr	msgQ.h	/^static struct mq_attr cn_MQ_attr = {O_NONBLOCK, 10, sizeof(struct msgQ_elem_frame), 0};$/;"	v	typeref:struct:mq_attr
+dataRate	v2x-obu.h	/^  Dot3DataRate      dataRate;$/;"	m	struct:V2X_OBU_MIB
+destMac	v2x-obu.h	/^  uint8_t           destMac[kDot3MacAddrSize];$/;"	m	struct:V2X_OBU_MIB
+eDbgMsgLevel	v2x-obu.h	/^enum eDbgMsgLevel {$/;"	g
+g_chan_access_complete	v2x-obu-libwlanaccess.c	/^volatile bool g_chan_access_complete = false;$/;"	v
+g_dbg	v2x-obu.c	/^DbgMsgLevel g_dbg = kDbgMsgLevel_nothing;  \/\/\/< 디버그메시지 출력레벨$/;"	v
+g_if0_mac_address	v2x-obu.c	/^const uint8_t g_if0_mac_address[] = { 0x00, 0x49, 0x54, 0x45, 0xCC, 0x00};$/;"	v
+g_if1_mac_address	v2x-obu.c	/^const uint8_t g_if1_mac_address[] = { 0x00, 0x49, 0x54, 0x45, 0xCC, 0x01};$/;"	v
+g_mib	v2x-obu.c	/^struct V2X_OBU_MIB g_mib; \/\/\/< 어플리케이션 관리정보$/;"	v	typeref:struct:V2X_OBU_MIB
+g_poll_thread	v2x-obu-libwlanaccess.c	/^pthread_t g_poll_thread; \/\/\/< 이벤트 폴링 쓰레드$/;"	v
+g_set_if_mac_addr_done	v2x-obu-libwlanaccess.c	/^volatile bool g_set_if_mac_addr_done = false;$/;"	v
+g_tx_thread	v2x-obu-tx-wsm.c	/^static pthread_t g_tx_thread; \/\/\/< 송신쓰레드$/;"	v	file:
+hexdump	hexdump.c	/^void hexdump(void *mem, unsigned int len)$/;"	f
+if_num	v2x-obu.h	/^    uint8_t if_num; \/\/\/< v2x 송수신 인터페이스 총 개수 (플랫폼 하드웨어에 의존적이다)$/;"	m	struct:V2X_OBU_MIB
+initMQ	msgQ.c	/^int initMQ(void)$/;"	f
+kDbgMsgLevel_event	v2x-obu.h	/^  kDbgMsgLevel_event, \/\/\/< 이벤트 출력$/;"	e	enum:eDbgMsgLevel
+kDbgMsgLevel_max	v2x-obu.h	/^  kDbgMsgLevel_max = kDbgMsgLevel_msgdump$/;"	e	enum:eDbgMsgLevel
+kDbgMsgLevel_msgdump	v2x-obu.h	/^  kDbgMsgLevel_msgdump,  \/\/\/< 메시지 hexdump 출력$/;"	e	enum:eDbgMsgLevel
+kDbgMsgLevel_nothing	v2x-obu.h	/^  kDbgMsgLevel_nothing, \/\/\/< 미출력$/;"	e	enum:eDbgMsgLevel
+msg	msgQ.h	/^   MSGQ_MSG msg;$/;"	m	struct:msgQ_elem_frame
+msg	msgQ.h	/^   uint8_t msg[MSGMAX];$/;"	m	struct:msgq_msg
+msgQ_elem_frame	msgQ.h	/^struct msgQ_elem_frame$/;"	s
+msgType	msgQ.h	/^typedef enum msgType {$/;"	g
+msg_len	msgQ.h	/^   uint32_t	msg_len;$/;"	m	struct:msgq_msg
+msgqCnt	msgQ.c	/^uint32_t msgqCnt = 0;$/;"	v
+msgq_msg	msgQ.h	/^typedef struct msgq_msg$/;"	s
+msgq_msgtype_messageframe	msgQ.h	/^   msgq_msgtype_messageframe,$/;"	e	enum:msgType
+msgtype	msgQ.h	/^   long msgtype;$/;"	m	struct:msgQ_elem_frame
+netIfIndex	v2x-obu.h	/^  uint32_t          netIfIndex;$/;"	m	struct:V2X_OBU_MIB
+op	v2x-obu.h	/^  op_e op;$/;"	m	struct:V2X_OBU_MIB
+opRX	v2x-obu.h	/^    opRX,$/;"	e	enum:__anon1
+opTRX	v2x-obu.h	/^    opTRX$/;"	e	enum:__anon1
+opTX	v2x-obu.h	/^    opTX,$/;"	e	enum:__anon1
+op_e	v2x-obu.h	/^} op_e;$/;"	t	typeref:enum:__anon1
+optStr	options.c	/^static const char	*optStr	=	"a:x:n:k:p:r:w:o:b:h";$/;"	v	file:
+power	v2x-obu.h	/^  Dot3Power         power;$/;"	m	struct:V2X_OBU_MIB
+priority	v2x-obu.h	/^  Dot3Priority      priority;$/;"	m	struct:V2X_OBU_MIB
+psid	v2x-obu.h	/^  Dot3Psid          psid;$/;"	m	struct:V2X_OBU_MIB
+recvFD	msgQ.c	/^mqd_t recvFD, sendFD;$/;"	v
+recvMQ	msgQ.c	/^int recvMQ(char *pkt)$/;"	f
+recvPkt	msgQ.c	/^struct msgQ_elem_frame *recvPkt = NULL; \/\/ 메시지 버퍼$/;"	v	typeref:struct:msgQ_elem_frame
+releaseMQ	msgQ.c	/^void releaseMQ(void)$/;"	f
+rxCnt	msgQ.h	/^   uint32_t rxCnt;$/;"	m	struct:msgQ_elem_frame
+sendFD	msgQ.c	/^mqd_t recvFD, sendFD;$/;"	v
+sendMQ	msgQ.c	/^void sendMQ(uint8_t *pPkt, uint32_t len)$/;"	f
+sendPkt	msgQ.c	/^struct msgQ_elem_frame *sendPkt = NULL; \/\/ 메시지 버퍼$/;"	v	typeref:struct:msgQ_elem_frame
+timeSlot	v2x-obu.h	/^  Dot3TimeSlot      timeSlot;$/;"	m	struct:V2X_OBU_MIB
+usage	options.c	/^static void usage(char *cmd) {$/;"	f	file:

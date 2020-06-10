@@ -83,7 +83,8 @@ struct V2X_OBU_MIB
   Dot3DataRate      dataRate;
   Dot3Power         power;
   Dot3Psid          psid;
-
+  int16_t rxpower;
+  uint8_t rcpi;
 };
 
 

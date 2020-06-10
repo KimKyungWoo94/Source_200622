@@ -45,13 +45,16 @@ static void V2X_OBU_ProcessRxMpduCallback(
                 mpdu_size, rxparams->ifindex, rxparams->timeslot, rxparams->channel,
                 rxparams->rxpower, rxparams->rcpi, rxparams->datarate);
 #endif
+#if 0
         syslog(LOG_INFO | LOG_LOCAL0, "\n-- Processing received MPDU --------------------------------\n");
         syslog(LOG_INFO | LOG_LOCAL0, "Rx MPDU callback - MPDU size: %u, ifindex: %u, timeslot: %u, channel: %u, "
                 "rxpower: %d(0.5dBm), rcpi: %u, datarate: %u(500kbps)\n",
                 mpdu_size, rxparams->ifindex, rxparams->timeslot, rxparams->channel,
                 rxparams->rxpower, rxparams->rcpi, rxparams->datarate);
+#endif
     }
-
+g_mib.rcpi = rxparams->rcpi;
+g_mib.rxpower=rxparams->rxpower/2;
 
     V2X_OBU_ProcessRxMpdu(mpdu, mpdu_size);
 }

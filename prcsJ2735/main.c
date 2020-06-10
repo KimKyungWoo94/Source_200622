@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
 
 	/* MIB 초기화 및 입력 파라미터 설정 */
 	memset(&g_mib, 0, sizeof(mib_t));
-    g_mib.interval = 100000;
-    g_mib.gpsdPort = "2947";
+    g_mib.interval = 100000;//송신주기
+    g_mib.gpsdPort = "2947"; //GPSD서버 포트번호
 
 	/* 사용자가 입력한 파라미터들을 MIB에 저장한다. */
 	result	=	ParsingOptions(argc, argv);
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
     /* 프로그램 종료 위한 시그널 등록 Ctrl+C  */
     signal(SIGINT, sigint_handler);
-    signal(SIGPIPE, SIG_IGN);
+    signal(SIGPIPE, SIG_IGN); // 브로큰 파이프 시그널 무시
 
     /* Messge Queue 초기화 */
     if(initMQ() == -1)

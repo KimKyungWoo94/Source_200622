@@ -58,6 +58,6 @@ static void TxTimerExpired(union sigval arg)
 
     pthread_mutex_lock(&g_mib.txMtx);
     //pthread_cond_signal(&g_mib.txCond);
-    pthread_cond_broadcast(&g_mib.txCond);
+    pthread_cond_broadcast(&g_mib.txCond);//1초 됬어 동작해알려줌
     pthread_mutex_unlock(&g_mib.txMtx);
 }

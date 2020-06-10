@@ -40,7 +40,6 @@ void setJ2735rx()
             syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] Fail to create tx thread() : %s\n", strerror(errno));
             return;
         }
-
     }
     else if(g_mib.dbg == 0)
     {
@@ -61,9 +60,19 @@ void setJ2735rx()
     /* UBLOX LOG En */
     if(g_mib.dbg == 2)
     {
-        for(int i=0; i < 35; i++)
+        for(int i=0; i < 37; i++)
         {
             result = write(gpsData.gps_fd, ublox_debug_message[i], 11);
+            if(result == -1)
+                syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] Ublox debug message error : %s\n", strerror(errno));
+            else
+                syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] Ublox debug message send\n");
+            usleep(10000);
+        }
+
+        for(int i=0; i < 2; i++)
+        {
+            result = write(gpsData.gps_fd, ublox_debug_message_2[i], 16);
             if(result == -1)
                 syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] Ublox debug message error : %s\n", strerror(errno));
             else
@@ -98,7 +107,7 @@ void setJ2735rx()
             }
         }
 
-#if 0
+#if 1
         /* 1초 계산 획득 */
         if(timeFlag == false)
         {
@@ -150,8 +159,8 @@ void setJ2735rx()
                             {
                                 if(timeFlag)
                                 {
-                                    //timeFlag = false;
-                                    //gettimeofday(&endTime, NULL);
+                                    timeFlag = false;
+                                    gettimeofday(&endTime, NULL);
 
                                     result = write(gpsData.gps_fd, pRTCM->msgs.tab->buf, pRTCM->msgs.tab->len);
                                     if( result < 0)
@@ -170,7 +179,7 @@ void setJ2735rx()
                                         }
                                     }
                                 }
-                                sleep(1);
+                                //sleep(1);
                             }
                             else
                                 syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] GPSd socket not open\n");
@@ -261,7 +270,7 @@ static void* gpsdThread(void *notused)
                 {
                     if(g_mib.dbg)
                     {
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] %u %u 0x%02x %u-%u-%u %u:%u:%u.%d\n", gpsData.pvt.lat, gpsData.pvt.lon, gpsData.pvt.flags, gpsData.pvt.year, gpsData.pvt.month, gpsData.pvt.day, gpsData.pvt.hour, gpsData.pvt.min, gpsData.pvt.sec, gpsData.pvt.nano);
+                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] %u %u %d 0x%02x %u %u-%u-%u %u:%u:%u.%d\n", gpsData.pvt.lat, gpsData.pvt.lon, gpsData.pvt.gSpeed, gpsData.pvt.flags, gpsData.pvt.pDOP, gpsData.pvt.year, gpsData.pvt.month, gpsData.pvt.day, gpsData.pvt.hour, gpsData.pvt.min, gpsData.pvt.sec, gpsData.pvt.nano);
 #if 0
                         //printf("flags   : 0x%02x\n", gpsData.pvt.flags); 
                         syslog(LOG_INFO | LOG_LOCAL0, "*******************gpsData*****************\n");
