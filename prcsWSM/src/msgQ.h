@@ -46,4 +46,4 @@ int initMQ(void);
 void releaseMQ(void);
 int recvMQ(char *pkt);
 void sendMQ(uint8_t *pPkt, uint32_t len);
-void parsendMQ(uint8_t *pPkt, uint32_t len);
+void PARsendMQ(uint8_t *pPkt, uint32_t len);

@@ -25,6 +25,10 @@ string.h
 -
 stdbool.h
 -
+sys/file.h
+-
+shm.h
+-
 
 ext/include/gps.h
 sys/types.h
@@ -44,5 +48,15 @@ signal.h
 stdio.h
 -
 pthread.h
+-
+
+shm.h
+stdio.h
+-
+stdint.h
+-
+stdbool.h
+-
+sys/shm.h
 -
 

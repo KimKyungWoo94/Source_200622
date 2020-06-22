@@ -153,6 +153,33 @@ main.c.s:
 	$(MAKE) -f CMakeFiles/timeSync.dir/build.make CMakeFiles/timeSync.dir/main.c.s
 .PHONY : main.c.s
 
+shm.o: shm.c.o
+
+.PHONY : shm.o
+
+# target to build an object file
+shm.c.o:
+	$(MAKE) -f CMakeFiles/timeSync.dir/build.make CMakeFiles/timeSync.dir/shm.c.o
+.PHONY : shm.c.o
+
+shm.i: shm.c.i
+
+.PHONY : shm.i
+
+# target to preprocess a source file
+shm.c.i:
+	$(MAKE) -f CMakeFiles/timeSync.dir/build.make CMakeFiles/timeSync.dir/shm.c.i
+.PHONY : shm.c.i
+
+shm.s: shm.c.s
+
+.PHONY : shm.s
+
+# target to generate assembly for a file
+shm.c.s:
+	$(MAKE) -f CMakeFiles/timeSync.dir/build.make CMakeFiles/timeSync.dir/shm.c.s
+.PHONY : shm.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -165,6 +192,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... shm.o"
+	@echo "... shm.i"
+	@echo "... shm.s"
 .PHONY : help
 
 

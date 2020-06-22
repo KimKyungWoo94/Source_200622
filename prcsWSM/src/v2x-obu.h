@@ -85,6 +85,7 @@ struct V2X_OBU_MIB
   Dot3Psid          psid;
   int16_t rxpower;
   uint8_t rcpi;
+
 };
 
 

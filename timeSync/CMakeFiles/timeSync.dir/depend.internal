@@ -4,3 +4,7 @@
 CMakeFiles/timeSync.dir/main.c.o
  /media/sf_Source/Xavier/apps/timeSync/main.c
  ext/include/gps.h
+ shm.h
+CMakeFiles/timeSync.dir/shm.c.o
+ /media/sf_Source/Xavier/apps/timeSync/shm.c
+ shm.h

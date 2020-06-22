@@ -13,20 +13,17 @@ void hexdump(void *mem, unsigned int len)
         /* print offset */
         if(i % HEXDUMP_COLS == 0)
         {
-            //printf("0x%06X: ", i);
-            syslog(LOG_INFO | LOG_LOCAL0, "0x%06X: ", i);
+            printf("0x%06X: ", i);
         }
 
         /* print hex data */
         if(i < len)
         {
-            //printf("%02X ", 0xFF & ((char*)mem)[i]);
-            syslog(LOG_INFO | LOG_LOCAL0, "%02X ", 0xFF & ((char*)mem)[i]);
+            printf("%02X ", 0xFF & ((char*)mem)[i]);
         }
         else /* end of block, just aligning for ASCII dump */
         {
-            //printf("   ");
-            syslog(LOG_INFO | LOG_LOCAL0, "   ");
+            printf("   ");
         }
 
         /* print ASCII dump */
@@ -36,22 +33,18 @@ void hexdump(void *mem, unsigned int len)
             {
                 if(j >= len) /* end of block, not really printing */
                 {
-                    //putchar(' ');
-                    syslog(LOG_INFO | LOG_LOCAL0, " ");
+                    putchar(' ');
                 }
                 else if(isprint(((char*)mem)[j])) /* printable char */
                 {
-                    //putchar(0xFF & ((char*)mem)[j]);        
-                    syslog(LOG_INFO | LOG_LOCAL0, "0x%02X", 0xFF & ((char*)mem)[j]);
+                    putchar(0xFF & ((char*)mem)[j]);        
                 }
                 else /* other char */
                 {
-                    //putchar('.');
-                    syslog(LOG_INFO | LOG_LOCAL0, ".");
+                    putchar('.');
                 }
             }
-            //putchar('\n');
-            syslog(LOG_INFO | LOG_LOCAL0, "\n");
+            putchar('\n');
         }
     }
 }

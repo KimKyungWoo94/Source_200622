@@ -77,12 +77,12 @@ preinstall:
 CMakeFiles/timeSync.dir/all:
 	$(MAKE) -f CMakeFiles/timeSync.dir/build.make CMakeFiles/timeSync.dir/depend
 	$(MAKE) -f CMakeFiles/timeSync.dir/build.make CMakeFiles/timeSync.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/media/sf_Source/Xavier/apps/timeSync/CMakeFiles --progress-num=1,2 "Built target timeSync"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/media/sf_Source/Xavier/apps/timeSync/CMakeFiles --progress-num=1,2,3 "Built target timeSync"
 .PHONY : CMakeFiles/timeSync.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/timeSync.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /media/sf_Source/Xavier/apps/timeSync/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /media/sf_Source/Xavier/apps/timeSync/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/timeSync.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /media/sf_Source/Xavier/apps/timeSync/CMakeFiles 0
 .PHONY : CMakeFiles/timeSync.dir/rule

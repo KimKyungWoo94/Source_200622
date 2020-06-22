@@ -8,17 +8,53 @@
 
 #include "udp.h"
 #include "ublox_debug.h"
+#include "shm.h"
 
 /* 전역변수 */
 bool sockCheck = false;
 struct gps_data_t gpsData;
 pthread_t gpsd_thread;
-bool gpsdOpenFlag = false;
+char *shmPtr = NULL;
+int shmid;
+bool gpsdCheckFlag = false;
+int writeErrCnt = 0;
+int recvCnt = 0;
+int errCnt = 0;
 
 /* 함수 원형 */
 static void* gpsdThread(void *notused);
 struct timeval startTime, endTime = {0, };
 bool timeFlag = true;
+
+int openGPSD()
+{
+    int result;
+
+    /* GPSD */
+    result = gps_open("localhost", g_mib.gpsdPort, &gpsData);
+    if(result < 0 )
+    {
+        //printf("[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
+        syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] gps_open() fail(%s)\n", gps_errstr(result));
+        sockCheck = true;
+        return -1;
+    }
+    else
+    {
+        if(gpsData.gps_fd == 0)
+        {
+        syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] gps_fd is 0");
+        sockCheck = true;
+        return -1;
+        }
+    }
+    (void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
+    syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] gps_open() Success\n");
+    
+    sockCheck = false;
+
+    return 0;
+}
 
 void setJ2735rx()
 {
@@ -26,13 +62,18 @@ void setJ2735rx()
     void *msg;
     ASN1Error err;
     char pkt[kMpduMaxSize] = {0, };
+    int timeCheck = 0;
 
     /* 현재 시간 획득 */
     gettimeofday(&startTime, NULL);
     gettimeofday(&endTime, NULL);
 
-    if(g_mib.dbg)
-    {
+    /* Shared Memory open */
+    if(InitShm(&shmid, &shmPtr) == -1)
+        return;
+
+//    if(g_mib.dbg)
+//    {
         /* GPSD 쓰레드 생성 */
         result = pthread_create(&gpsd_thread, NULL, gpsdThread, NULL);
         if (result < 0) {
@@ -40,7 +81,8 @@ void setJ2735rx()
             syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] Fail to create tx thread() : %s\n", strerror(errno));
             return;
         }
-    }
+//    }
+#if 0
     else if(g_mib.dbg == 0)
     {
         /* GPSD */
@@ -48,15 +90,15 @@ void setJ2735rx()
         if(result < 0 )
         {
             //printf("[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
-            syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
+            syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] gps_open() fail(%s)\n", gps_errstr(result));
+            sockCheck = true;
             return;
         }
         (void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
 
-        gpsdOpenFlag = true;
+        //gpsdOpenFlag = true;
+        openGPSD();
     }
-
-#if 0
     /* UBLOX LOG En */
     if(g_mib.dbg == 2)
     {
@@ -84,6 +126,7 @@ void setJ2735rx()
 
     while(!ending)
     {
+#if 0
         if(g_mib.dbg == 0)
         {
             /* connection check */
@@ -99,33 +142,25 @@ void setJ2735rx()
                 {
                     //printf("[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
                     syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
-                   pthread_exit((void *)-1);
+                    sleep(1);
+                    continue;
                 }
                 (void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
-
-                sockCheck = false;
-            }
-        }
-
-#if 1
-        /* 1초 계산 획득 */
-        if(timeFlag == false)
-        {
-            gettimeofday(&startTime, NULL);
-            result = startTime.tv_sec - endTime.tv_sec;
-            if(result >= 1)
-            {
-                timeFlag = true;
+                if(openGPSD() == -1)
+                {
+                    sleep(1);
+                    continue;
+                }
             }
         }
 #endif
-
         /* msgQ read */
         result = recvMQ(pkt);
         if(result < 0 )
             continue;
         else
         {
+          
             /* J2735 Decoding */
             result = asn1_uper_decode(&msg, asn1_type_MessageFrame, pkt, result, &err);
             if(result < 0)
@@ -142,6 +177,22 @@ void setJ2735rx()
                     syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] Decoding success\n");
                 }
 
+                /* 1초 계산 획득 */
+                if(timeFlag == false)
+                {
+                    gettimeofday(&startTime, NULL);
+                    timeCheck = startTime.tv_sec - endTime.tv_sec;
+                    if(timeCheck >= 1)
+                    {
+                        timeFlag = true;
+                    }
+                    else if(timeCheck < 0)
+                    {
+                        gettimeofday(&endTime, NULL);
+                        continue;
+                    }
+                }
+
                 switch( ((MessageFrame *)msg)->messageId)
                 {
                     case 28 :
@@ -154,32 +205,48 @@ void setJ2735rx()
                                 syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] Receive RTCM(%d Byte)\n", result);
                                 //hexdump(pRTCM->msgs.tab->buf, pRTCM->msgs.tab->len);
                             }
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] startTime : %d, endTime : %d\n",  startTime.tv_sec, endTime.tv_sec);
 
-                            if(gpsdOpenFlag )
+                            if(sockCheck == false )
                             {
                                 if(timeFlag)
                                 {
                                     timeFlag = false;
                                     gettimeofday(&endTime, NULL);
 
+                                    syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] gps_fd : %d\n", gpsData.gps_fd);
                                     result = write(gpsData.gps_fd, pRTCM->msgs.tab->buf, pRTCM->msgs.tab->len);
                                     if( result < 0)
                                     {
                                         //perror("[prcsJ2735] RTCM write fail : ");
                                         syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735]  RTCM write fail : %s\n", strerror(errno));
-
+                                        gps_close(&gpsData);
                                         sockCheck = true;
                                     }
                                     else
                                     {
+                                        if(gpsData.pvt.flags == 0x01)
+                                            writeErrCnt++;
+                                        else
+                                            writeErrCnt = 0;
+
+                                        if(writeErrCnt >= 3)
+                                        {
+                                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] RTCM write err\n");
+                                            gps_close(&gpsData);
+                                            sockCheck = true;
+                                            writeErrCnt = 0;
+                                            continue;
+                                        }
+
                                         if( g_mib.dbg)
                                         {
+
                                             //printf("[prcsJ2735] Write RTCM(%d byte)\n",  result);
                                             syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] Write RTCM(%d byte)\n",  result);
                                         }
                                     }
                                 }
-                                //sleep(1);
                             }
                             else
                                 syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] GPSd socket not open\n");
@@ -192,7 +259,6 @@ void setJ2735rx()
             }
         }
     }
-
 
     if(g_mib.dbg)
     {
@@ -215,6 +281,8 @@ void setJ2735rx()
     else if(g_mib.dbg == 0)
         gps_close(&gpsData);
 
+    ReleaseShm(shmPtr);
+
     return;
 }
 
@@ -222,47 +290,68 @@ static void* gpsdThread(void *notused)
 {
     int result;
     GPS_Pkt_t shared_GPS;
+    uint32_t prevItow = 0;
 
-    result = gps_open("localhost", g_mib.gpsdPort, &gpsData);
+#if 0
+    //result = gps_open("localhost", g_mib.gpsdPort, &gpsData);
+    result = gps_open(GPSD_SHARED_MEMORY, 0, &gpsData);
     if(result < 0 )
     {
         //printf("[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
         syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
-        sockCheck == true;
+        sockCheck = true;
     }
-    gpsdOpenFlag = true;
-    (void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
+    //gpsdOpenFlag = true;
+    //(void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
+#else
+    openGPSD();
+#endif
+
 
     while(!ending)
     {
         /* connection check */
         if(sockCheck == true)
         {
+#if 0
             gps_close(&gpsData);
 
             //printf("[prcsJ2735] Re connection to GPSD\n");
             syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] Re connection to GPSD\n");
 
-            result = gps_open("localhost", g_mib.gpsdPort, &gpsData);
+            //result = gps_open("localhost", g_mib.gpsdPort, &gpsData);
+            result = gps_open(GPSD_SHARED_MEMORY, 0, &gpsData);
             if(result < 0 )
             {
                 //printf("[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
                 syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] gps_opn() fail(%s)\n", gps_errstr(result));
-                pthread_exit((void *)-1);
+                sleep(1);
+                continue;
             }
-            (void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
+            //(void) gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
 
             sockCheck = false;
+#else
+            if(openGPSD() == -1)
+            {
+                sleep(1);
+                continue;
+            }
+#endif
         }
 
         /* gps read */
-        if (gps_waiting(&gpsData, 1000000))
+        if (gps_waiting(&gpsData, 3000000))
         {
+//            gpsdCheckFlag = false;
             result = gps_read(&gpsData);
-            if(result == -1)
+            if(result < 0)
             {
                 //printf("[prcsJ2735] gps_read() fail( %s)\n", gps_errstr(result));
                 syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] gps_read() fail( %s)\n", gps_errstr(result));
+                gps_close(&gpsData);
+                sockCheck = true;
+                sleep(1);
             }
             else
             {
@@ -270,61 +359,39 @@ static void* gpsdThread(void *notused)
                 {
                     if(g_mib.dbg)
                     {
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] %u %u %d 0x%02x %u %u-%u-%u %u:%u:%u.%d\n", gpsData.pvt.lat, gpsData.pvt.lon, gpsData.pvt.gSpeed, gpsData.pvt.flags, gpsData.pvt.pDOP, gpsData.pvt.year, gpsData.pvt.month, gpsData.pvt.day, gpsData.pvt.hour, gpsData.pvt.min, gpsData.pvt.sec, gpsData.pvt.nano);
-#if 0
-                        //printf("flags   : 0x%02x\n", gpsData.pvt.flags); 
-                        syslog(LOG_INFO | LOG_LOCAL0, "*******************gpsData*****************\n");
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] itow      : %u\t", gpsData.pvt.itow);
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] time      : %u-%u-%u %u:%u:%u.%d\t", gpsData.pvt.year, gpsData.pvt.month, gpsData.pvt.day, gpsData.pvt.hour, gpsData.pvt.min, gpsData.pvt.sec, gpsData.pvt.nano);
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] latitude  : %u\t", gpsData.pvt.lat);
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] longitude : %u\t", gpsData.pvt.lon);
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] speed     : %u\t", gpsData.pvt.gSpeed);
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] numSV     : %u\t", gpsData.pvt.numSV);
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] pDOP      : %u\t", gpsData.pvt.pDOP);
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] hAcc      : %u\t", gpsData.pvt.hAcc);
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] vAcc      : %u\t", gpsData.pvt.vAcc);
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] flags     : 0x%02x\t", gpsData.pvt.flags);
-                        syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] %u %u 0x%02x %u-%u-%u %u:%u:%u.%d\n", gpsData.pvt.lat, gpsData.pvt.lon, gpsData.pvt.flags, gpsData.pvt.year, gpsData.pvt.month, gpsData.pvt.day, gpsData.pvt.hour, gpsData.pvt.min, gpsData.pvt.sec, gpsData.pvt.nano);
-                        syslog(LOG_INFO | LOG_LOCAL0, "*******************************************\n");
-                        printf("\r******************gpsData*****************\n");
-                        printf("\rstatus  : %d\n", gpsData.status); 
-                        printf("\ritow    : %u\n", gpsData.pvt.itow); 
-                        printf("\ryear    : %u\n", gpsData.pvt.year); 
-                        printf("\rmonth   : %u\n", gpsData.pvt.month); 
-                        printf("\rday     : %u\n", gpsData.pvt.day); 
-                        printf("\rhour    : %u\n", gpsData.pvt.hour); 
-                        printf("\rmin     : %u\n", gpsData.pvt.min); 
-                        printf("\rsec     : %d\n", gpsData.pvt.sec); 
-                        printf("\rvalid   : %d\n", gpsData.pvt.valid); 
-                        printf("\rtAcc    : %u\n", gpsData.pvt.tAcc); 
-                        printf("\rnano    : %d\n", gpsData.pvt.nano); 
-                        printf("\rfixType : 0x%02x\n", gpsData.pvt.fixType); 
-                        printf("\rflags   : 0x%02x\n", gpsData.pvt.flags); 
-                        printf("\rflags2  : 0x%02x\n", gpsData.pvt.flags2); 
-                        printf("\rnumSV   : %u\n", gpsData.pvt.numSV); 
-                        printf("\rlon     : %d\n", gpsData.pvt.lon); 
-                        printf("\rlat     : %d\n", gpsData.pvt.lat); 
-                        printf("\rheight  : %d\n", gpsData.pvt.height); 
-                        printf("\rhMSL    : %d\n", gpsData.pvt.hMSL); 
-                        printf("\rhAcc    : %u\n", gpsData.pvt.hAcc); 
-                        printf("\rvAcc    : %u\n", gpsData.pvt.vAcc); 
-                        printf("\rvelN    : %d\n", gpsData.pvt.velN); 
-                        printf("\rvelE    : %d\n", gpsData.pvt.velE); 
-                        printf("\rvelD    : %d\n", gpsData.pvt.velD); 
-                        printf("\rgSpeed  : %d\n", gpsData.pvt.gSpeed); 
-                        printf("\rheadMot : %d\n", gpsData.pvt.headMot); 
-                        printf("\rsAcc    : %u\n", gpsData.pvt.sAcc); 
-                        printf("\rheadAcc : %u\n", gpsData.pvt.headAcc); 
-                        printf("\rpDOP    : %u\n", gpsData.pvt.pDOP); 
-                        printf("\rheadVeh : %d\n", gpsData.pvt.headVeh); 
-                        printf("\rmsgDec  : %d\n", gpsData.pvt.msgDec); 
-                        printf("\rmsgAcc  : %u\n", gpsData.pvt.msgAcc); 
-                        printf("\rheading : %d\n", gpsData.fix.track); 
-                        printf("\r********************************************\n");
+                        if(prevItow != gpsData.pvt.itow)
+                        {
+#if 1
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] %u %u %d 0x%02x %u %u-%u-%u %u:%u:%u.%d\n", gpsData.pvt.lat, gpsData.pvt.lon, gpsData.pvt.gSpeed, gpsData.pvt.flags, gpsData.pvt.pDOP, gpsData.pvt.year, gpsData.pvt.month, gpsData.pvt.day, gpsData.pvt.hour, gpsData.pvt.min, gpsData.pvt.sec, gpsData.pvt.nano);
+#else
+                            syslog(LOG_INFO | LOG_LOCAL0, "*******************gpsData*****************\n");
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] itow      : %u\t", gpsData.pvt.itow);
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] time      : %u-%u-%u %u:%u:%u.%d\t", gpsData.pvt.year, gpsData.pvt.month, gpsData.pvt.day, gpsData.pvt.hour, gpsData.pvt.min, gpsData.pvt.sec, gpsData.pvt.nano);
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] latitude  : %u\t", gpsData.pvt.lat);
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] longitude : %u\t", gpsData.pvt.lon);
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] speed     : %u\t", gpsData.pvt.gSpeed);
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] numSV     : %u\t", gpsData.pvt.numSV);
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] pDOP      : %u\t", gpsData.pvt.pDOP);
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] hAcc      : %u\t", gpsData.pvt.hAcc);
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] vAcc      : %u\t", gpsData.pvt.vAcc);
+                            syslog(LOG_INFO | LOG_LOCAL0, "[prcsJ2735] flags     : 0x%02x\t", gpsData.pvt.flags);
+                            syslog(LOG_INFO | LOG_LOCAL0, "*******************************************\n");
 #endif
+                            prevItow = gpsData.pvt.itow;
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            syslog(LOG_ERR | LOG_LOCAL1, "[prcsJ2735] gps_waiting() fail( %s)\n", gps_errstr(result));
+
+            gpsdCheckFlag = true;
+            memcpy(shmPtr, &gpsdCheckFlag, sizeof(bool));
+
+            gps_close(&gpsData);
+            sockCheck = true;
         }
     }
     gps_close(&gpsData);

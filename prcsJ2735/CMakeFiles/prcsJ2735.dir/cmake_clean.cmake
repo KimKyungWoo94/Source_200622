@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/prcsJ2735.dir/options.c.o"
   "CMakeFiles/prcsJ2735.dir/prcsRTCM.c.o"
   "CMakeFiles/prcsJ2735.dir/rxJ2735.c.o"
+  "CMakeFiles/prcsJ2735.dir/shm.c.o"
   "CMakeFiles/prcsJ2735.dir/socket.c.o"
   "CMakeFiles/prcsJ2735.dir/timer.c.o"
   "CMakeFiles/prcsJ2735.dir/txJ2735.c.o"

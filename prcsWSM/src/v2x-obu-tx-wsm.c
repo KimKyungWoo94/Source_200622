@@ -48,8 +48,8 @@ static void* V2X_OBU_WsmTxThread(void *notused)
 
     do {
         if (g_dbg >= kDbgMsgLevel_msgdump) {
-            printf("\n-- Sending WSM ---------------------------------------------\n");
-            //syslog(LOG_INFO | LOG_LOCAL0, "\n-- Sending WSM ---------------------------------------------\n");
+            //printf("\n-- Sending WSM ---------------------------------------------\n");
+            syslog(LOG_INFO | LOG_LOCAL0, "\n-- Sending WSM ---------------------------------------------\n");
         }
 
         /* Receive MsgQ */
@@ -77,17 +77,16 @@ static void* V2X_OBU_WsmTxThread(void *notused)
             wsm_params.psid = g_mib.psid;
             mpdu_size = Dot3_ConstructWsmMpdu(&wsm_params, pkt, len, mpdu, sizeof(mpdu));
             if (mpdu_size < 0) {
-                printf("Fail to Dot3_ConstructWsmMpdu() - %d\n", mpdu_size);
-                printf("------------------------------------------------------------\n\n");
-                //syslog(LOG_ERR | LOG_LOCAL1, "Fail to Dot3_ConstructWsmMpdu() - %d\n", mpdu_size);
-                //syslog(LOG_INFO | LOG_LOCAL0, "------------------------------------------------------------\n\n");
+                //printf("Fail to Dot3_ConstructWsmMpdu() - %d\n", mpdu_size);
+                //printf("------------------------------------------------------------\n\n");
+                syslog(LOG_ERR | LOG_LOCAL1, "Fail to Dot3_ConstructWsmMpdu() - %d\n", mpdu_size);
+                syslog(LOG_INFO | LOG_LOCAL0, "------------------------------------------------------------\n\n");
                 continue;
             }
             if (g_dbg >= kDbgMsgLevel_event) {
                 {
                     //printf("[prcsWSM] Success to construct %d-bytes WSM MPDU\n", mpdu_size);
-                    
-		    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to construct %d-bytes WSM MPDU\n", mpdu_size);
+                    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to construct %d-bytes WSM MPDU\n", mpdu_size);
                 }
                 if (g_dbg >= kDbgMsgLevel_msgdump) {
                     for (int i = 0; i < mpdu_size; i++) {
@@ -111,13 +110,12 @@ static void* V2X_OBU_WsmTxThread(void *notused)
             al_params.txpower = g_mib.power;
             int ret = Al_TransmitMpdu(g_mib.netIfIndex, mpdu, mpdu_size, &al_params);
             if (ret < 0) {
-                printf("Fail to Al_TransmitMpdu() - ret: %d\n", ret);
-                printf("------------------------------------------------------------\n\n");
-                //syslog(LOG_ERR | LOG_LOCAL1, "Fail to Al_TransmitMpdu() - ret: %d\n", ret);
-                //syslog(LOG_INFO | LOG_LOCAL0, "------------------------------------------------------------\n\n");
+                //printf("Fail to Al_TransmitMpdu() - ret: %d\n", ret);
+                //printf("------------------------------------------------------------\n\n");
+                syslog(LOG_ERR | LOG_LOCAL1, "Fail to Al_TransmitMpdu() - ret: %d\n", ret);
+                syslog(LOG_INFO | LOG_LOCAL0, "------------------------------------------------------------\n\n");
                 continue;
             } else {
-                    //printf("[prcsWSM] Success to Al_TransmitMpdu()\n");
                 if (g_dbg >= kDbgMsgLevel_event)
                 {
                     //printf("[prcsWSM] Success to Al_TransmitMpdu()\n");
@@ -207,16 +205,16 @@ static int V2X_OBU_InitWsmTxTimer(const uint32_t interval)
  */
 int V2X_OBU_InitWsmTx(const uint32_t timer_interval)
 {
-    printf("Initializing WSM tx operation\n");
-    //syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Initializing WSM tx operation\n");
+    //printf("Initializing WSM tx operation\n");
+    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Initializing WSM tx operation\n");
     int ret = pthread_create(&g_tx_thread, NULL, V2X_OBU_WsmTxThread, NULL);
     if (ret < 0) {
-        perror("Fail to create WSM tx thread() ");
-        //syslog(LOG_ERR | LOG_LOCAL1, "Fail to create WSM tx thread() : %s\n", strerror(errno));
+        //perror("Fail to create WSM tx thread() ");
+        syslog(LOG_ERR | LOG_LOCAL1, "Fail to create WSM tx thread() : %s\n", strerror(errno));
         return -1;
     }
 
-    printf("Success to initialize WSM tx operation\n");
-   // syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to initialize WSM tx operation\n");
+    //printf("Success to initialize WSM tx operation\n");
+    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to initialize WSM tx operation\n");
     return 0;
 }

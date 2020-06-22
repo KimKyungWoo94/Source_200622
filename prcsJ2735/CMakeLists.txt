@@ -78,6 +78,7 @@ add_executable(${TARGET_APP}
         ${SRC_DIR}/hexdump.c
 #        ${SRC_DIR}/gpsd_To_PotiMsg.c
         ${SRC_DIR}/socket.c
+        ${SRC_DIR}/shm.c
         ${SRC_DIR}/txJ2735.c)
 
 add_compile_options(-Wall)

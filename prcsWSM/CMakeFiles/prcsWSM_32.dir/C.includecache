@@ -8,19 +8,19 @@
 
 /media/sf_Source/200104_Application_source/prcsWSM/src/hexdump.h
 
-/media/sf_Source/200104_Application_source/prcsWSM/src/msgQ.c
-signal.h
+/media/sf_Source/200104_Application_source/prcsWSM/src/v2x-obu-libwlanaccess.c
+pthread.h
 -
-msgQ.h
+stdbool.h
 -
-sys/types.h
+stdio.h
 -
-sys/ipc.h
+unistd.h
 -
-sys/msg.h
--
+wlanaccess/wlanaccess.h
+/media/sf_Source/200104_Application_source/prcsWSM/src/wlanaccess/wlanaccess.h
 v2x-obu.h
--
+/media/sf_Source/200104_Application_source/prcsWSM/src/v2x-obu.h
 
 /media/sf_Source/200104_Application_source/prcsWSM/src/v2x-obu-rx.c
 arpa/inet.h
@@ -43,24 +43,6 @@ v2x-obu.h
 /media/sf_Source/200104_Application_source/prcsWSM/src/v2x-obu.h
 hexdump.h
 /media/sf_Source/200104_Application_source/prcsWSM/src/hexdump.h
-
-/media/sf_Source/200104_Application_source/prcsWSM/src/v2x-obu-tx-wsm.c
-pthread.h
--
-signal.h
--
-stdio.h
--
-string.h
--
-stdint.h
--
-time.h
--
-wlanaccess/wlanaccess.h
-/media/sf_Source/200104_Application_source/prcsWSM/src/wlanaccess/wlanaccess.h
-v2x-obu.h
-/media/sf_Source/200104_Application_source/prcsWSM/src/v2x-obu.h
 
 /media/sf_Source/200104_Application_source/prcsWSM/src/v2x-obu.h
 arpa/inet.h
@@ -127,28 +109,4 @@ stdint.h
 -
 errno.h
 -
-
-src/v2x-obu.h
-arpa/inet.h
--
-stdbool.h
--
-stdio.h
--
-string.h
--
-unistd.h
--
-stdlib.h
--
-pthread.h
--
-stdint.h
--
-msgQ.h
--
-syslog.h
--
-dot3/dot3.h
-src/dot3/dot3.h
 

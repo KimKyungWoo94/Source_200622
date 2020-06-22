@@ -3,4 +3,8 @@
 
 CMakeFiles/timeSync.dir/main.c.o: main.c
 CMakeFiles/timeSync.dir/main.c.o: ext/include/gps.h
+CMakeFiles/timeSync.dir/main.c.o: shm.h
+
+CMakeFiles/timeSync.dir/shm.c.o: shm.c
+CMakeFiles/timeSync.dir/shm.c.o: shm.h
 

@@ -64,6 +64,7 @@ endif()
 set(TARGET_APP timeSync)
 set(OUTPUT_FILE "${TARGET_APP}")
 add_executable(${TARGET_APP}
+        ${SRC_DIR}/shm.c
         ${SRC_DIR}/main.c)
 
 add_compile_options(-Wall)

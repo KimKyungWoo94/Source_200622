@@ -6,5 +6,5 @@ C_FLAGS =   -std=gnu99
 
 C_DEFINES = -DDEBUG_ -D_PSR_MAX_NUM_=128 -D_WSA_CHAN_INFO_MAX_NUM_=31 -D_WSA_SERVICE_INFO_MAX_NUM_=31
 
-C_INCLUDES = -I/media/sf_Source/200104_Application_source/prcsJ2735/ext/include -I/media/sf_Source/200104_Application_source/prcsJ2735 
+C_INCLUDES = -I/media/sf_Source/Xavier/apps/prcsJ2735/ext/include -I/media/sf_Source/Xavier/apps/prcsJ2735 
 

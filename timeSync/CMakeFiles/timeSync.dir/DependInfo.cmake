@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/media/sf_Source/Xavier/apps/timeSync/main.c" "/media/sf_Source/Xavier/apps/timeSync/CMakeFiles/timeSync.dir/main.c.o"
+  "/media/sf_Source/Xavier/apps/timeSync/shm.c" "/media/sf_Source/Xavier/apps/timeSync/CMakeFiles/timeSync.dir/shm.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

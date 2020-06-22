@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/timeSync.dir/main.c.o"
+  "CMakeFiles/timeSync.dir/shm.c.o"
   "output/timeSync"
   "output/timeSync.pdb"
 )

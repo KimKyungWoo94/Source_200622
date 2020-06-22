@@ -41,6 +41,7 @@ CMakeFiles/prcsJ2735.dir/prcsRTCM.c.o: hexdump.h
 CMakeFiles/prcsJ2735.dir/prcsRTCM.c.o: prcsJ2735.h
 
 CMakeFiles/prcsJ2735.dir/rxJ2735.c.o: rxJ2735.c
+CMakeFiles/prcsJ2735.dir/rxJ2735.c.o: shm.h
 CMakeFiles/prcsJ2735.dir/rxJ2735.c.o: ublox_debug.h
 CMakeFiles/prcsJ2735.dir/rxJ2735.c.o: udp.h
 CMakeFiles/prcsJ2735.dir/rxJ2735.c.o: ext/include/J2735_201603_CITS.h
@@ -48,6 +49,9 @@ CMakeFiles/prcsJ2735.dir/rxJ2735.c.o: ext/include/asn1defs.h
 CMakeFiles/prcsJ2735.dir/rxJ2735.c.o: ext/include/gps.h
 CMakeFiles/prcsJ2735.dir/rxJ2735.c.o: hexdump.h
 CMakeFiles/prcsJ2735.dir/rxJ2735.c.o: prcsJ2735.h
+
+CMakeFiles/prcsJ2735.dir/shm.c.o: shm.c
+CMakeFiles/prcsJ2735.dir/shm.c.o: shm.h
 
 CMakeFiles/prcsJ2735.dir/socket.c.o: socket.c
 CMakeFiles/prcsJ2735.dir/socket.c.o: ext/include/J2735_201603_CITS.h

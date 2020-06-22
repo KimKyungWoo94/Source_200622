@@ -96,6 +96,7 @@ int V2X_OBU_Main(int argc, char *argv[])
         return -1;
     }
 
+#if 0
     /* 채널 접속*/
     ret = V2X_OBU_AccessChannel(g_mib.netIfIndex, g_mib.channel, g_mib.channel);
     if (ret < 0) {
@@ -104,7 +105,6 @@ int V2X_OBU_Main(int argc, char *argv[])
     //printf("Success to access chanel %d on if%d\n", g_mib.channel, g_mib.netIfIndex);
     syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to access chanel %d on if%d\n", g_mib.channel, g_mib.netIfIndex);
 
-#if 0
     /* 인터페이스 MAC 주소 설정*/
     ret = V2X_OBU_SetIfMacAddress(g_mib.netIfIndex, g_if0_mac_address);
     if (ret < 0) {

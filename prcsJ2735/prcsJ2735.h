@@ -60,7 +60,7 @@ typedef struct
     uint32_t type;
     uint32_t len;
     char buf[1024];
-    bool flag;//갱신정보
+    bool flag;
 } rtcmData_t;
 
 /*----------------------------------------------------------------------------------*/
@@ -104,6 +104,7 @@ void setRTCM(uint8_t *buf, int len);
 int rtcmPkt(struct gps_data_t * gpsData);
 int ConstructRTCM(uint8_t *pkt, uint32_t *len);
 void setRTCM_mutex(int op);
+void fillRTCM();
 //void set_renewFlag();
 /* socket.c */
 int createSockThread();

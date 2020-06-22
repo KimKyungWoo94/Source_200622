@@ -1,0 +1,1 @@
+aarch64-linux-gnu-gcc    CMakeFiles/checkGPSD.dir/shm.c.o CMakeFiles/checkGPSD.dir/main.c.o  -o output/checkGPSD  -L/media/sf_Source/Xavier/apps/checkGPSD/ext/lib/aarch64 -Wl,-rpath,/media/sf_Source/Xavier/apps/checkGPSD/ext/lib/aarch64 -lm -lrt 
