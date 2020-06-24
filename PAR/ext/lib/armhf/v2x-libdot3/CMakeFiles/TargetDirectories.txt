@@ -1,0 +1,4 @@
+/media/sf_Source/Xavier/v2x-obu/ext/lib/armhf/v2x-libdot3/CMakeFiles/rebuild_cache.dir
+/media/sf_Source/Xavier/v2x-obu/ext/lib/armhf/v2x-libdot3/CMakeFiles/dot3-test.dir
+/media/sf_Source/Xavier/v2x-obu/ext/lib/armhf/v2x-libdot3/CMakeFiles/edit_cache.dir
+/media/sf_Source/Xavier/v2x-obu/ext/lib/armhf/v2x-libdot3/CMakeFiles/dot3.dir
