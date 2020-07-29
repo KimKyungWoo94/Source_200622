@@ -114,17 +114,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named PAR_32
+# Target rules for targets named PAR_64
 
 # Build rule for target.
-PAR_32: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 PAR_32
-.PHONY : PAR_32
+PAR_64: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 PAR_64
+.PHONY : PAR_64
 
 # fast build rule for target.
-PAR_32/fast:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/build
-.PHONY : PAR_32/fast
+PAR_64/fast:
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/build
+.PHONY : PAR_64/fast
 
 src/PAR.o: src/PAR.c.o
 
@@ -132,7 +132,7 @@ src/PAR.o: src/PAR.c.o
 
 # target to build an object file
 src/PAR.c.o:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/PAR.c.o
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/PAR.c.o
 .PHONY : src/PAR.c.o
 
 src/PAR.i: src/PAR.c.i
@@ -141,7 +141,7 @@ src/PAR.i: src/PAR.c.i
 
 # target to preprocess a source file
 src/PAR.c.i:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/PAR.c.i
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/PAR.c.i
 .PHONY : src/PAR.c.i
 
 src/PAR.s: src/PAR.c.s
@@ -150,7 +150,7 @@ src/PAR.s: src/PAR.c.s
 
 # target to generate assembly for a file
 src/PAR.c.s:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/PAR.c.s
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/PAR.c.s
 .PHONY : src/PAR.c.s
 
 src/PAR_RX.o: src/PAR_RX.c.o
@@ -159,7 +159,7 @@ src/PAR_RX.o: src/PAR_RX.c.o
 
 # target to build an object file
 src/PAR_RX.c.o:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/PAR_RX.c.o
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/PAR_RX.c.o
 .PHONY : src/PAR_RX.c.o
 
 src/PAR_RX.i: src/PAR_RX.c.i
@@ -168,7 +168,7 @@ src/PAR_RX.i: src/PAR_RX.c.i
 
 # target to preprocess a source file
 src/PAR_RX.c.i:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/PAR_RX.c.i
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/PAR_RX.c.i
 .PHONY : src/PAR_RX.c.i
 
 src/PAR_RX.s: src/PAR_RX.c.s
@@ -177,7 +177,7 @@ src/PAR_RX.s: src/PAR_RX.c.s
 
 # target to generate assembly for a file
 src/PAR_RX.c.s:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/PAR_RX.c.s
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/PAR_RX.c.s
 .PHONY : src/PAR_RX.c.s
 
 src/PAR_TX.o: src/PAR_TX.c.o
@@ -186,7 +186,7 @@ src/PAR_TX.o: src/PAR_TX.c.o
 
 # target to build an object file
 src/PAR_TX.c.o:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/PAR_TX.c.o
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/PAR_TX.c.o
 .PHONY : src/PAR_TX.c.o
 
 src/PAR_TX.i: src/PAR_TX.c.i
@@ -195,7 +195,7 @@ src/PAR_TX.i: src/PAR_TX.c.i
 
 # target to preprocess a source file
 src/PAR_TX.c.i:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/PAR_TX.c.i
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/PAR_TX.c.i
 .PHONY : src/PAR_TX.c.i
 
 src/PAR_TX.s: src/PAR_TX.c.s
@@ -204,7 +204,7 @@ src/PAR_TX.s: src/PAR_TX.c.s
 
 # target to generate assembly for a file
 src/PAR_TX.c.s:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/PAR_TX.c.s
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/PAR_TX.c.s
 .PHONY : src/PAR_TX.c.s
 
 src/msgQ.o: src/msgQ.c.o
@@ -213,7 +213,7 @@ src/msgQ.o: src/msgQ.c.o
 
 # target to build an object file
 src/msgQ.c.o:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/msgQ.c.o
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/msgQ.c.o
 .PHONY : src/msgQ.c.o
 
 src/msgQ.i: src/msgQ.c.i
@@ -222,7 +222,7 @@ src/msgQ.i: src/msgQ.c.i
 
 # target to preprocess a source file
 src/msgQ.c.i:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/msgQ.c.i
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/msgQ.c.i
 .PHONY : src/msgQ.c.i
 
 src/msgQ.s: src/msgQ.c.s
@@ -231,7 +231,7 @@ src/msgQ.s: src/msgQ.c.s
 
 # target to generate assembly for a file
 src/msgQ.c.s:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/msgQ.c.s
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/msgQ.c.s
 .PHONY : src/msgQ.c.s
 
 src/options.o: src/options.c.o
@@ -240,7 +240,7 @@ src/options.o: src/options.c.o
 
 # target to build an object file
 src/options.c.o:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/options.c.o
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/options.c.o
 .PHONY : src/options.c.o
 
 src/options.i: src/options.c.i
@@ -249,7 +249,7 @@ src/options.i: src/options.c.i
 
 # target to preprocess a source file
 src/options.c.i:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/options.c.i
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/options.c.i
 .PHONY : src/options.c.i
 
 src/options.s: src/options.c.s
@@ -258,7 +258,7 @@ src/options.s: src/options.c.s
 
 # target to generate assembly for a file
 src/options.c.s:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/options.c.s
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/options.c.s
 .PHONY : src/options.c.s
 
 src/shm.o: src/shm.c.o
@@ -267,7 +267,7 @@ src/shm.o: src/shm.c.o
 
 # target to build an object file
 src/shm.c.o:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/shm.c.o
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/shm.c.o
 .PHONY : src/shm.c.o
 
 src/shm.i: src/shm.c.i
@@ -276,7 +276,7 @@ src/shm.i: src/shm.c.i
 
 # target to preprocess a source file
 src/shm.c.i:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/shm.c.i
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/shm.c.i
 .PHONY : src/shm.c.i
 
 src/shm.s: src/shm.c.s
@@ -285,7 +285,7 @@ src/shm.s: src/shm.c.s
 
 # target to generate assembly for a file
 src/shm.c.s:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/shm.c.s
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/shm.c.s
 .PHONY : src/shm.c.s
 
 src/timer.o: src/timer.c.o
@@ -294,7 +294,7 @@ src/timer.o: src/timer.c.o
 
 # target to build an object file
 src/timer.c.o:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/timer.c.o
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/timer.c.o
 .PHONY : src/timer.c.o
 
 src/timer.i: src/timer.c.i
@@ -303,7 +303,7 @@ src/timer.i: src/timer.c.i
 
 # target to preprocess a source file
 src/timer.c.i:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/timer.c.i
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/timer.c.i
 .PHONY : src/timer.c.i
 
 src/timer.s: src/timer.c.s
@@ -312,7 +312,7 @@ src/timer.s: src/timer.c.s
 
 # target to generate assembly for a file
 src/timer.c.s:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/src/timer.c.s
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/src/timer.c.s
 .PHONY : src/timer.c.s
 
 # Help Target
@@ -323,7 +323,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... PAR_32"
+	@echo "... PAR_64"
 	@echo "... src/PAR.o"
 	@echo "... src/PAR.i"
 	@echo "... src/PAR.s"

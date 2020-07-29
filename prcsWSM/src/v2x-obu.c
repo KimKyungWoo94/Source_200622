@@ -30,7 +30,7 @@ const uint8_t g_if1_mac_address[] = { 0x00, 0x49, 0x54, 0x45, 0xCC, 0x01};
 static int V2X_OBU_InitV2XLibs(void)
 {
     //printf("Initializing V2X libraries\n");
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Initializing V2X libraries\n");
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Initializing V2X libraries\n");
     int ret;
 
     /*
@@ -39,7 +39,7 @@ static int V2X_OBU_InitV2XLibs(void)
     ret = V2X_OBU_InitDot3Library(0);
     if (ret < 0) {
         //printf("Fail to initialize dot3 library\n");
-        syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to initialize dot3 library\n");
+        syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to initialize dot3 library\n");
         return -1;
     }
 
@@ -49,12 +49,12 @@ static int V2X_OBU_InitV2XLibs(void)
     ret = V2X_OBU_OpenAccessLibrary(0);
     if (ret < 0) {
         //printf("Fail to initialize access library\n");
-        syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to initialize access library\n");
+        syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to initialize access library\n");
         return -1;
     }
 
     //printf("Success to initialize V2X libraries\n");
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to initialize V2X libraries\n");
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Success to initialize V2X libraries\n");
     return 0;
 }
 
@@ -73,7 +73,7 @@ int V2X_OBU_Main(int argc, char *argv[])
     int ret;
 
     //printf("Running v2x-obu application..\n");
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Running v2x-obu application..\n");
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Running v2x-obu application..\n");
 
     /* MIB 초기화 및 입력 파라미터 설정 */
     memset(&g_mib, 0, sizeof(struct V2X_OBU_MIB));
@@ -103,7 +103,7 @@ int V2X_OBU_Main(int argc, char *argv[])
         return ret;
     }
     //printf("Success to access chanel %d on if%d\n", g_mib.channel, g_mib.netIfIndex);
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to access chanel %d on if%d\n", g_mib.channel, g_mib.netIfIndex);
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Success to access chanel %d on if%d\n", g_mib.channel, g_mib.netIfIndex);
 
     /* 인터페이스 MAC 주소 설정*/
     ret = V2X_OBU_SetIfMacAddress(g_mib.netIfIndex, g_if0_mac_address);

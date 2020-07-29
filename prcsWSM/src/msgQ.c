@@ -22,7 +22,7 @@ int initMQ(void)
         if( recvPkt == NULL )
         {
             //printf("[prcsWSM] Fail to allocate memory for receive packet message queue.\n");
-            syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to allocate memory for receive packet message queue.\n");
+            syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to allocate memory for receive packet message queue.\n");
             return -1;
         }
         /* 수신 Packet 메시지큐 생성 */
@@ -30,7 +30,7 @@ int initMQ(void)
         if (recvFD < 0)
         {
             //perror("[prcsWSM] msgget error ");
-            syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] msgget error : %s", strerror(errno));
+            syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] msgget error : %s", strerror(errno));
             free(recvPkt);
             return -1;
         }
@@ -40,7 +40,7 @@ int initMQ(void)
         if( parRecvPkt == NULL )
         {
             //printf("[prcsWSM] Fail to allocate memory for PAR receive packet message queue.\n");
-            syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to allocate memory for PAR receive packet message queue.\n");
+            syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to allocate memory for PAR receive packet message queue.\n");
             return -1;
         }
 
@@ -49,7 +49,7 @@ int initMQ(void)
         if (recvFD < 0)
         {
             //perror("[prcsWSM] PAR msgget error ");
-            syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] PAR msgget error : %s", strerror(errno));
+            syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] PAR msgget error : %s", strerror(errno));
             free(parRecvPkt);
             return -1;
         }
@@ -61,7 +61,7 @@ int initMQ(void)
         if( sendPkt == NULL )
         {
             //printf("[prcsWSM] Fail to allocate memory for send packet message queue.\n");
-            syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to allocate memory for send packet message queue.\n");
+            syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to allocate memory for send packet message queue.\n");
             return -1;
         }
         /* 송신 Packet 메시지큐 생성 */
@@ -69,7 +69,7 @@ int initMQ(void)
         if (sendFD < 0)
         {
             //perror("[prcsWSM] msgget error ");
-            syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] msgget error : %s", strerror(errno));
+            syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] msgget error : %s", strerror(errno));
             free(sendPkt);
             return -1;
         }
@@ -113,7 +113,7 @@ int recvMQ(char *pkt)
     if( msgrcv(sendFD, (char *)sendPkt, sizeof(struct msgQ_elem_frame) - sizeof(long), 1, 0) == -1 )
     {
         //perror("[prcsWSM] MQ receive error :  " );
-        syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] MQ receive error : %s", strerror(errno));
+        syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] MQ receive error : %s", strerror(errno));
         return -1;
     }
     else
@@ -121,7 +121,7 @@ int recvMQ(char *pkt)
         if (g_dbg >= kDbgMsgLevel_event)
         {
             //printf("[prcsWSM] MQ receive(len: %d)\n", sendPkt->msg.msg_len);
-            syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] MQ receive(len: %d)\n", sendPkt->msg.msg_len);
+            syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] MQ receive(len: %d)\n", sendPkt->msg.msg_len);
         }
         memcpy(pkt, sendPkt->msg.msg, sendPkt->msg.msg_len);
     }
@@ -141,14 +141,14 @@ void sendMQ(uint8_t *pPkt, uint32_t len)
     if( msgsnd( recvFD, (char *)recvPkt, sizeof(struct msgQ_elem_frame) - sizeof(long), IPC_NOWAIT) == -1 )
     {
         //perror("[precsWSM] MQ send error : ");
-        syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] MQ send error : %s", strerror(errno));
+        syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] MQ send error : %s", strerror(errno));
     }
     else
     {
         if (g_dbg >= kDbgMsgLevel_event)
         {
             //printf("[prcsWSM] MQ send(%d Byte) \n", recvPkt->msg.msg_len);
-            syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] MQ send(%d Byte) \n", recvPkt->msg.msg_len);
+            syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] MQ send(%d Byte) \n", recvPkt->msg.msg_len);
         }
     }
 }
@@ -165,14 +165,14 @@ void PARsendMQ(uint8_t *pPkt, uint32_t len)
 	if( msgsnd( parRecvFD, (char *)parRecvPkt, sizeof(struct msgQ_elem_frame) - sizeof(long), IPC_NOWAIT) == -1 )
 	{
 		//perror("[precsWSM] PAR MQ send error : ");
-		syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] PAR MQ send error : %s", strerror(errno));
+		syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] PAR MQ send error : %s", strerror(errno));
 	}
 	else
 	{
 		if (g_dbg >= kDbgMsgLevel_event)
 		{
 			//printf("[prcsWSM] MQ send(%d Byte) for PAR \n", parRecvPkt->msg.msg_len);
-			syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] MQ send(%d Byte) for PAR \n", parRecvPkt->msg.msg_len);
+			syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] MQ send(%d Byte) for PAR \n", parRecvPkt->msg.msg_len);
 		}
 	}
 }

@@ -50,13 +50,13 @@ int par_InitTXoperation(){
 	if(ret <0)
 	{
 		//perror("[PAR] Fail to create gpsd thread() ");
-		syslog(LOG_ERR | LOG_LOCAL3, "[PAR_TX] Fail to create gpsd thread() : %s\n ",(char*)status);
+		syslog(LOG_ERR | LOG_LOCAL5, "[PAR_TX] Fail to create gpsd thread() : %s\n ",(char*)status);
 		return -1;
 	}
 	else
 	{
-		printf("[PAR] Success gpsd thread() \n");
-		//syslog(LOG_INFO | LOG_LOCAL2, "[PAR_TX] Success create gpsd thread() \n");
+		//printf("[PAR] Success gpsd thread() \n");
+		syslog(LOG_INFO | LOG_LOCAL4, "[PAR_TX] Success create gpsd thread() \n");
 	}
 	return 0;
 }
@@ -88,7 +88,7 @@ void par_TXoperation()
 		len = sizeof(struct rsuInfo_t);
 
 		/* 기지국 정보 전송 */
-		sendMQ(&outBuf,len);
+		sendMQ((char *)&outBuf,len);
 
 		/* 메모리 초기화 */
 		memset(outBuf, 0, sizeof(outBuf));
@@ -103,13 +103,13 @@ void par_TXoperation()
 
 	if( ret == 0 )
 	{
-		printf("[PAR] Completed join with gpsdThread status = %s\n", (char*)status);
-		//syslog(LOG_INFO | LOG_LOCAL2, "[PAR_TX] Completed join with gpsdThread status = %d\n", status);
+		//printf("[PAR] Completed join with gpsdThread status = %s\n", (char*)status);
+		syslog(LOG_INFO | LOG_LOCAL4, "[PAR_TX] Completed join with gpsdThread status = %s\n",(char*)status);
 	}
 	else
 	{
-		printf("[PAR] ERROR: return code from pthread_join() is %d\n", ret);
-		//syslog(LOG_ERR | LOG_LOCAL3, "[PAR_TX] ERROR: return code from pthread_join() is %d\n", ret);
+		//printf("[PAR] ERROR: return code from pthread_join() is %d\n", ret);
+		syslog(LOG_ERR | LOG_LOCAL5, "[PAR_TX] ERROR: return code from pthread_join() is %d\n", ret);
 	}
 
 	/* 뮤텍스 및 컨디션시그널 해제 */
@@ -132,7 +132,7 @@ static  void* gpsdThread(void *notused){
 	if(result <0)
 	{
 		//printf("[PAR] gps_open() fail(%s)\n", gps_errstr(result));
-		syslog(LOG_ERR | LOG_LOCAL3, "[PAR_TX] gps_open() fail(%s)\n", gps_errstr(result));
+		syslog(LOG_ERR | LOG_LOCAL5, "[PAR_TX] gps_open() fail(%s)\n", gps_errstr(result));
 		shmCheck = true;
 	}
 
@@ -142,13 +142,13 @@ static  void* gpsdThread(void *notused){
 		if(shmCheck == true)
 		{
 			gps_close(&gpsData);
-			syslog(LOG_INFO | LOG_LOCAL2, "[PAR_TX] Re connection to GPSD\n");
+			syslog(LOG_INFO | LOG_LOCAL4, "[PAR_TX] Re connection to GPSD\n");
 			
 			result = gps_open(GPSD_SHARED_MEMORY, 0, &gpsData);
 
 			if(result < 0 )
 			{
-				syslog(LOG_ERR | LOG_LOCAL3, "[PAR_TX] gps_open() fail(%s)\n", gps_errstr(result));
+				syslog(LOG_ERR | LOG_LOCAL5, "[PAR_TX] gps_open() fail(%s)\n", gps_errstr(result));
 				pthread_exit((void *)-1);
 			}
 			shmCheck = false;
@@ -159,7 +159,7 @@ static  void* gpsdThread(void *notused){
 		result = gps_read(&gpsData);
 		if(result < 0)
 		{
-			syslog(LOG_ERR | LOG_LOCAL3, "[PAR_TX] gps_read() fail( %s)\n", gps_errstr(result));
+			syslog(LOG_ERR | LOG_LOCAL5, "[PAR_TX] gps_read() fail( %s)\n", gps_errstr(result));
 			shmCheck = true;
 		}
 
@@ -170,10 +170,10 @@ static  void* gpsdThread(void *notused){
 			g_rsu.rsuLatitude = g_mib.Latitude;
 			g_rsu.rsuLongitude = g_mib.Longitude;
 
-			syslog(LOG_INFO | LOG_LOCAL2, "[PAR_TX] INPUT LATI AND LONGI\n");
+			syslog(LOG_INFO | LOG_LOCAL4, "[PAR_TX] INPUT LATI AND LONGI\n");
 			if(g_mib.dbg)
 			{
-				syslog(LOG_INFO | LOG_LOCAL2, "rsuID : %d   rsuLati : %d   rsuLongi : %d \n",g_rsu.rsuID, g_rsu.rsuLatitude, g_rsu.rsuLongitude);
+				syslog(LOG_INFO | LOG_LOCAL4, "rsuID : %d   rsuLati : %d   rsuLongi : %d \n",g_rsu.rsuID, g_rsu.rsuLatitude, g_rsu.rsuLongitude);
 			}
 		}
 
@@ -186,10 +186,10 @@ static  void* gpsdThread(void *notused){
 				g_rsu.rsuLatitude = (int) pow(10,7)*gpsData.fix.latitude;
 				g_rsu.rsuLongitude = (int) pow(10,7)*gpsData.fix.longitude;
 
-				syslog(LOG_INFO | LOG_LOCAL2, "[PAR_TX] GPSData.set Success\n");
+				syslog(LOG_INFO | LOG_LOCAL4, "[PAR_TX] GPSData.set Success\n");
 				if(g_mib.dbg)
 				{
-					syslog(LOG_INFO | LOG_LOCAL2, "rsuID : %d   rsuLati : %d   rsuLongi : %d \n",g_rsu.rsuID, g_rsu.rsuLatitude, g_rsu.rsuLongitude);
+					syslog(LOG_INFO | LOG_LOCAL4, "rsuID : %d   rsuLati : %d   rsuLongi : %d \n",g_rsu.rsuID, g_rsu.rsuLatitude, g_rsu.rsuLongitude);
 				}
 			}
 
@@ -199,10 +199,10 @@ static  void* gpsdThread(void *notused){
 				g_rsu.rsuLatitude = 900000001;
 				g_rsu.rsuLongitude = 1800000001;
 
-				syslog(LOG_INFO | LOG_LOCAL2, "[PAR_TX] GPSData Invalid\n");
+				syslog(LOG_INFO | LOG_LOCAL4, "[PAR_TX] GPSData Invalid\n");
 				if(g_mib.dbg)
 				{
-					syslog(LOG_INFO | LOG_LOCAL2, "rsuID : %d   rsuLati : %d   rsuLongi : %d \n",g_rsu.rsuID, g_rsu.rsuLatitude, g_rsu.rsuLongitude);
+					syslog(LOG_INFO | LOG_LOCAL4, "rsuID : %d   rsuLati : %d   rsuLongi : %d \n",g_rsu.rsuID, g_rsu.rsuLatitude, g_rsu.rsuLongitude);
 				}
 			}
 		}

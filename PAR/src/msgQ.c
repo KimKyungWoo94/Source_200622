@@ -21,7 +21,7 @@ int initMQ(void)
 		if( recvPkt == NULL )
 		{
 			//printf("[PAR] Fail to allocate memory for receive packet message queue.\n");
-			syslog(LOG_ERR | LOG_LOCAL3, "[PAR] Fail to allocate memory for receive packet message queue.\n");
+			syslog(LOG_ERR | LOG_LOCAL5, "[PAR] Fail to allocate memory for receive packet message queue.\n");
 			return -1;
 		}
 		/* 수신 Packet 메시지큐 생성 */
@@ -29,7 +29,7 @@ int initMQ(void)
 		if (recvFD < 0)
 		{
 			//perror("[PAR] msgget error ");
-			syslog(LOG_ERR | LOG_LOCAL3, "[PAR] msgget error : %s", strerror(errno));
+			syslog(LOG_ERR | LOG_LOCAL5, "[PAR] msgget error : %s", strerror(errno));
 			free(recvPkt);
 			return -1;
 		}
@@ -41,7 +41,7 @@ int initMQ(void)
 		if( sendPkt == NULL )
 		{
 			//printf("[PAR] Fail to allocate memory for send packet message queue.\n");
-			syslog(LOG_ERR | LOG_LOCAL3, "[PAR] Fail to allocate memory for send packet message queue.\n");
+			syslog(LOG_ERR | LOG_LOCAL5, "[PAR] Fail to allocate memory for send packet message queue.\n");
 			return -1;
 		}
 		/* 송신 Packet 메시지큐 생성 */
@@ -49,7 +49,7 @@ int initMQ(void)
 		if (sendFD < 0)
 		{
 			//perror("[PAR] msgget error ");
-			syslog(LOG_ERR | LOG_LOCAL3, "[PAR] msgget error : %s", strerror(errno));
+			syslog(LOG_ERR | LOG_LOCAL5, "[PAR] msgget error : %s", strerror(errno));
 			free(sendPkt);
 			return -1;
 		}
@@ -95,17 +95,17 @@ int recvMQ(char *pkt)
 	if( msgrcv(recvFD, (char *)recvPkt, sizeof(struct msgQ_elem_frame) - sizeof(long), 1, 0) == -1 )
 	{
 		//perror("[PAR] MQ receive error :  " );
-		syslog(LOG_ERR | LOG_LOCAL3, "[PAR] MQ receive error : %s", strerror(errno));
+		syslog(LOG_ERR | LOG_LOCAL5, "[PAR] MQ receive error : %s", strerror(errno));
 		return -1;
 	}
 	else
 	{
 		cnt++;
-#if 0
+#if 1
 		if (g_mib.dbg)
 		{
 			//printf("[PAR] %dth MQ receive(len: %d)\n",cnt, recvPkt->msg.msg_len);
-			syslog(LOG_INFO | LOG_LOCAL2, "[PAR] %dth MQ receive(len: %d)\n", cnt, recvPkt->msg.msg_len);
+			//syslog(LOG_INFO | LOG_LOCAL4, "[PAR] %dth MQ receive(len: %d)\n", cnt, recvPkt->msg.msg_len);
 		}
 #endif
 		memcpy(pkt, recvPkt->msg.msg, recvPkt->msg.msg_len);
@@ -130,7 +130,7 @@ void sendMQ(uint8_t *pPkt, uint32_t len)
 	if( result < 0 )
 	{
 		//perror("[PAR] MQ send error : ");
-		syslog(LOG_ERR | LOG_LOCAL3, "[PAR] MQ send error : %s", strerror(errno));
+		syslog(LOG_ERR | LOG_LOCAL5, "[PAR] MQ send error : %s", strerror(errno));
 	}
 	else 
 	{
@@ -142,7 +142,7 @@ void sendMQ(uint8_t *pPkt, uint32_t len)
 	//		}
 	//		printf("\n");
 			//printf("[PAR] %dth MQ send(%d Byte) \n",cnt, sendPkt->msg.msg_len);
-			 syslog(LOG_INFO | LOG_LOCAL2, "[PAR] %dth MQ send(%d Byte) \n", cnt, sendPkt->msg.msg_len);
+			 syslog(LOG_INFO | LOG_LOCAL4, "[PAR] %dth MQ send(%d Byte) \n", cnt, sendPkt->msg.msg_len);
 		}
 	}
 }

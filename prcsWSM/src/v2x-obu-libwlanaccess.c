@@ -45,8 +45,8 @@ static void V2X_OBU_ProcessRxMpduCallback(
                 mpdu_size, rxparams->ifindex, rxparams->timeslot, rxparams->channel,
                 rxparams->rxpower, rxparams->rcpi, rxparams->datarate);
 #endif
-        syslog(LOG_INFO | LOG_LOCAL0, "\n-- Processing received MPDU --------------------------------\n");
-        syslog(LOG_INFO | LOG_LOCAL0, "Rx MPDU callback - MPDU size: %u, ifindex: %u, timeslot: %u, channel: %u, "
+        syslog(LOG_INFO | LOG_LOCAL6, "\n-- Processing received MPDU --------------------------------\n");
+        syslog(LOG_INFO | LOG_LOCAL6, "Rx MPDU callback - MPDU size: %u, ifindex: %u, timeslot: %u, channel: %u, "
                 "rxpower: %d(0.5dBm), rcpi: %u, datarate: %u(500kbps)\n",
                 mpdu_size, rxparams->ifindex, rxparams->timeslot, rxparams->channel,
                 rxparams->rxpower, rxparams->rcpi, rxparams->datarate);
@@ -66,7 +66,7 @@ static void V2X_OBU_ProcessRxMpduCallback(
 static void V2X_OBU_ProcessAccessChannelResultCallback(const AlIfIndex ifindex)
 {
     //printf("Access channel result callback - ifindex: %u\n", ifindex);
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Access channel result callback - ifindex: %u\n", ifindex);
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Access channel result callback - ifindex: %u\n", ifindex);
     g_chan_access_complete = true;
 }
 
@@ -81,7 +81,7 @@ static void V2X_OBU_ProcessTransmitResultCallback(const AlTxResultCode result, c
 {
     if(g_dbg)
         //printf("Transmit result callback - result: %d, errcode: %d\n", result, dev_specific_errcode);
-        syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Transmit result callback - result: %d, errcode: %d\n", result, dev_specific_errcode);
+        syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Transmit result callback - result: %d, errcode: %d\n", result, dev_specific_errcode);
 }
 
 
@@ -93,7 +93,7 @@ static void V2X_OBU_ProcessTransmitResultCallback(const AlTxResultCode result, c
 static void V2X_OBU_ProcessSetIfMacAddressResultCallback(const AlIfIndex ifindex)
 {
     //printf("Set interface MAC address result callback - ifindex: %u\n", ifindex);
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Set interface MAC address result callback - ifindex: %u\n", ifindex);
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Set interface MAC address result callback - ifindex: %u\n", ifindex);
     g_set_if_mac_addr_done = true;
 }
 
@@ -110,11 +110,11 @@ static void V2X_OBU_ProcessSetIfMacAddressResultCallback(const AlIfIndex ifindex
 static void* V2X_OBU_PollEvent(void *none)
 {
     //printf("Polling access layer event\n");
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Polling access layer event\n");
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Polling access layer event\n");
     int ret = Al_PollEvent();
     if (ret < 0) {
         //printf("Fail to poll event - ret: %d\n", ret);
-        syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to poll event - ret: %d\n", ret);
+        syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to poll event - ret: %d\n", ret);
     }
     return NULL;
 }
@@ -133,7 +133,7 @@ int V2X_OBU_OpenAccessLibrary(const int log_level)
     int ret;
 
     //printf("Opening access library - log_level: %d\n", log_level);
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Opening access library - log_level: %d\n", log_level);
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Opening access library - log_level: %d\n", log_level);
 
     /*
      * 라이브러리 열기
@@ -141,7 +141,7 @@ int V2X_OBU_OpenAccessLibrary(const int log_level)
     ret = Al_Open(log_level);
     if (ret < 0) {
         //printf("Fail to Al_Open() - %d\n", ret);
-        syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to Al_Open() - %d\n", ret);
+        syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to Al_Open() - %d\n", ret);
         return -1;
     }
     g_mib.if_num = ret;
@@ -164,12 +164,12 @@ int V2X_OBU_OpenAccessLibrary(const int log_level)
     ret = pthread_create(&g_poll_thread, NULL, V2X_OBU_PollEvent, NULL);
     if (ret) {
         //perror("Fail to create poll thread ");
-        syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to create poll thread : %s", strerror(errno));
+        syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to create poll thread : %s", strerror(errno));
         return -1;
     }
 
     //printf("Success to open access library - %d interface is supported\n", g_mib.if_num);
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to open access library - %d interface is supported\n", g_mib.if_num);
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Success to open access library - %d interface is supported\n", g_mib.if_num);
     return 0;
 }
 
@@ -185,20 +185,20 @@ int V2X_OBU_OpenAccessLibrary(const int log_level)
 int V2X_OBU_AccessChannel(const uint8_t if_idx, const uint8_t ts0_chan, const uint8_t ts1_chan)
 {
     //printf("Accessing channel - if_idx: %u, ts0_chan: %u, ts1_chan: %u\n", if_idx, ts0_chan, ts1_chan);
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Accessing channel - if_idx: %u, ts0_chan: %u, ts1_chan: %u\n", if_idx, ts0_chan, ts1_chan);
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Accessing channel - if_idx: %u, ts0_chan: %u, ts1_chan: %u\n", if_idx, ts0_chan, ts1_chan);
 
     g_chan_access_complete = false;
     int ret = Al_AccessChannel(if_idx, ts0_chan, ts1_chan);
     if (ret < 0) {
         //printf("Fail to Al_AccessChannel() - %d\n", ret);
-        syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to Al_AccessChannel() - %d\n", ret);
+        syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to Al_AccessChannel() - %d\n", ret);
         return ret;
     }
     //while(!g_chan_access_complete); // 채널접속결과 콜백함수가 호출될 때까지 대기
     usleep(10000);
 
     //printf("Success to access channel\n");
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to access channel\n");
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Success to access channel\n");
     return 0;
 }
 
@@ -215,15 +215,15 @@ int V2X_OBU_GetCurrentChannel(uint8_t *const ts0_chan, uint8_t *const ts1_chan)
     int ret;
     for (int i = 0; i < g_mib.if_num; i++) {
         //printf("Get current channel on interface %d\n", i);
-        syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Get current channel on interface %d\n", i);
+        syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Get current channel on interface %d\n", i);
         ret = Al_GetCurrentChannel(i, ts0_chan, ts1_chan);
         if (ret < 0) {
             //printf("Fail to Al_GetCurrentChannel() on interface %d - %d\n", i, ret);
-            syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to Al_GetCurrentChannel() on interface %d - %d\n", i, ret);
+            syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to Al_GetCurrentChannel() on interface %d - %d\n", i, ret);
             return ret;
         }
         //printf("Success to get current channel on interface %d - ts0: %u, ts1: %u\n", i, *ts0_chan, *ts1_chan);
-        syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to get current channel on interface %d - ts0: %u, ts1: %u\n", i, *ts0_chan, *ts1_chan);
+        syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Success to get current channel on interface %d - ts0: %u, ts1: %u\n", i, *ts0_chan, *ts1_chan);
     }
     return 0;
 }
@@ -241,20 +241,20 @@ int V2X_OBU_SetIfMacAddress(const uint8_t if_idx, const uint8_t *addr)
     int ret;
     //printf("Set interface MAC address %02X:%02X:%02X:%02X:%02X:%02X on interface %d\n",
      //       addr[0], addr[1], addr[2], addr[3], addr[4], addr[5], if_idx);
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Set interface MAC address %02X:%02X:%02X:%02X:%02X:%02X on interface %d\n",
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Set interface MAC address %02X:%02X:%02X:%02X:%02X:%02X on interface %d\n",
             addr[0], addr[1], addr[2], addr[3], addr[4], addr[5], if_idx);
 
     g_set_if_mac_addr_done = false;
     ret = Al_SetIfMacAddress(if_idx, addr);
     if (ret < 0) {
         //printf("Fail to Al_SetIfMacAddress() - ret: %d\n", ret);
-        syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to Al_SetIfMacAddress() - ret: %d\n", ret);
+        syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to Al_SetIfMacAddress() - ret: %d\n", ret);
         return -1;
     }
     while(!g_set_if_mac_addr_done);
 
     //printf("Success to set interface mac address\n");
-        syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to set interface mac address\n");
+        syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Success to set interface mac address\n");
     return 0;
 }
 

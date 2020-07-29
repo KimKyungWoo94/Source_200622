@@ -19,7 +19,7 @@
 int V2X_OBU_InitDot3Library(int log_level)
 {
     //printf("Initializing dot3 library - log_level: %d\n", log_level);
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Initializing dot3 library - log_level: %d\n", log_level);
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Initializing dot3 library - log_level: %d\n", log_level);
 
     /*
      * 라이브러리 초기화
@@ -27,11 +27,11 @@ int V2X_OBU_InitDot3Library(int log_level)
     int ret = Dot3_Init(log_level);
     if (ret < 0) {
         //printf("Fail to Dot3_Init() - %d\n", ret);
-        syslog(LOG_ERR | LOG_LOCAL1, "[prcsWSM] Fail to Dot3_Init() - %d\n", ret);
+        syslog(LOG_ERR | LOG_LOCAL7, "[prcsWSM] Fail to Dot3_Init() - %d\n", ret);
         return -1;
     }
 
     //printf("Success to initialize dot3 library\n");
-    syslog(LOG_INFO | LOG_LOCAL0, "[prcsWSM] Success to initialize dot3 library\n");
+    syslog(LOG_INFO | LOG_LOCAL6, "[prcsWSM] Success to initialize dot3 library\n");
     return 0;
 }

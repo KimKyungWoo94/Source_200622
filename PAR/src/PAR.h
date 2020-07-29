@@ -78,7 +78,7 @@ struct parPacket_t{
 
 /* 통신성능 측정 프로그램에 사용될 정보 */
 struct parInfo_t{
-	uint32_t check;// 이벤트 번호
+	/*uint32_t*/ bool check;// 이벤트 번호
 	int rsuID;//prcsWSM으로부터 받은 RSU_ID
 	int32_t rsuLatitude; //prcsWSM으로부터 받은 위도 int32_t int; 4Byte
 	int32_t rsuLongitude;//prcsWSM으로부터 받은 경도
@@ -98,6 +98,7 @@ struct parInfo_t{
 	uint32_t curPAR; //현재 PAR
 	struct parInfo_t *next;
 	int pastArrayidx;
+	double calculateData[8]; //min, max avr, last <- rxpower, rcpi
 };
 
 /* 통신성능측정 프로그램에 사용될 인자 값 및 변수들 */
@@ -111,7 +112,7 @@ struct parMib
 	int rsuID;
 	
 	/* 수신 인자값 */
-	uint32_t cycle;
+	uint32_t cycle; //ms 주기
 	uint32_t Information; //Information 쓰레드 사용 여부
 	//uint32_t rsuNum; //RSU 개수
 	
@@ -148,6 +149,7 @@ extern pthread_t rx_thread;
 extern pthread_t userSelect_thread;
 extern pthread_t gpsd_thread;
 extern struct gps_data_t gpsData;
+extern bool debugModeFirstCheck;
 
 /****************************************************************************************
   함수원형(지역/전역)
@@ -175,9 +177,11 @@ long double ldCaldistance(uint32_t rlo, uint32_t rla, uint32_t olo, uint32_t ola
 static void* rxThread(void *notused);
 static void* userSelectThread(void *notused);
 struct parInfo_t* getNode(int index);
-void getCalDataRcpi(uint8_t* array, int arrayIdx, int mode);
-void getCalDataRxpower(int16_t* array, int arrayIdx, int mode);
+void getCalDataRcpi(uint8_t* array, int arrayIdx, double* saveArray); //int mode);
+void getCalDataRxpower(int16_t* array, int arrayIdx, double* saveArray); //int mode);
 bool isThereRSUID(int rsuID);
+void setZeroParInfo(struct parInfo_t* ptr);
+
 /* msgQ.c */
 int initMQ(void);
 void releaseMQ(void);

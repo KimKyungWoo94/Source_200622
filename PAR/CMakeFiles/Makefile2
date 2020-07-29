@@ -66,41 +66,41 @@ CMAKE_BINARY_DIR = /media/sf_Source/200104_Application_source/PAR
 # Directory level rules for the build root directory
 
 # The main recursive "clean" target.
-clean: CMakeFiles/PAR_32.dir/clean
+clean: CMakeFiles/PAR_64.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/PAR_32.dir
+# Target rules for target CMakeFiles/PAR_64.dir
 
 # All Build rule for target.
-CMakeFiles/PAR_32.dir/all:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/depend
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/media/sf_Source/200104_Application_source/PAR/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target PAR_32"
-.PHONY : CMakeFiles/PAR_32.dir/all
+CMakeFiles/PAR_64.dir/all:
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/depend
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/media/sf_Source/200104_Application_source/PAR/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target PAR_64"
+.PHONY : CMakeFiles/PAR_64.dir/all
 
 # Include target in all.
-all: CMakeFiles/PAR_32.dir/all
+all: CMakeFiles/PAR_64.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/PAR_32.dir/rule: cmake_check_build_system
+CMakeFiles/PAR_64.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /media/sf_Source/200104_Application_source/PAR/CMakeFiles 8
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/PAR_32.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/PAR_64.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /media/sf_Source/200104_Application_source/PAR/CMakeFiles 0
-.PHONY : CMakeFiles/PAR_32.dir/rule
+.PHONY : CMakeFiles/PAR_64.dir/rule
 
 # Convenience name for target.
-PAR_32: CMakeFiles/PAR_32.dir/rule
+PAR_64: CMakeFiles/PAR_64.dir/rule
 
-.PHONY : PAR_32
+.PHONY : PAR_64
 
 # clean rule for target.
-CMakeFiles/PAR_32.dir/clean:
-	$(MAKE) -f CMakeFiles/PAR_32.dir/build.make CMakeFiles/PAR_32.dir/clean
-.PHONY : CMakeFiles/PAR_32.dir/clean
+CMakeFiles/PAR_64.dir/clean:
+	$(MAKE) -f CMakeFiles/PAR_64.dir/build.make CMakeFiles/PAR_64.dir/clean
+.PHONY : CMakeFiles/PAR_64.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

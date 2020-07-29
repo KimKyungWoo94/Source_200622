@@ -8,7 +8,7 @@ add_compile_definitions(_PSR_MAX_NUM_=128 _WSA_SERVICE_INFO_MAX_NUM_=31 _WSA_CHA
 #########################################################################################################
 ### 사용자 설정 영역
 #########################################################################################################
-set(TARGET_PLATFORM armhf)        # 가능 항목 : x64, arm, armhf, aarch64, ppc, ...
+set(TARGET_PLATFORM aarch64)        # 가능 항목 : x64, arm, armhf, aarch64, ppc, ...
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 0)
 set(VERSION_PATCH 1)
@@ -54,7 +54,7 @@ endif()
 ### PAR 어플리케이션 빌드
 #########################################################################################################
 ## PAR 컴파일/빌드
-set(TARGET_APP PAR_32)
+set(TARGET_APP PAR_64)
 set(OUTPUT_FILE "${TARGET_APP}")
 set(EXT_LIB_HDR
         ${EXT_INC_DIR}/wlanaccess/wlanaccess.h

@@ -27,49 +27,49 @@
 static void V2X_OBU_PrintWsaParseParams(const struct Dot3ParseWsaParams *const params)
 {
   //printf("WSA params\n");
-  syslog(LOG_INFO | LOG_LOCAL0, "WSA params\n");
+  syslog(LOG_INFO | LOG_LOCAL6, "WSA params\n");
   //printf("  version: %u, wsa_id: %u, content_count: %u\n",
   //        params->hdr.version, params->hdr.wsa_id, params->hdr.content_count);
-  syslog(LOG_INFO | LOG_LOCAL0, "  version: %u, wsa_id: %u, content_count: %u\n",
+  syslog(LOG_INFO | LOG_LOCAL6, "  version: %u, wsa_id: %u, content_count: %u\n",
           params->hdr.version, params->hdr.wsa_id, params->hdr.content_count);
   if (params->hdr.extensions.repeat_rate) {
       //printf("  repeat_rate: %u\n", params->hdr.repeat_rate);
-      syslog(LOG_INFO | LOG_LOCAL0, "  repeat_rate: %u\n", params->hdr.repeat_rate);
+      syslog(LOG_INFO | LOG_LOCAL6, "  repeat_rate: %u\n", params->hdr.repeat_rate);
   }
   if (params->hdr.extensions.twod_location) {
       //printf("  2DLocation.latitude: %d\n", params->hdr.twod_location.latitude);
       //printf("  2DLocation.longitude: %d\n", params->hdr.twod_location.longitude);
-      syslog(LOG_INFO | LOG_LOCAL0, "  2DLocation.latitude: %d\n", params->hdr.twod_location.latitude);
-      syslog(LOG_INFO | LOG_LOCAL0, "  2DLocation.longitude: %d\n", params->hdr.twod_location.longitude);
+      syslog(LOG_INFO | LOG_LOCAL6, "  2DLocation.latitude: %d\n", params->hdr.twod_location.latitude);
+      syslog(LOG_INFO | LOG_LOCAL6, "  2DLocation.longitude: %d\n", params->hdr.twod_location.longitude);
   }
   if (params->hdr.extensions.threed_location) {
       //printf("  3DLocation.latitude: %d\n", params->hdr.threed_location.latitude);
       //printf("  3DLocation.longitude: %d\n", params->hdr.threed_location.longitude);
       //printf("  3DLocation.elevation: %d\n", params->hdr.threed_location.elevation);
 
-      syslog(LOG_INFO | LOG_LOCAL0, "  3DLocation.latitude: %d\n", params->hdr.threed_location.latitude);
-      syslog(LOG_INFO | LOG_LOCAL0, "  3DLocation.longitude: %d\n", params->hdr.threed_location.longitude);
-      syslog(LOG_INFO | LOG_LOCAL0, "  3DLocation.elevation: %d\n", params->hdr.threed_location.elevation);
+      syslog(LOG_INFO | LOG_LOCAL6, "  3DLocation.latitude: %d\n", params->hdr.threed_location.latitude);
+      syslog(LOG_INFO | LOG_LOCAL6, "  3DLocation.longitude: %d\n", params->hdr.threed_location.longitude);
+      syslog(LOG_INFO | LOG_LOCAL6, "  3DLocation.elevation: %d\n", params->hdr.threed_location.elevation);
   }
   if (params->hdr.extensions.advertiser_id) {
       //printf("  Advertiser Id: %s\n", params->hdr.advertiser_id.id);
-      syslog(LOG_INFO | LOG_LOCAL0, "  Advertiser Id: %s\n", params->hdr.advertiser_id.id);
+      syslog(LOG_INFO | LOG_LOCAL6, "  Advertiser Id: %s\n", params->hdr.advertiser_id.id);
   }
   for (int i = 0; i < params->wsi_num; i++) {
       //printf("  Serv info[%d] - psid: %u, channel_index: %u,", i, params->wsis[i].psid, params->wsis[i].channel_index);
-      syslog(LOG_INFO | LOG_LOCAL0, "  Serv info[%d] - psid: %u, channel_index: %u,", i, params->wsis[i].psid, params->wsis[i].channel_index);
+      syslog(LOG_INFO | LOG_LOCAL6, "  Serv info[%d] - psid: %u, channel_index: %u,", i, params->wsis[i].psid, params->wsis[i].channel_index);
       if (params->wsis[i].extensions.ipv6_address) {
           char ip_str[IPV6_ADDR_STR_MAX_LEN];
           inet_ntop(AF_INET6, params->wsis[i].ipv6_address, ip_str, IPV6_ADDR_STR_MAX_LEN);
           //printf("  ip: %s, ", ip_str);
-          syslog(LOG_INFO | LOG_LOCAL0, "  ip: %s, ", ip_str);
+          syslog(LOG_INFO | LOG_LOCAL6, "  ip: %s, ", ip_str);
       }
       if (params->wsis[i].extensions.service_port) {
           //printf("  port: %u, ", params->wsis[i].service_port);
-          syslog(LOG_INFO | LOG_LOCAL0, "  port: %u, ", params->wsis[i].service_port);
+          syslog(LOG_INFO | LOG_LOCAL6, "  port: %u, ", params->wsis[i].service_port);
       }
       //printf("\n");
-      syslog(LOG_INFO | LOG_LOCAL0, "\n");
+      syslog(LOG_INFO | LOG_LOCAL6, "\n");
   }
   for (int i = 0; i < params->wci_num; i++) {
       //printf("  Chan info[%d] - chan: %d, power: %d, datarate: %d, adaptable: %u\n",
@@ -77,7 +77,7 @@ static void V2X_OBU_PrintWsaParseParams(const struct Dot3ParseWsaParams *const p
               //params->wcis[i].transmit_power_level,
               //params->wcis[i].datarate,
               //params->wcis[i].adaptable_datarate);
-      syslog(LOG_INFO | LOG_LOCAL0, "  Chan info[%d] - chan: %d, power: %d, datarate: %d, adaptable: %u\n",
+      syslog(LOG_INFO | LOG_LOCAL6, "  Chan info[%d] - chan: %d, power: %d, datarate: %d, adaptable: %u\n",
               i,params->wcis[i].chan_num,
               params->wcis[i].transmit_power_level,
               params->wcis[i].datarate,
@@ -90,7 +90,7 @@ static void V2X_OBU_PrintWsaParseParams(const struct Dot3ParseWsaParams *const p
       inet_ntop(AF_INET6, params->wra.primary_dns, primary_dns, IPV6_ADDR_STR_MAX_LEN);
       //printf("  WRA - lifetime: %u, ip_prefix: %s/%u, default_gw: %s, primary_dns: %s\n",
               //params->wra.router_lifetime, ip_prefix_str, params->wra.ip_prefix_len, default_gw, primary_dns);
-      syslog(LOG_INFO | LOG_LOCAL0, "  WRA - lifetime: %u, ip_prefix: %s/%u, default_gw: %s, primary_dns: %s\n",
+      syslog(LOG_INFO | LOG_LOCAL6, "  WRA - lifetime: %u, ip_prefix: %s/%u, default_gw: %s, primary_dns: %s\n",
               params->wra.router_lifetime, ip_prefix_str, params->wra.ip_prefix_len, default_gw, primary_dns);
   }
 }
@@ -121,8 +121,8 @@ void V2X_OBU_ProcessRxMpdu(const uint8_t *const mpdu, const uint16_t mpdu_size)
         {
             //printf("Fail to Dot3_ParseWsmMpdu() %d\n", payload_size);
             //printf("------------------------------------------------------------\n\n");
-            syslog(LOG_ERR | LOG_LOCAL1, "Fail to Dot3_ParseWsmMpdu() %d\n", payload_size);
-            syslog(LOG_INFO | LOG_LOCAL0, "------------------------------------------------------------\n\n");
+            syslog(LOG_ERR | LOG_LOCAL7, "Fail to Dot3_ParseWsmMpdu() %d\n", payload_size);
+            syslog(LOG_INFO | LOG_LOCAL6, "------------------------------------------------------------\n\n");
         }
         return;
     }
@@ -138,12 +138,12 @@ void V2X_OBU_ProcessRxMpdu(const uint8_t *const mpdu, const uint16_t mpdu_size)
                 dot3_params.src_mac_addr[0], dot3_params.src_mac_addr[1], dot3_params.src_mac_addr[2],
                 dot3_params.src_mac_addr[3], dot3_params.src_mac_addr[4], dot3_params.src_mac_addr[5]);
 #endif
-        syslog(LOG_INFO | LOG_LOCAL0, "Success to Dot3_ParseWsmMpdu() - payload_size: %d\n", payload_size);
-        syslog(LOG_INFO | LOG_LOCAL0, "    tx_chan_num: %d, tx_datarate: %d, tx_power: %d, priority: %d, psid: %d\n",
+        syslog(LOG_INFO | LOG_LOCAL6, "Success to Dot3_ParseWsmMpdu() - payload_size: %d\n", payload_size);
+        syslog(LOG_INFO | LOG_LOCAL6, "    tx_chan_num: %d, tx_datarate: %d, tx_power: %d, priority: %d, psid: %d\n",
                 dot3_params.tx_chan_num, dot3_params.tx_datarate, dot3_params.tx_power, dot3_params.priority, dot3_params.psid);
-	syslog(LOG_INFO | LOG_LOCAL0, "rx_power : %d, rcpi : %d \n",
+	syslog(LOG_INFO | LOG_LOCAL6, "rx_power : %d, rcpi : %d \n",
 			g_mib.rxpower, g_mib.rcpi);
-        //syslog(LOG_INFO | LOG_LOCAL0, "    dst_mac_addr: %02X:%02X:%02X:%02X:%02X:%02X, src_mac_addr: %02X:%02X:%02X:%02X:%02X:%02X\n",
+        //syslog(LOG_INFO | LOG_LOCAL6, "    dst_mac_addr: %02X:%02X:%02X:%02X:%02X:%02X, src_mac_addr: %02X:%02X:%02X:%02X:%02X:%02X\n",
                 //dot3_params.dst_mac_addr[0], dot3_params.dst_mac_addr[1], dot3_params.dst_mac_addr[2],
                 //dot3_params.dst_mac_addr[3], dot3_params.dst_mac_addr[4], dot3_params.dst_mac_addr[5],
                 //dot3_params.src_mac_addr[0], dot3_params.src_mac_addr[1], dot3_params.src_mac_addr[2],
@@ -156,10 +156,10 @@ void V2X_OBU_ProcessRxMpdu(const uint8_t *const mpdu, const uint16_t mpdu_size)
                     printf("\n");
                 }
                 //printf("%02X ", outbuf[i]);
-                syslog(LOG_INFO | LOG_LOCAL0, "%02X ", outbuf[i]);
+                syslog(LOG_INFO | LOG_LOCAL6, "%02X ", outbuf[i]);
             }
             //printf("\n");
-            syslog(LOG_INFO | LOG_LOCAL0, "\n");
+            syslog(LOG_INFO | LOG_LOCAL6, "\n");
         }
 #endif
     }
@@ -176,14 +176,14 @@ void V2X_OBU_ProcessRxMpdu(const uint8_t *const mpdu, const uint16_t mpdu_size)
             {
                 //printf("Fail to parse WSA - %d\n", ret);
                 //printf("------------------------------------------------------------\n\n");
-                syslog(LOG_INFO | LOG_LOCAL0, "Fail to parse WSA - %d\n", ret);
-                syslog(LOG_INFO | LOG_LOCAL0, "------------------------------------------------------------\n\n");
+                syslog(LOG_INFO | LOG_LOCAL6, "Fail to parse WSA - %d\n", ret);
+                syslog(LOG_INFO | LOG_LOCAL6, "------------------------------------------------------------\n\n");
             }
             return;
         }
         if (g_dbg >= kDbgMsgLevel_event) {
             //printf("Success to parse WSA()\n");
-            syslog(LOG_INFO | LOG_LOCAL0, "Success to parse WSA()\n");
+            syslog(LOG_INFO | LOG_LOCAL6, "Success to parse WSA()\n");
             V2X_OBU_PrintWsaParseParams(&wsa_params);
         }
     }
@@ -195,8 +195,8 @@ void V2X_OBU_ProcessRxMpdu(const uint8_t *const mpdu, const uint16_t mpdu_size)
         if (g_dbg >= kDbgMsgLevel_event) {
             //printf("Processing interseted WSM for psid %u\n", dot3_params.psid);
             //printf("------------------------------------------------------------\n\n");
-            syslog(LOG_INFO | LOG_LOCAL0, "Processing interseted WSM for psid %u\n", dot3_params.psid);
-            syslog(LOG_INFO | LOG_LOCAL0, "------------------------------------------------------------\n\n");
+            syslog(LOG_INFO | LOG_LOCAL6, "Processing interseted WSM for psid %u\n", dot3_params.psid);
+            syslog(LOG_INFO | LOG_LOCAL6, "------------------------------------------------------------\n\n");
         }
         /* TO DO */
     }
@@ -212,8 +212,8 @@ void V2X_OBU_ProcessRxMpdu(const uint8_t *const mpdu, const uint16_t mpdu_size)
         if (g_dbg >= kDbgMsgLevel_event) {
             //printf("Processing interseted WSM for psid %u\n", dot3_params.psid);
             //printf("------------------------------------------------------------\n\n");
-            syslog(LOG_INFO | LOG_LOCAL0, "Processing interseted WSM for psid %u\n", dot3_params.psid);
-            syslog(LOG_INFO | LOG_LOCAL0, "------------------------------------------------------------\n\n");
+            syslog(LOG_INFO | LOG_LOCAL6, "Processing interseted WSM for PAR psid %u\n", dot3_params.psid);
+            syslog(LOG_INFO | LOG_LOCAL6, "------------------------------------------------------------\n\n");
         }
         /* TO DO */
     }
@@ -226,8 +226,8 @@ void V2X_OBU_ProcessRxMpdu(const uint8_t *const mpdu, const uint16_t mpdu_size)
         if (g_dbg >= kDbgMsgLevel_event) {
             //printf("Drop not interseted WSM for psid %u\n", dot3_params.psid);
             //printf("------------------------------------------------------------\n\n");
-            syslog(LOG_INFO | LOG_LOCAL0, "Drop not interseted WSM for psid %u\n", dot3_params.psid);
-            syslog(LOG_INFO | LOG_LOCAL0, "------------------------------------------------------------\n\n");
+            syslog(LOG_INFO | LOG_LOCAL6, "Drop not interseted WSM for psid %u\n", dot3_params.psid);
+            syslog(LOG_INFO | LOG_LOCAL6, "------------------------------------------------------------\n\n");
         }
     }
 }

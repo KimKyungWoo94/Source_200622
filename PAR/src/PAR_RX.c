@@ -25,9 +25,10 @@ static void* userSelectThread(void *notused);
 void createNode();
 void freeAllNode();
 struct parInfo_t* getNode(int index);
-void getCalDataRcpi(uint8_t* array, int arrayIdx, int mode);
-void getCalDataRxpower(int16_t* array, int arrayIdx, int mode);
+void getCalDataRcpi(uint8_t* array, int arrayIdx, double* saveArray); // int mode);
+void getCalDataRxpower(int16_t* array, int arrayIdx, double* saveArray); //int mode);
 bool isThereRSUID(int rsuID);
+bool debugModeFirstCheck;
 /**
  * par_InitRXoperation() 
  * PAR 수신동작을 초기화한다.
@@ -48,6 +49,7 @@ int par_InitRXoperation(){
 		ListPtr->tail = NULL;
 		ListPtr->numOfList = 0;
 	}
+	debugModeFirstCheck = false;
 
 	/* 구조체 동적할당 */
 	//stPARInfo = malloc(sizeof(struct parInfo_t));
@@ -84,22 +86,22 @@ int par_InitRXoperation(){
 	ret = pthread_create(&rx_thread, NULL, rxThread, NULL);
 	if(ret <0){
 		//perror("[PAR] Fail to create RX thread() ");
-		syslog(LOG_ERR | LOG_LOCAL3, "[PAR_RX] Fail to create RX thread()\n");
+		syslog(LOG_ERR | LOG_LOCAL5, "[PAR_RX] Fail to create RX thread()\n");
 		return -1;
 	}
 	else{
 		//printf("Success RX thread() \n");
-		syslog(LOG_INFO | LOG_LOCAL2, "[PAR_RX] Success create RX thread()\n");
+		syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] Success create RX thread()\n");
 	}
 
 	/* User Select 쓰레드 생성 */
 	if(g_mib.Information != 0){
 		ret = pthread_create(&userSelect_thread, NULL, userSelectThread, NULL);
 		if(ret < 0){
-			syslog(LOG_ERR | LOG_LOCAL3, "[PAR_RX] Fail to create userSelect thread()\n");
+			syslog(LOG_ERR | LOG_LOCAL5, "[PAR_RX] Fail to create userSelect thread()\n");
 		}
 		else{
-			syslog(LOG_INFO | LOG_LOCAL2, "[PAR_RX] Success create userSelect thread()\n");
+			syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] Success create userSelect thread()\n");
 
 		}
 	}
@@ -108,11 +110,11 @@ int par_InitRXoperation(){
 	/* GPSD 오픈 */
 	ret = gps_open(GPSD_SHARED_MEMORY, 0, &gpsData);
 	if(ret <0){
-		syslog(LOG_ERR | LOG_LOCAL3, "[PAR_RX] gps_open() fail(%s)\n", gps_errstr(ret));
+		syslog(LOG_ERR | LOG_LOCAL5, "[PAR_RX] gps_open() fail(%s)\n", gps_errstr(ret));
 		shmCheck = true;
 	}
 	else{
-		syslog(LOG_INFO | LOG_LOCAL2, "[PAR_RX] Success gps_open()\n");
+		syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] Success gps_open()\n");
 	}
 
 
@@ -148,12 +150,12 @@ void par_RXoperation(){
 		if(shmCheck == true)
 		{
 			gps_close(&gpsData);
-			syslog(LOG_INFO | LOG_LOCAL2, "[PAR_RX] Re connection to GPSD\n");
+			syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] Re connection to GPSD\n");
 			ret = gps_open(GPSD_SHARED_MEMORY, 0, &gpsData);
 
 			if(ret < 0)
 			{
-				syslog(LOG_ERR | LOG_LOCAL3, "[PAR_RX] gps_open() fail(%s)\n", gps_errstr(ret));
+				syslog(LOG_ERR | LOG_LOCAL5, "[PAR_RX] gps_open() fail(%s)\n", gps_errstr(ret));
 			}
 			shmCheck = false;
 
@@ -163,7 +165,7 @@ void par_RXoperation(){
 		ret = gps_read(&gpsData);
 		if(ret < 0){
 			//printf("[PAR_RX] gps_read() fail( %s)\n", gps_errstr(ret));
-			syslog(LOG_ERR | LOG_LOCAL3, "[PAR_RX] gps_read() fail( %s)\n", gps_errstr(ret));
+			syslog(LOG_ERR | LOG_LOCAL5, "[PAR_RX] gps_read() fail( %s)\n", gps_errstr(ret));
 			shmCheck = true;
 		}
 
@@ -174,12 +176,12 @@ void par_RXoperation(){
 		{
 			g_obu.obuLatitude = g_mib.Latitude;
 			g_obu.obuLongitude = g_mib.Longitude;
-			//printf("OBULati : %d   OBULongi : %d \n",g_obu.OBULatitude, g_obu.OBULongitude);
-			syslog(LOG_INFO | LOG_LOCAL2,"Success INPUT LATI and LONGI\n");
+			//printf("OBULati : %d   OBULongi : %d \n",g_obu.obuLatitude, g_obu.obuLongitude);
+			syslog(LOG_INFO | LOG_LOCAL4,"Success INPUT LATI and LONGI\n");
 #if 0 
 			if(g_mib.dbg)
 			{
-				syslog(LOG_INFO | LOG_LOCAL2,"OBULati : %d   OBULongi : %d \n",g_obu.OBULatitude, g_obu.OBULongitude);
+				syslog(LOG_INFO | LOG_LOCAL2,"OBULati : %d   OBULongi : %d \n",g_obu.obuLatitude, g_obu.obuLongitude);
 			}
 #endif
 		}
@@ -193,13 +195,13 @@ void par_RXoperation(){
 				//syslog(LOG_INFO | LOG_LOCAL2,"[PAR_RX] GPSData.set Success\n");
 				g_obu.obuLatitude = (int) pow(10,7)*gpsData.fix.latitude;
 				g_obu.obuLongitude = (int) pow(10,7)*gpsData.fix.longitude;
-				g_obu.obuSpeed = gpsData.fix.speed;
+				g_obu.obuSpeed = gpsData.fix.speed*3.6;
 				g_obu.obuHeading = gpsData.fix.track;
-				//printf("OBULatitude : %d  OBULongitude : %d OBUSpeed : %f OBUHeading : %f \n", g_obu.OBULatitude, g_obu.OBULongitude, g_obu.OBUSpeed, g_obu.OBUHeading);
+				//printf("OBULatitude : %d  OBULongitude : %d OBUSpeed : %f OBUHeading : %f \n", g_obu.obuLatitude, g_obu.obuLongitude, g_obu.obuSpeed, g_obu.obuHeading);
 #if 0 
 				if(g_mib.dbg)
 				{
-					syslog(LOG_INFO | LOG_LOCAL2,"OBULatitude : %d  OBULongitude : %d OBUSpeed : %f OBUHeading : %f \n", g_obu.OBULatitude, g_obu.OBULongitude, g_obu.OBUSpeed, g_obu.OBUHeading);
+					syslog(LOG_INFO | LOG_LOCAL2,"OBULatitude : %d  OBULongitude : %d OBUSpeed : %f OBUHeading : %f \n", g_obu.obuLatitude, g_obu.obuLongitude, g_obu.obuSpeed, g_obu.obuHeading);
 				}
 #endif
 			}
@@ -207,16 +209,16 @@ void par_RXoperation(){
 			else {
 				/* 인자 값과 gpsd로부터 받지 않음 */
 				//printf("GPS Invalid\n");
-				syslog(LOG_INFO | LOG_LOCAL2, "[PAR_RX] GPS Invalid\n");
+				syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] GPS Invalid\n");
 				g_obu.obuLatitude = 900000001;
 				g_obu.obuLongitude = 1800000001;
 				g_obu.obuSpeed = 8191;
 				g_obu.obuHeading = 28800;
-				//printf("OBULatitude : %d  OBULongitude : %d OBUSpeed : %f OBUHeading : %f \n",g_obu.OBULatitude, g_obu.OBULongitude, g_obu.OBUSpeed, g_obu.OBUHeading);
+				//printf("OBULatitude : %d  OBULongitude : %d OBUSpeed : %f OBUHeading : %f \n",g_obu.obuLatitude, g_obu.obuLongitude, g_obu.obuSpeed, g_obu.obuHeading);
 #if 0 
 				if(g_mib.dbg)
 				{
-					syslog(LOG_INFO | LOG_LOCAL2,"OBULatitude : %d  OBULongitude : %d OBUSpeed : %f OBUHeading : %f \n", g_obu.OBULatitude, g_obu.OBULongitude, g_obu.OBUSpeed, g_obu.OBUHeading);
+					syslog(LOG_INFO | LOG_LOCAL4,"OBULatitude : %d  OBULongitude : %d OBUSpeed : %f OBUHeading : %f \n", g_obu.obuLatitude, g_obu.obuLongitude, g_obu.obuSpeed, g_obu.obuHeading);
 				}
 #endif				
 			}
@@ -235,11 +237,14 @@ void par_RXoperation(){
 			//if(g_Packet.rsuID >0 && g_Packet.rsuID <= g_mib.rsuNum)
 			//{
 #if 1
+			/* CreateNode */
 			if(!isThereRSUID(g_Packet.rsuID))
 				createNode();
 			else
+				/* getNode */
 				ListPtr->cur = getNode(g_Packet.rsuID);
 
+			/* arrayIdx 초기화 */
 			if(ListPtr->cur->arrayIdx == 10)
 				ListPtr->cur->arrayIdx = 0;
 
@@ -277,7 +282,7 @@ void par_RXoperation(){
 #if 0 
 			if(g_mib.dbg)
 			{
-				syslog(LOG_INFO | LOG_LOCAL2,"stPARInfo[CNT] : %d \n\n\n",stPARInfo[g_Packet.rsuID].cnt);
+				syslog(LOG_INFO | LOG_LOCAL4,"stPARInfo[CNT] : %d \n\n\n",stPARInfo[g_Packet.rsuID].cnt);
 			}
 #endif
 			//	}
@@ -290,34 +295,36 @@ void par_RXoperation(){
 	// free(stPARInfo);
 
 
-	/* userSelect쓰레드 종료 */
-	//ret = pthread_join(userSelect_thread, (void **)status);
-	ret = pthread_join(userSelect_thread, &status);
-	if( ret == 0 )
-	{
-		//printf("[PAR_RX] Completed join with userSelectThread status = %s\n", (char*)status);
-		syslog(LOG_INFO | LOG_LOCAL2, "[PAR_RX] Completed join with userSelectThread status = %s\n", (char*)status);
-	}
-	else
-	{
-		//printf("[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
-		syslog(LOG_ERR | LOG_LOCAL3, "[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
-	}	
-
 	/* RX쓰레드 종료 */
 	//ret = pthread_join(rx_thread, (void **)status);
 	ret = pthread_join(rx_thread, &status);
 	if( ret == 0 )
 	{
 		//printf("[PAR_RX] Completed join with rxThread status = %s\n", (char*)status);
-		syslog(LOG_INFO | LOG_LOCAL2, "[PAR_RX] Completed join with rxThread status = %s\n", (char*)status);
+		syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] Completed join with rxThread status = %s\n", (char*)status);
 	}
 	else
 	{
 		//printf("[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
-		syslog(LOG_ERR | LOG_LOCAL3, "[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
+		syslog(LOG_ERR | LOG_LOCAL5, "[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
 	}
 
+	/* userSelect쓰레드 종료 */
+	if(g_mib.Information != 0){
+		//ret = pthread_join(userSelect_thread, (void **)status);
+		ret = pthread_join(userSelect_thread, &status);
+		if( ret == 0 )
+		{
+			//printf("[PAR_RX] Completed join with userSelectThread status = %s\n", (char*)status);
+			syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] Completed join with userSelectThread status = %s\n", (char*)status);
+		}
+		else
+		{
+			//printf("[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
+			syslog(LOG_ERR | LOG_LOCAL5, "[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
+		}	
+
+	}
 	/* gpsd close */
 	gps_close(&gpsData);
 
@@ -345,7 +352,7 @@ void par_Report(void){
 	//uint32_t maxPAR = 0;
 	//uint32_t curPAR = 0;
 	//printf("[PAR_INFO] Running Timer \n");
-	//syslog(LOG_INFO | LOG_LOCAL0,"[PAR_INFO] Running Timer \n");
+	//syslog(LOG_INFO | LOG_LOCAL4,"[PAR_INFO] Running Timer \n");
 
 
 	struct parInfo_t *ptrTemp = ListPtr->head;
@@ -353,7 +360,7 @@ void par_Report(void){
 	//for(idx=0;idx<=g_mib.rsuNum;idx++)
 	for(idx=1;idx<=ListPtr->numOfList;idx++)
 	{
-		//syslog(LOG_INFO | LOG_LOCAL2, "Report function Test : %d\n",idx);
+		//syslog(LOG_INFO | LOG_LOCAL4, "Report function Test : %d\n",idx);
 		if(ptrTemp == NULL)
 			break;
 
@@ -374,36 +381,41 @@ void par_Report(void){
 		//printf("--------------------------------------------------------------------------------------------------\n");
 
 		//기존 들어오던 기지국 정보가 수신되지 않기 시작함
-		if(ptrTemp->check >0 && ptrTemp->cnt==0)
+		if(/*ptrTemp->check >0 &&*/ ptrTemp->cnt==0)
 		{
-			ptrTemp->check++;
+			ptrTemp->check = false;
 
 		}
+		else
+			ptrTemp->check = true;
+
+		/*
 		// 5초 동안 연속적으로 수신되지 않음
 		if(ptrTemp->check > MAX_ZERO_COUNT && ptrTemp->cnt==0)
 		{
 			// 다음 수신 정보가 있을때까지 통신성능측정프로그램으로 정보전달하지 않음.
 			ptrTemp->check=0;
 		}
+		*/
+
 		// 체크되어 있지 않은 기지국의 정보는 통신성능측정프로그램으로 정보전달하지 않음.
-		if(ptrTemp->check==0)
+		if(!ptrTemp->check)
 		{
-			//if(ptrTemp->arrayIdx !=0){
-				//ptrTemp->pastArrayidx = ptrTemp->arrayIdx;
-				ptrTemp->arrayIdx =0;
-			//}
-			ptrTemp = ptrTemp->next;
-			continue;
+//			ptrTemp->arrayIdx =0;
+//			ptrTemp = ptrTemp->next;
+//			continue;
+			setZeroParInfo(ptrTemp);
 		}
+		else
+		{
+			/* 거리 계산 */
+			ptrTemp->distance = ldCaldistance(ptrTemp->rsuLongitude, ptrTemp->rsuLatitude, ptrTemp->obuLongitude, ptrTemp->obuLatitude);
+	
+			/* 해당 기지국 받은 CNT 갯수 저장 */
+			cnt[idx] = ptrTemp->cnt;
 
-		/* 거리 계산 */
-		ptrTemp->distance = ldCaldistance(ptrTemp->rsuLongitude, ptrTemp->rsuLatitude, ptrTemp->obuLongitude, ptrTemp->obuLatitude);
-
-		/* 해당 기지국 받은 CNT 갯수 저장 */
-		cnt[idx] = ptrTemp->cnt;
-
-		/* 해당 기지국 CNT 초기화 */
-		ptrTemp->cnt = 0;
+			/* 해당 기지국 CNT 초기화 */
+			ptrTemp->cnt = 0;
 
 		// 현재 측정지점에서 최대 PAR 갱신
 		//curPAR = (cnt[idx]*100)/(1000/stPARInfo[idx].interval);
@@ -412,26 +424,30 @@ void par_Report(void){
 
 #if 1 
 
-		/* 현재 PAR 계산 */
-		ptrTemp->curPAR = (cnt[idx]*100)/(1000/ptrTemp->interval);
-
-		/* PAR최대값 계산 */
-		if(ptrTemp->curPAR > ptrTemp->maxPAR)
-			ptrTemp->maxPAR = ptrTemp->curPAR;
+			/* 현재 PAR 계산 */
+			ptrTemp->curPAR = (cnt[idx]*100)/(1000/ptrTemp->interval);
+	
+			/* PAR최대값 계산 */
+			if(ptrTemp->curPAR > ptrTemp->maxPAR)
+				ptrTemp->maxPAR = ptrTemp->curPAR;
+	
+		}
 
 		/* dbg모드 */
 		if(g_mib.dbg){
 			//printf("RSU ID : %d  RSUNUM : %d dbg모드\n",ptrTemp->rsuID,g_mib.rsuNum);
 			//printf("--------------------------------------------------------------------------------------------------\n");
-			syslog(LOG_INFO | LOG_LOCAL2, "CHECK : %u, RSUID : %d, RSU Latitude : %d, RSU Longitude : %d, OBU Latitude : %d, OBU Longitude : %d\n", 
-					ptrTemp->check,
+			
+#if 0
+			syslog(LOG_INFO | LOG_LOCAL4, "RSUID : %d, RSULatitude : %d, RSULongitude : %d, OBULatitude : %d, OBULongitude : %d\n", 
+//					ptrTemp->check,
 					ptrTemp->rsuID,
 					ptrTemp->rsuLatitude,
 					ptrTemp->rsuLongitude,
 					ptrTemp->obuLatitude,
 					ptrTemp->obuLongitude);
 
-			syslog(LOG_INFO | LOG_LOCAL2, /*"RXPOWER : %d, rcpi : %d,*/"Distance : %.0f, OBUSpeed : %3.2f, OBUHeading : %3.2f, CNT : %u, PAR : %d\n",
+			syslog(LOG_INFO | LOG_LOCAL4, /*"RXPOWER : %d, rcpi : %d,*/"Distance : %.0f, OBUSpeed : %3.2f, OBUHeading : %3.2f, CNT : %u, PAR : %d\n",
 					//ptrTemp->rxpower2,
 					//ptrTemp->rcpi2,
 					ptrTemp->distance,
@@ -439,11 +455,49 @@ void par_Report(void){
 					(double)ptrTemp->obuHeading,
 					cnt[idx],
 					ptrTemp->maxPAR);
-			getCalDataRcpi(ptrTemp->rcpi, ptrTemp->arrayIdx,0);
-			getCalDataRxpower(ptrTemp->rxpower, ptrTemp->arrayIdx,0);
+			
+#endif
+
+				if(ptrTemp->check && ptrTemp->arrayIdx == 0)
+				{
+					getCalDataRcpi(ptrTemp->rcpi, ptrTemp->pastArrayidx,ptrTemp->calculateData); //0);
+					getCalDataRxpower(ptrTemp->rxpower, ptrTemp->pastArrayidx,ptrTemp->calculateData); //0);
+				}
+				else{
+					getCalDataRcpi(ptrTemp->rcpi, ptrTemp->arrayIdx,ptrTemp->calculateData); //0);
+					getCalDataRxpower(ptrTemp->rxpower, ptrTemp->arrayIdx,ptrTemp->calculateData); //0);
+				}
+			//getCalDataRcpi(ptrTemp->rcpi, ptrTemp->arrayIdx,0);
+			//getCalDataRxpower(ptrTemp->rxpower, ptrTemp->arrayIdx,0);
 
 
-			syslog(LOG_INFO | LOG_LOCAL2, "--------------------------------------------------------------------------------------------------\n");
+
+			if(!debugModeFirstCheck){
+				syslog(LOG_INFO | LOG_LOCAL4, "RSUID, RSULatitude, RSULongitude, OBULatitude, OBULongitude, Distance, OBUSpeed, OBUHeading, CNT, PAR, Min_rxpower, Max_rxpower, Avr_rxpower, Last_rxpower, Min_rcpi, Max_rcpi, Avr_rcpi, Last_rcpi\n"); 
+				debugModeFirstCheck = true;
+			}
+
+			syslog(LOG_INFO | LOG_LOCAL4, "%d, %d, %d, %d, %d, %.0f, %3.2f, %3.2f, %u, %d, %d, %d, %.1f, %d, %d, %d, %.1f, %d\n",
+					ptrTemp->rsuID,
+					ptrTemp->rsuLatitude,
+					ptrTemp->rsuLongitude,
+					ptrTemp->obuLatitude,
+					ptrTemp->obuLongitude,
+					ptrTemp->distance,
+					(double)ptrTemp->obuSpeed,
+					(double)ptrTemp->obuHeading,
+					cnt[idx],
+					ptrTemp->maxPAR,
+					(int)ptrTemp->calculateData[0],
+					(int)ptrTemp->calculateData[1],
+					ptrTemp->calculateData[2],
+					(int)ptrTemp->calculateData[3],
+					(int)ptrTemp->calculateData[4],
+					(int)ptrTemp->calculateData[5],
+					ptrTemp->calculateData[6],
+					(int)ptrTemp->calculateData[7]);
+
+			syslog(LOG_INFO | LOG_LOCAL4, "------------------------------------------------------------------------------------------------\n");
 		}
 #else
 		printf("CHECK : %u, RSUID : %d, RSU Latitude : %d, RSU Longitude : %d, OBU Latitude : %d, OBU Longitude : %d,  RXPOWER : %d, rcpi : %d, distance : %.0f, OBUSpeed : %3.2f, OBUHeading : %3.2f, CNT : %u, PAR : %d\n",
@@ -463,19 +517,33 @@ void par_Report(void){
 #endif
 		//if(ptrTemp->arrayIdx !=0)
 		//ptrTemp->pastArrayidx = ptrTemp->arrayIdx;
-		ptrTemp->arrayIdx =0;	
+		ptrTemp->arrayIdx =0;
+		//ptrTemp->check = true;
 		ptrTemp = ptrTemp->next;
 		//}
 
 	}
 }
+
+void setZeroParInfo(struct parInfo_t* ptr){
+	ptr->arrayIdx = 0;
+	ptr->rsuLatitude = 0;
+	ptr->rsuLongitude = 0;
+	ptr->obuLatitude = 0 ;
+	ptr->obuLongitude = 0;
+	ptr->distance = 0;
+	ptr->obuSpeed = 0.0;
+	ptr->obuHeading = 0.0;
+	ptr->maxPAR = 0;
+}
+
 /**
  * createNode()
  * 노드 생성
  */
 void createNode() {
-	printf("[PAR_RX] createNode\n");
-	//syslog(LOG_INFO | LOG_LOCAL2, "[PAR_RX] CreateNode\n");
+	//printf("[PAR_RX] createNode\n");
+	syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] CreateNode\n");
 
 	struct parInfo_t* stPARInfoPtr =(struct parInfo_t *) malloc(sizeof(struct parInfo_t));
 	stPARInfoPtr->next = NULL;
@@ -504,14 +572,21 @@ void createNode() {
  * 동적할당 해제
  */
 void freeAllNode(){
+
+	struct parInfo_t* tempPtr = ListPtr->head; //tempPtr = a
+	
 	while(ListPtr->head != NULL){
-		struct parInfo_t* tempPtr = ListPtr->head; //tempPtr = a; -> B;
-		ListPtr->head = ListPtr->head->next; // a = b;
+	//	struct parInfo_t* tempPtr = ListPtr->head; //tempPtr = a
+		ListPtr->head = ListPtr->head->next; // header = b;
 		free(tempPtr); //a free
+		tempPtr = ListPtr->head; //b
+		syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] Free Node\n");
 	}
 	ListPtr->cur = NULL;
 	ListPtr->tail = NULL;
 	ListPtr->numOfList = 0;
+	
+	syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] There is nothing to free Node \n");
 }
 
 /**
@@ -523,7 +598,7 @@ struct parInfo_t* getNode(int rsuID){
 
 	while(returnPtr != NULL){
 		if(rsuID == returnPtr->rsuID)
-			break;;
+			break;
 		returnPtr = returnPtr->next;
 	}
 	return returnPtr;
@@ -534,13 +609,13 @@ struct parInfo_t* getNode(int rsuID){
  * getCalDataRcpi()
  * RCPI 값 MIN, MAX, avg, 마지막 값 출력 
  */
-void getCalDataRcpi(uint8_t* array, int arrayIdx, int mode){
+void getCalDataRcpi(uint8_t* array, int arrayIdx, double* saveArray){ //int mode){
 	if(arrayIdx > 0){
 		uint16_t sum = array[0];
 		uint8_t min = array[0];
 		uint8_t max = array[0];
 
-		//syslog(LOG_INFO | LOG_LOCAL2, "rcpi[0]: %d", array[0]);
+		//syslog(LOG_INFO | LOG_LOCAL4, "rcpi[0]: %d", array[0]);
 
 		for(int i=1; i<arrayIdx; i++){
 
@@ -552,15 +627,35 @@ void getCalDataRcpi(uint8_t* array, int arrayIdx, int mode){
 			if(array[i] > max)
 				max = array[i];
 
-			//syslog(LOG_INFO | LOG_LOCAL2, "rcpi[%d]: %d", i, array[i]);
+			//syslog(LOG_INFO | LOG_LOCAL4, "rcpi[%d]: %d", i, array[i]);
 		}
+		
+		saveArray[4] = min;
+		saveArray[5] = max;
+		saveArray[6] = (double)(sum/arrayIdx);
+		saveArray[7] = array[arrayIdx-1];
 
+		/*
 		if(mode == 0)
-			syslog(LOG_INFO | LOG_LOCAL2, "Max_rcpi: %d, Min_rcpi: %d, Avr_rcpi: %.1f, Last_rcpi: %d\n",
+			syslog(LOG_INFO | LOG_LOCAL4, "Max_rcpi : %d, Min_rcpi : %d, Avr_rcpi : %.1f, Last_rcpi : %d\n",
 					max, min, (double)(sum/arrayIdx), array[arrayIdx-1]);
 		else
-			printf("Max_rcpi: %d, Min_rcpi: %d, Avr_rcpi: %.1f, Last_rcpi: %d\n",
+			printf("Max_rcpi : %d, Min_rcpi : %d, Avr_rcpi : %.1f, Last_rcpi : %d\n",
 					max, min, (double)(sum/arrayIdx), array[arrayIdx-1]);
+		*/
+	}
+	else{
+		saveArray[4] = 0.0;
+		saveArray[5] = 0.0;
+		saveArray[6] = 0.0;
+		saveArray[7] = 0.0;
+
+		/*
+		 if(mode == 0)
+			 syslog(LOG_INFO | LOG_LOCAL4, "Max_rcpi : 0, Min_rcpi : 0, Avr_rcpi : 0.0, Last_rcpi : 0\n");
+		 else
+			 printf("Max_rcpi : 0, Min_rcpi : 0, Avr_rcpi : 0.0, Last_rcpi : 0\n");
+		*/
 	}
 }
 
@@ -568,13 +663,13 @@ void getCalDataRcpi(uint8_t* array, int arrayIdx, int mode){
  * getCalDataRxpower()
  * RXpower 값 MIN, MAX, avg, 마지막 값 출력 
  */
-void getCalDataRxpower(int16_t* array, int arrayIdx, int mode){
+void getCalDataRxpower(int16_t* array, int arrayIdx, double* saveArray){ // int mode){
 	if(arrayIdx > 0){
 		int16_t sum = array[0];
 		int16_t min = array[0];
 		int16_t max = array[0];
 
-		//syslog(LOG_INFO | LOG_LOCAL2, "rxpower[0]: %d", array[0]);
+		//syslog(LOG_INFO | LOG_LOCAL4, "rxpower[0]: %d", array[0]);
 
 		for(int i=1; i<arrayIdx; i++){
 			sum += array[i];
@@ -585,15 +680,35 @@ void getCalDataRxpower(int16_t* array, int arrayIdx, int mode){
 			if(array[i] > max)
 				max = array[i];
 
-			//syslog(LOG_INFO | LOG_LOCAL2, "rxpower[%d]: %d", i, array[i]);
+			//syslog(LOG_INFO | LOG_LOCAL4, "rxpower[%d]: %d", i, array[i]);
 		}
 
+		saveArray[0] = min;
+                saveArray[1] = max;
+                saveArray[2] = (double)(sum/arrayIdx);
+                saveArray[3] = array[arrayIdx-1];
+
+		/*
 		if(mode==0)
-			syslog(LOG_INFO | LOG_LOCAL2, "Max_rxpower: %d, Min_rxpower: %d, Avr_rxpower: %.1f, Last_rxpower: %d\n",
+			syslog(LOG_INFO | LOG_LOCAL4, "Max_rxpower : %d, Min_rxpower : %d, Avr_rxpower : %.1f, Last_rxpower : %d\n",
 					max, min, (double)(sum/arrayIdx), array[arrayIdx-1]);
 		else
-			printf("Max_rxpower: %d, Min_rxpower: %d, Avr_rxpower: %.1f, Last_rxpower: %d\n",
+			printf("Max_rxpower : %d, Min_rxpower : %d, Avr_rxpower : %.1f, Last_rxpower : %d\n",
 					max, min, (double)(sum/arrayIdx), array[arrayIdx-1]);
+		*/
+	}
+	else{
+		saveArray[0] = 0.0;
+		saveArray[1] = 0.0;
+		saveArray[2] = 0.0;
+		saveArray[3] = 0.0;
+
+		/*
+		if(mode == 0)
+			syslog(LOG_INFO | LOG_LOCAL4, "Max_rxpower : 0, Min_rxpower : 0, Avr_rxpower : 0.0, Last_rxpower : 0\n");
+		else
+			printf("Max_rxpower : 0, Min_rxpower : 0, Avr_rxpower : 0.0, Last_rxpower : 0\n");
+		*/
 	}
 }
 
@@ -641,7 +756,11 @@ static  void* rxThread(void *notused){
 	/* Thread 종료 */
 	pthread_exit((void *)0);
 }
-
+/***
+ * userSelectThread()
+ * 유저 메뉴 쓰레드
+ * 연결된 기지국 ID 와 원하는 기지국 정보 출력
+ */
 static void* userSelectThread(void *notused){
 	int num;
 	int ret;
@@ -659,12 +778,12 @@ static void* userSelectThread(void *notused){
 				   if( ret == 0 )
 				   {
 				   printf("[PAR_RX] Completed join with userSelectThread status = %d\n", status);
-				//syslog(LOG_INFO | LOG_LOCAL2, "[PAR_RX] Completed join with userSelectThread status = %d\n", status);
+				//syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] Completed join with userSelectThread status = %d\n", status);
 				}
 				else
 				{
 				printf("[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
-				//syslog(LOG_ERR | LOG_LOCAL3, "[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
+				//syslog(LOG_ERR | LOG_LOCAL5, "[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
 				}
 				break;
 				 */
@@ -679,8 +798,9 @@ static void* userSelectThread(void *notused){
 				break;
 			case 1:
 				ptrTemp = ListPtr->head;
-				for(int i=0; i<ListPtr->numOfList; i++){
-					printf("RSUID of [%d]: %d\n",i+1,ptrTemp->rsuID);
+				int count = 1;
+				while(ptrTemp != NULL){
+					printf("RSUID of [%d]: %d\n", count++, ptrTemp->rsuID);
 					ptrTemp = ptrTemp->next;
 				}
 				num = 0;
@@ -693,9 +813,10 @@ static void* userSelectThread(void *notused){
 					printf("# Error(Please input correct RsuID\n");
 					break;
 				}
-				printf("[%d] information :\n",selectRsuID); 
-				printf( "CHECK : %u\nRSUID : %d\nRSU Latitude : %d\nRSU Longitude : %d\nOBU Latitude : %d\nOBU Longitude : %d\n",
-						ptrTemp->check,
+				printf("**Information of RSU ID[%d]**\n",selectRsuID); 
+#if 0				
+				printf( "RSUID : %d\nRSU Latitude : %d\nRSU Longitude : %d\nOBU Latitude : %d\nOBU Longitude : %d\n",
+					//	ptrTemp->check,
 						ptrTemp->rsuID,
 						ptrTemp->rsuLatitude,
 						ptrTemp->rsuLongitude,
@@ -708,18 +829,36 @@ static void* userSelectThread(void *notused){
 						(double)ptrTemp->obuSpeed,
 						(double)ptrTemp->obuHeading,
 						ptrTemp->maxPAR);
-
-				if(ptrTemp->arrayIdx !=0)
+#endif
+				if(ptrTemp->check && ptrTemp->arrayIdx == 0)
 				{
-				getCalDataRcpi(ptrTemp->rcpi, ptrTemp->arrayIdx,1);
-				getCalDataRxpower(ptrTemp->rxpower, ptrTemp->arrayIdx,1);
+					getCalDataRcpi(ptrTemp->rcpi, ptrTemp->pastArrayidx, ptrTemp->calculateData); //1);
+					getCalDataRxpower(ptrTemp->rxpower, ptrTemp->pastArrayidx, ptrTemp->calculateData); //1);
 				}
-
 				else
 				{
-				getCalDataRcpi(ptrTemp->rcpi, ptrTemp->pastArrayidx,1);
-				getCalDataRxpower(ptrTemp->rxpower, ptrTemp->pastArrayidx,1);
+					getCalDataRcpi(ptrTemp->rcpi, ptrTemp->arrayIdx, ptrTemp->calculateData); //1);
+					getCalDataRxpower(ptrTemp->rxpower, ptrTemp->arrayIdx, ptrTemp->calculateData); //1);
 				}
+
+				printf("RSUID : %d\nRSULatitude : %d\nRSULongitude : %d\nOBULatitude : %d\nOBULongitude : %d\nDistance : %.0f\nOBUSpeed : %3.2f\nOBUHeading : %3.2f\nPAR : %d\nMin_rxpower : %d\nMax_rxpower : %d\nAvr_rxpower : %.1f\nLast_rxpower : %d\nMin_rcpi : %d\nMax_rcpi : %d\nAvr_rcpi : %.1f\nLast_rcpi : %d\n",
+						ptrTemp->rsuID,
+						ptrTemp->rsuLatitude,
+						ptrTemp->rsuLongitude,
+						ptrTemp->obuLatitude,
+						ptrTemp->obuLongitude,
+						ptrTemp->distance,
+						(double)ptrTemp->obuSpeed,
+						(double)ptrTemp->obuHeading,
+						ptrTemp->maxPAR,
+						(int)ptrTemp->calculateData[0],
+						(int)ptrTemp->calculateData[1],
+						ptrTemp->calculateData[2],
+						(int)ptrTemp->calculateData[3],
+						(int)ptrTemp->calculateData[4],
+						(int)ptrTemp->calculateData[5],
+						ptrTemp->calculateData[6],
+						(int)ptrTemp->calculateData[7]);
 
 				num=0;
 				break;
@@ -745,22 +884,28 @@ static void* userSelectThread(void *notused){
 	if( ret == 0 )
 	{
 		printf("[PAR_RX] Completed join with userSelectThread status = %d\n", status);
-		//syslog(LOG_INFO | LOG_LOCAL2, "[PAR_RX] Completed join with userSelectThread status = %d\n", status);
+		//syslog(LOG_INFO | LOG_LOCAL4, "[PAR_RX] Completed join with userSelectThread status = %d\n", status);
 	}
 	else
 	{
 		printf("[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
-		//syslog(LOG_ERR | LOG_LOCAL3, "[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
+		//syslog(LOG_ERR | LOG_LOCAL5, "[PAR_RX] ERROR: return code from pthread_join() is %d\n", ret);
 	}
 #endif
 
 }
 
+/***
+ * isThereRSUID()
+ * 리스트에 RSUID가 있는지 확인해주는 함수
+ * 있으면 TRUE 없으면 FALSE
+ */
 bool isThereRSUID(int rsuID){
 	struct parInfo_t *ptrTemp = ListPtr->head;
 	while(ptrTemp != NULL){
 		if(ptrTemp->rsuID == rsuID)
 			return true;
+
 		ptrTemp = ptrTemp->next;
 	}
 	return false;
